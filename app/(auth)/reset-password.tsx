@@ -1,4 +1,4 @@
-import { ResetPasswordForm } from '@/components/reset-password-form';
+import { ResetPasswordForm } from '@/components/forms/reset-password-form';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 

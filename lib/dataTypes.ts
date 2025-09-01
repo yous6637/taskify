@@ -1,13 +1,16 @@
+type Day = "saturday" | "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday"
 export interface Habit {
-    name: string;
-    days: string[];
-    time: string;
+    title: string;
+    repeat_days: Day[];
+    reminder: string; // 09:00 am
+    isPaused: boolean
   }
   
   export interface Task {
-    name: string;
-    date: string;
-    time: string;
+    title: string;
+    dueDate: string;
+    reminder: string; // 09:00 am
+    note: string
   }
   
   export interface Goal {
@@ -16,7 +19,7 @@ export interface Habit {
     start_date: string;
     habits: Habit[];
     tasks: Task[];
-    notes: string[];
+    notes: string;
   }
   
   export interface SelfMadeGoals {

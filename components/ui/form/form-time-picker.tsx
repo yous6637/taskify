@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { TimerPicker } from 'react-native-timer-picker';
 import { Button, buttonTextVariants } from '../button';
 import type { ButtonChildrenProps } from './button-types';
 import { FormItem } from './form';
@@ -11,8 +11,18 @@ import { Clock1Icon } from 'lucide-react-native';
 import { X } from '~/lib/icons/X';
 import { cn } from '~/lib/utils';
 import { Text } from '../text';
+import { View } from 'react-native';
 import type { Override } from './types';
 import { Noop } from 'react-hook-form';
+import MaskedView from '@react-native-masked-view/masked-view'; // for transparent fade-out
+import {
+  BottomSheet,
+  BottomSheetContent,
+  BottomSheetHeader,
+  BottomSheetOpenTrigger,
+  BottomSheetCloseTrigger,
+  BottomSheetView,
+} from '@/components/deprecated-ui/bottom-sheet';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -39,7 +49,16 @@ const FormTimePicker = React.forwardRef<
   }
 >(({ label, description, value, onChange, mode = 'time', is24Hour = true, display = 'default', ...props }, ref) => {
   const { error, formItemNativeID, formDescriptionNativeID, formMessageNativeID } = useFormField();
-  const [showTimePicker, setShowTimePicker] = React.useState(false);
+  const initialDate = React.useMemo(() => (value ? new Date(value) : new Date()), [value]);
+  const [draft, setDraft] = React.useState<{ hours: number; minutes: number; isAm?: boolean }>(() => {
+    const hours24 = initialDate.getHours();
+    const minutes = initialDate.getMinutes();
+    return {
+      hours: is24Hour ? hours24 : ((hours24 + 11) % 12) + 1,
+      minutes,
+      isAm: hours24 < 12,
+    };
+  });
 
   const formatTime = (timeString: string) => {
     if (!timeString) return 'Pick a time';
@@ -55,81 +74,129 @@ const FormTimePicker = React.forwardRef<
     }
   };
 
-  const handleTimeChange = (event: any, selectedTime?: Date) => {
-    setShowTimePicker(false);
-    
-    if (selectedTime && event.type !== 'dismissed') {
-      onChange?.(selectedTime.toISOString());
+  function commitDraft() {
+    const base = new Date(initialDate);
+    let hours24 = draft.hours;
+    if (!is24Hour) {
+      // convert 12h to 24h using draft.isAm
+      const isAm = draft.isAm ?? (base.getHours() < 12);
+      hours24 = ((draft.hours % 12) + (isAm ? 0 : 12)) % 24;
     }
-  };
+    base.setHours(hours24, draft.minutes, 0, 0);
+    onChange?.(base.toISOString());
+  }
 
-  React.useEffect(() => {
-    return () => {
-      setShowTimePicker(false);
-    };
-  }, []);
+  const TimerPickerAny = TimerPicker as any;
 
   return (
     <FormItem>
       {!!label && <FormLabel nativeID={formItemNativeID}>{label}</FormLabel>}
-      
-      <Button
-        variant='outline'
-        className='flex-row gap-3 justify-start px-3 relative'
-        ref={ref!}
-        aria-labelledby={formItemNativeID}
-        aria-describedby={
-          !error
-            ? `${formDescriptionNativeID}`
-            : `${formDescriptionNativeID} ${formMessageNativeID}`
-        }
-        aria-invalid={!!error}
-        onPress={() => setShowTimePicker(true)}
-        {...props}
-      >
-        {({ pressed }) => (
-          <>
-            <Clock1Icon
-              className={buttonTextVariants({
-                variant: 'outline',
-                className: cn(!value && 'opacity-80', pressed && 'opacity-60'),
-              })}
-              size={18}
-            />
-            <Text
-              className={buttonTextVariants({
-                variant: 'outline',
-                className: cn('font-normal', !value && 'opacity-70', pressed && 'opacity-50'),
-              })}
-            >
-              {formatTime(value)}
-            </Text>
-            {!!value && (
-              <Button
-                className='absolute right-0 active:opacity-70 native:pr-3'
-                variant='ghost'
-                onPress={(e) => {
-                  e.stopPropagation();
-                  onChange?.('');
-                }}
-              >
-                <X size={18} className='text-muted-foreground text-xs' />
-              </Button>
-            )}
-          </>
-        )}
-      </Button>
 
-      {showTimePicker && (
-        <RNDateTimePicker
-          value={value ? new Date(value) : new Date()}
-          mode={mode}
-          is24Hour={is24Hour}
-          display={display}
-          onChange={handleTimeChange}
-        />
-      )}
-      
+      <BottomSheet>
+        <BottomSheetOpenTrigger asChild>
+          <Button
+            variant='outline'
+            className='flex-row gap-3 justify-start px-3 relative'
+            aria-labelledby={formItemNativeID}
+            aria-describedby={
+              !error
+                ? `${formDescriptionNativeID}`
+                : `${formDescriptionNativeID} ${formMessageNativeID}`
+            }
+            aria-invalid={!!error}
+            {...props}
+          >
+            {({ pressed }) => (
+              <>
+                <Clock1Icon
+                  className={buttonTextVariants({
+                    variant: 'outline',
+                    className: cn(!value && 'opacity-80', pressed && 'opacity-60'),
+                  })}
+                  size={18}
+                />
+                <Text
+                  className={buttonTextVariants({
+                    variant: 'outline',
+                    className: cn('font-normal', !value && 'opacity-70', pressed && 'opacity-50'),
+                  })}
+                >
+                  {formatTime(value)}
+                </Text>
+                {!!value && (
+                  <Button
+                    className='absolute right-0 active:opacity-70 native:pr-3'
+                    variant='ghost'
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      onChange?.('');
+                    }}
+                  >
+                    <X size={18} className='text-muted-foreground text-xs' />
+                  </Button>
+                )}
+              </>
+            )}
+          </Button>
+        </BottomSheetOpenTrigger>
+
+        <BottomSheetContent backgroundStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24 }}>
+          <BottomSheetHeader className='py-4'>
+            <Text className='text-lg font-semibold'>
+              {label ? String(label).replace(/\*$/, '') : 'Select time'}
+            </Text>
+          </BottomSheetHeader>
+          <BottomSheetView className='py-4'>
+            <TimerPickerAny
+              padWithNItems={2}
+              hourLabel={':' as any}
+              minuteLabel={':' as any}
+              secondLabel={'' as any}
+              use12HourPicker={!is24Hour}
+              onChange={(v: any) => {
+                const { hours, minutes, isAmpm, ampm } = v || {};
+                setDraft((prev) => ({
+                  hours: typeof hours === 'number' ? hours : prev.hours,
+                  minutes: typeof minutes === 'number' ? minutes : prev.minutes,
+                  isAm: typeof isAmpm === 'boolean' ? isAmpm :
+                    typeof ampm === 'string' ? ampm?.toUpperCase?.() === 'AM' : prev.isAm,
+                }));
+              }}
+              MaskedView={MaskedView}
+              styles={{
+                theme: 'light',
+                backgroundColor: 'transparent',
+                pickerItem: { fontSize: 34 },
+                pickerLabel: { fontSize: 32, marginTop: 0 },
+                pickerContainer: { marginRight: 6 },
+                pickerItemContainer: { width: 100 },
+                pickerLabelContainer: {
+                  right: -20,
+                  top: 0,
+                  bottom: 6,
+                  width: 40,
+                  alignItems: 'center',
+                },
+              }}
+            />
+
+            <View className='flex-row justify-between mt-6 px-1'>
+              <BottomSheetCloseTrigger asChild>
+                <Button variant='outline' className='min-w-[120px]'>
+                  <Text>Cancel</Text>
+                </Button>
+              </BottomSheetCloseTrigger>
+
+              <BottomSheetCloseTrigger asChild>
+                <Button className='min-w-[120px]' onPress={commitDraft}>
+                  <Text>OK</Text>
+                </Button>
+              </BottomSheetCloseTrigger>
+            </View>
+          </BottomSheetView>
+        </BottomSheetContent>
+      </BottomSheet>
+
       {!!description && <FormDescription>{description}</FormDescription>}
       <FormMessage />
     </FormItem>
