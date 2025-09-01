@@ -33,7 +33,7 @@ function Input({ className, placeholderClassName, LeftIcon, RightIcon, ...props 
         </View>
       )}
       <TextInput
-        className={cn('flex h-7 w-full min-w-0 flex-row items-center', placeholderClassName)}
+        className={cn('flex w-full min-w-0 flex-row items-center', placeholderClassName)}
         {...props}
       />
       {RightIcon && (
