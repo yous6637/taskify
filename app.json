@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "./",
-    "slug": "./",
+    "name": "taskify",
+    "slug": "taskify",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "./",
+    "scheme": "taskify",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mobdevdz.taskify"
     },
     "web": {
       "bundler": "metro",
@@ -38,6 +39,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7e7dedff-32d6-4e27-b414-87fc93493496"
+      }
+    },
+    "owner": "mobdevdz"
   }
 }

@@ -1,15 +1,17 @@
 import { cn } from '@/lib/utils';
-import { Platform, TextInput, type TextInputProps } from 'react-native';
+import { Platform, TextInput, View, type TextInputProps } from 'react-native';
 
-function Input({
-  className,
-  placeholderClassName,
-  ...props
-}: TextInputProps & React.RefAttributes<TextInput>) {
+type AdditionalProps = {
+  LeftIcon?: () => React.ReactNode;
+  RightIcon?: () => React.ReactNode;
+};
+
+type Props = TextInputProps & React.RefAttributes<TextInput> & AdditionalProps;
+function Input({ className, placeholderClassName, LeftIcon, RightIcon, ...props }: Props) {
   return (
-    <TextInput
+    <View
       className={cn(
-        'flex h-10 w-full min-w-0 flex-row items-center rounded-md border border-input bg-background px-3 py-1 text-base leading-5 text-foreground shadow-sm shadow-black/5 dark:bg-input/30 sm:h-9',
+        'flex-row items-center rounded-lg border border-input bg-background px-3 py-1 text-base leading-5 text-foreground shadow-sm shadow-black/5 dark:bg-input/30 sm:h-9',
         props.editable === false &&
           cn(
             'opacity-50',
@@ -24,9 +26,22 @@ function Input({
           native: 'placeholder:text-muted-foreground/50',
         }),
         className
+      )}>
+      {LeftIcon && (
+        <View className="mr-2">
+          <LeftIcon />
+        </View>
       )}
-      {...props}
-    />
+      <TextInput
+        className={cn('flex h-7 w-full min-w-0 flex-row items-center', placeholderClassName)}
+        {...props}
+      />
+      {RightIcon && (
+        <View className="ml-2">
+          <RightIcon />
+        </View>
+      )}
+    </View>
   );
 }
 

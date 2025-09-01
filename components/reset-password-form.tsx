@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
 import { useSignIn } from '@clerk/clerk-expo';
-import { router } from 'expo-router';
+import { Icon, LockIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
 
@@ -70,6 +70,7 @@ export function ResetPasswordForm() {
                 returnKeyType="next"
                 submitBehavior="submit"
                 onSubmitEditing={onPasswordSubmitEditing}
+                LeftIcon={() => <LockIcon className="size-4" />}
               />
               {error.password ? (
                 <Text className="text-sm font-medium text-destructive">{error.password}</Text>
