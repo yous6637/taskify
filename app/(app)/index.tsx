@@ -5,12 +5,16 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
+  useWindowDimensions
+  
 } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 
 const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState('2024-03-22');
+  const { width } = useWindowDimensions()
   
   // Mock data for habits and tasks
   const habitStats = {
@@ -128,15 +132,17 @@ const HomePage = () => {
     }
   };
 
-  const toggleTask = (taskId) => {
+  const toggleTask = (taskId: number) => {
     // Handle task completion toggle
+    // Alert.alert()
     console.log('Toggle task:', taskId);
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
+      <CalendarProvider date= {new Date().toDateString()}>
       {/* Header */}
-      <View className="flex-row justify-between items-center px-4 py-2">
+      <View className="flex-row h-20 justify-between items-center px-4 ">
         <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
           <View className="w-4 h-4 border-2 border-white transform rotate-45" />
         </View>
@@ -146,15 +152,16 @@ const HomePage = () => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView className="flex-1">
         {/* Calendar */}
-        <View className="px-4 mb-4">
-          <Calendar
+        <View className="px-4 mb-4 overflow-hidden">
+          <WeekCalendar
             current="2024-03-22"
             onDayPress={(day) => setSelectedDate(day.dateString)}
             markedDates={markedDates}
+            windowSize={width - 32}
             theme={{
               backgroundColor: 'white',
+              contentStyle: { width: width - 32},
               calendarBackground: 'white',
               textSectionTitleColor: '#6b7280',
               selectedDayBackgroundColor: '#f97316',
@@ -169,9 +176,17 @@ const HomePage = () => {
               indicatorColor: '#f97316',
               textDayFontSize: 16,
               textMonthFontSize: 16,
-              textDayHeaderFontSize: 14
+              textDayHeaderFontSize: 14,
+              stylesheet: {
+                calendar: {
+                  "main" : {
+                    width: width - 32,
+                    flexGrow: 1
+                  }
+                }
+              }
             }}
-            hideExtraDays={true}
+            // hideExtraDays={true}
             disableMonthChange={true}
             firstDay={1}
             hideDayNames={false}
@@ -180,6 +195,7 @@ const HomePage = () => {
             disableArrowRight={false}
           />
         </View>
+      <ScrollView className="flex-1 h-full">
 
         {/* Progress Bar */}
         <View className="px-4 mb-6">
@@ -243,7 +259,7 @@ const HomePage = () => {
         ))}
       </ScrollView>
 
-      
+      </CalendarProvider>
 
       {/* Floating Action Button */}
       <TouchableOpacity className="absolute bottom-20 right-4 w-14 h-14 bg-orange-500 rounded-full items-center justify-center shadow-lg">

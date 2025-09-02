@@ -22,7 +22,7 @@ const tabLabels = {
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
-    <View className="flex-row bg-white border-t border-gray-200 px-4 py-2">
+    <View className="flex-row native:mb-10  border-t border-gray-200  px-4 py-2">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
