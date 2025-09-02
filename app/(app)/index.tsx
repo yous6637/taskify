@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Calendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
+import { AddButton } from '@/components/add-button';
 
 const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState('2024-03-22');
@@ -262,9 +263,7 @@ const HomePage = () => {
       </CalendarProvider>
 
       {/* Floating Action Button */}
-      <TouchableOpacity className="absolute bottom-20 right-4 w-14 h-14 bg-orange-500 rounded-full items-center justify-center shadow-lg">
-        <Ionicons name="add" size={28} color="white" />
-      </TouchableOpacity>
+     <AddButton />
     </SafeAreaView>
   );
 };
