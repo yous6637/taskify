@@ -10,6 +10,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
+import { DialogProvider } from '@/components/providers/dialog-provider';
+import { DialogInitializer } from '@/components/providers/dialog-initializer';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -21,11 +23,14 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache}>
-      <ThemeProvider  value={NAV_THEME[colorScheme ?? 'light']}>
-        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-        <Routes />
-        <PortalHost />
-      </ThemeProvider>
+      <DialogProvider>
+        <ThemeProvider  value={NAV_THEME[colorScheme ?? 'light']}>
+          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <Routes />
+          <DialogInitializer />
+          <PortalHost />
+        </ThemeProvider>
+      </DialogProvider>
     </ClerkProvider>
   );
 }
