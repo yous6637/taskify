@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const AccountPage = () => {
   const router = useRouter();
@@ -117,15 +118,7 @@ const AccountPage = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="flex-row justify-between items-center px-4 py-2 bg-white">
-        <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
-          <View className="w-4 h-4 border-2 border-white transform rotate-45" />
-        </View>
-        <Text className="text-xl font-semibold text-gray-900">Account</Text>
-        <TouchableOpacity>
-          <Ionicons name="ellipsis-vertical" size={24} color="gray" />
-        </TouchableOpacity>
-      </View>
+      <Header {...HeaderConfigs.basic("Account")} />
 
       <ScrollView className="flex-1">
         {/* Upgrade Banner */}

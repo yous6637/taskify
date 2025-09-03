@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useDialog } from '@/components/providers/dialog-provider';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const GoalDetailsPage = () => {
   const router = useRouter();
@@ -142,48 +143,26 @@ const GoalDetailsPage = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header with background image */}
-      <View className="relative">
-        <ImageBackground
-          source={{ uri: goalData.backgroundImage }}
-          className="h-64 justify-between"
-          style={{ backgroundColor: '#a855f7' }}
-        >
-          {/* Gradient overlay */}
-          <View className="absolute inset-0 bg-gradient-to-b from-purple-600/60 to-pink-500/60" />
-          
-          {/* Header controls */}
-          <View className="flex-row justify-between items-center px-4 pt-4">
-            <TouchableOpacity 
-              onPress={() => router.back()}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
-            >
-              <Ionicons name="arrow-back" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity className="w-10 h-10 bg-white/20 rounded-full items-center justify-center">
-              <Ionicons name="share-outline" size={24} color="white" />
-            </TouchableOpacity>
+      <Header {...HeaderConfigs.imageBackground(goalData.backgroundImage)}>
+        {/* Goal info */}
+        <View className="px-4 pb-6">
+          <Text className="text-white text-2xl font-bold mb-2">
+            {goalData.title}
+          </Text>
+          <View className="flex-row items-center mb-2">
+            <Ionicons name="briefcase-outline" size={16} color="white" />
+            <Text className="text-white/90 text-sm ml-2">{goalData.category}</Text>
           </View>
-
-          {/* Goal info */}
-          <View className="px-4 pb-6">
-            <Text className="text-white text-2xl font-bold mb-2">
-              {goalData.title}
-            </Text>
-            <View className="flex-row items-center mb-2">
-              <Ionicons name="briefcase-outline" size={16} color="white" />
-              <Text className="text-white/90 text-sm ml-2">{goalData.category}</Text>
-            </View>
-            <View className="flex-row items-center mb-2">
-              <Ionicons name="calendar-outline" size={16} color="white" />
-              <Text className="text-white/90 text-sm ml-2">{goalData.duration}</Text>
-            </View>
-            <View className="flex-row items-center">
-              <Ionicons name="time-outline" size={16} color="white" />
-              <Text className="text-white/90 text-sm ml-2">{goalData.deadline}</Text>
-            </View>
+          <View className="flex-row items-center mb-2">
+            <Ionicons name="calendar-outline" size={16} color="white" />
+            <Text className="text-white/90 text-sm ml-2">{goalData.duration}</Text>
           </View>
-        </ImageBackground>
-      </View>
+          <View className="flex-row items-center">
+            <Ionicons name="time-outline" size={16} color="white" />
+            <Text className="text-white/90 text-sm ml-2">{goalData.deadline}</Text>
+          </View>
+        </View>
+      </Header>
 
       <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
         {/* Habits section */}

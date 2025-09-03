@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const ExplorePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
@@ -22,7 +23,7 @@ const ExplorePage = () => {
     'Volunteer Regularly'
   ];
 
-  const removeRecentSearch = (index) => {
+  const removeRecentSearch = (index: number) => {
     // Handle removing recent search
     console.log('Remove search at index:', index);
   };
@@ -61,12 +62,12 @@ const ExplorePage = () => {
   ];
 
   // Since we can't use actual images in this example, I'll create placeholder cards
-  const GoalCard = ({ goal }) => (
+  const GoalCard = ({ goal }: { goal: any }) => (
     <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm">
       <View className="flex-row">
         {/* Image placeholder with gradient background */}
         <View className={`w-20 h-20 ${goal.backgroundColor} rounded-2xl mr-4 items-center justify-center`}>
-          <Text className="text-2xl">{goal.illustration}</Text>
+          <Image source = {goal.image} />
         </View>
         
         {/* Content */}
@@ -103,29 +104,14 @@ const ExplorePage = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="flex-row justify-between items-center px-4 py-2 bg-white">
-        {isSearchMode ? (
-          <View className="flex-row items-center flex-1">
-            <TouchableOpacity onPress={() => setIsSearchMode(false)} className="mr-3">
-              <Ionicons name="arrow-back" size={24} color="gray" />
-            </TouchableOpacity>
-            <View className="flex-row items-center flex-1 bg-gray-100 rounded-lg px-3 py-2">
-              <Ionicons name="search" size={20} color="#f97316" />
-              <Text className="ml-2 text-orange-500">|</Text>
-            </View>
-          </View>
-        ) : (
-          <>
-            <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
-              <View className="w-4 h-4 border-2 border-white transform rotate-45" />
-            </View>
-            <Text className="text-xl font-semibold text-gray-900">Explore</Text>
-            <TouchableOpacity onPress={() => setIsSearchMode(true)}>
-              <Ionicons name="search-outline" size={24} color="gray" />
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
+      <Header 
+        {...HeaderConfigs.withSearch("Explore")}
+        isSearchMode={isSearchMode}
+        setIsSearchMode={setIsSearchMode}
+        searchValue={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search goals..."
+      />
 
       <ScrollView className="flex-1">
         {isSearchMode ? (
