@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
@@ -12,6 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useDialog } from '@/components/providers/dialog-provider';
 import { Header, HeaderConfigs } from '@/components/ui/header';
+import { HabitCard, HabitCardConfigs } from '@/components/cards';
+import { Text } from '@/components/ui/text';
 
 const GoalDetailsPage = () => {
   const router = useRouter();
@@ -82,66 +83,10 @@ const GoalDetailsPage = () => {
     setShowDeleteSuccess(false);
   };
 
-  const HabitCard = ({ habit, isDeleted = false }: { habit: any, isDeleted?: boolean }) => {
-    const completedCount = habit.completed.filter(Boolean).length;
 
-    return (
-      <View className={`bg-background rounded-2xl p-4 mb-4 ${isDeleted ? 'opacity-50' : ''}`}>
-        <View className="flex-row items-start justify-between mb-3">
-          <View className="flex-1">
-            <Text className={`text-lg font-semibold text-gray-900 mb-1 ${isDeleted ? 'line-through' : ''}`}>
-              {habit.title}
-            </Text>
-            <View className="flex-row items-center">
-              <Ionicons name="time-outline" size={16} color="#6b7280" />
-              <Text className="text-gray-500 text-sm ml-1">{habit.reminder}</Text>
-            </View>
-          </View>
-          <TouchableOpacity
-            onPress={() => handleDeleteHabit(habit.id)}
-            className="p-2"
-          >
-            <Ionicons name="trash-outline" size={20} color="#ef4444" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Weekly progress */}
-        <View className="flex-row justify-between mb-3">
-          {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, index) => (
-            <View key={index} className="items-center">
-              <Text className="text-xs text-gray-500 mb-1">{day}</Text>
-              <View
-                className={`w-8 h-8 rounded-full items-center justify-center ${habit.completed[index]
-                    ? 'bg-orange-500'
-                    : index <= 2 ? 'bg-gray-200' : 'bg-gray-100'
-                  }`}
-              >
-                {habit.completed[index] && (
-                  <Ionicons name="checkmark" size={16} color="white" />
-                )}
-                {!habit.completed[index] && index <= 2 && (
-                  <Text className="text-gray-600 text-xs">{index + 1}</Text>
-                )}
-              </View>
-            </View>
-          ))}
-        </View>
-
-        <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center">
-            <Ionicons name="time-outline" size={16} color="#6b7280" />
-            <Text className="text-gray-500 text-sm ml-1">{habit.reminder}</Text>
-          </View>
-          <Text className="text-orange-500 text-sm font-medium">
-            {completedCount}/7 completed
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header with background image */}
       <View className="relative">
         <ImageBackground
@@ -198,7 +143,13 @@ const GoalDetailsPage = () => {
 
           {/* Habit cards */}
           {goalData.habits.map((habit) => (
-            <HabitCard key={habit.id} habit={habit} />
+            <HabitCard 
+              key={habit.id} 
+              {...HabitCardConfigs.detailed}
+              habit={habit}
+              onDelete={() => handleDeleteHabit(habit.id)}
+              isDeleted={showDeleteSuccess}
+            />
           ))}
         </View>
 

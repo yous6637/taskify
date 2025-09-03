@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
@@ -13,6 +12,8 @@ import { Calendar, CalendarProvider, WeekCalendar } from 'react-native-calendars
 import { Ionicons } from '@expo/vector-icons';
 import { AddButton } from '@/components/add-button';
 import { Header, HeaderConfigs } from '@/components/ui/header';
+import { TaskCard, TaskCardConfigs, StatsCard, StatsCardConfigs } from '@/components/cards';
+import { Text } from '@/components/ui/text';
 
 const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState('2024-03-22');
@@ -193,16 +194,22 @@ const HomePage = () => {
 
         {/* Progress Bar */}
         <View className="px-4 mb-6">
-          <View className="flex-row justify-between items-center mb-2">
-            <Text className="text-gray-600">
-              Today you have <Text className="text-orange-500 font-semibold">{habitStats.habits} habits</Text>, <Text className="text-blue-500 font-semibold">{habitStats.tasks} tasks</Text>
-            </Text>
-            <Text className="text-gray-400">{habitStats.completed} / {habitStats.total}</Text>
-          </View>
-          <View className="w-full bg-gray-200 rounded-full h-2">
-            <View 
-              className="bg-orange-500 h-2 rounded-full" 
-              style={{ width: `${(habitStats.completed / habitStats.total) * 100}%` }}
+          <StatsCard
+            {...StatsCardConfigs.progress}
+            progress={{
+              current: habitStats.completed,
+              total: habitStats.total,
+            }}
+          />
+          <View className="mt-2">
+            <StatsCard
+              {...StatsCardConfigs.metric}
+              metrics={{
+                habits: habitStats.habits,
+                tasks: habitStats.tasks,
+                completed: habitStats.completed,
+                total: habitStats.total,
+              }}
             />
           </View>
         </View>
@@ -210,43 +217,21 @@ const HomePage = () => {
         {/* Task Categories */}
         {goals.map((category, categoryIndex) => (
           <View key={categoryIndex} className="px-4 mb-6">
-            <Text className="text-gray-600 text-sm mb-3">{category.title}</Text>
+            <Text className="text-muted-foreground text-sm mb-3">{category.title}</Text>
             
             {category.tasks.map((task, taskIndex) => (
-              <View key={task.id} className="flex-row items-center mb-3">
-                {/* Color indicator */}
-                <View className={`w-1 h-12 ${task.color} rounded-full mr-3`} />
-                
-                {/* Checkbox */}
-                <TouchableOpacity 
-                  onPress={() => toggleTask(task.id)}
-                  className="mr-3"
-                >
-                  <View className={`w-6 h-6 rounded-full border-2 items-center justify-center ${
-                    task.completed 
-                      ? 'bg-green-500 border-green-500' 
-                      : 'border-gray-300'
-                  }`}>
-                    {task.completed && (
-                      <Ionicons name="checkmark" size={14} color="white" />
-                    )}
-                  </View>
-                </TouchableOpacity>
-                
-                {/* Task content */}
-                <View className="flex-1">
-                  <Text className={`text-gray-900 font-medium ${
-                    task.completed ? 'line-through text-gray-500' : ''
-                  }`}>
-                    {task.title}
-                  </Text>
-                  {task.time && (
-                    <View className="flex-row items-center mt-1">
-                      <Ionicons name="time-outline" size={14} color="gray" />
-                      <Text className="text-gray-500 text-sm ml-1">{task.time}</Text>
-                    </View>
-                  )}
-                </View>
+              <View key={task.id} className="mb-3">
+                <TaskCard
+                  {...TaskCardConfigs.inline}
+                  task={{
+                    id: task.id,
+                    title: task.title,
+                    time: task.time,
+                    completed: task.completed,
+                    color: task.color,
+                  }}
+                  onToggle={() => toggleTask(task.id)}
+                />
               </View>
             ))}
           </View>

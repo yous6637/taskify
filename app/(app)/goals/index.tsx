@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
@@ -9,6 +8,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Header, HeaderConfigs } from '@/components/ui/header';
+import { GoalCard, GoalCardConfigs } from '@/components/cards';
+import { Text } from '@/components/ui/text';
 
 const MyGoalsPage = () => {
   const router = useRouter();
@@ -66,58 +67,10 @@ const MyGoalsPage = () => {
 
   const currentGoals = activeTab === 'Ongoing' ? ongoingGoals : achievedGoals;
 
-  const GoalCard = ({ goal }: { goal: any }) => (
-    <TouchableOpacity 
-      className="bg-white rounded-3xl p-4 mb-4 shadow-sm"
-      onPress={() => router.push(`/goals/details/${goal.id}`)}
-    >
-      <View className="flex-row">
-        {/* Goal illustration */}
-        <View className={`w-20 h-20 ${goal.backgroundColor} rounded-2xl mr-4 items-center justify-center`}>
-          <Text className="text-2xl">{goal.illustration}</Text>
-        </View>
-        
-        {/* Goal content */}
-        <View className="flex-1">
-          <Text className="text-lg font-semibold text-gray-900 mb-3">
-            {goal.title}
-          </Text>
-          
-          {/* Progress badges */}
-          <View className="flex-row mb-3">
-            {goal.habits.total > 0 && (
-              <View className="bg-orange-100 px-3 py-1 rounded-full mr-2">
-                <Text className="text-orange-600 text-sm">
-                  Habits {goal.habits.completed}/{goal.habits.total}
-                </Text>
-              </View>
-            )}
-            {goal.tasks.total > 0 && (
-              <View className="bg-blue-100 px-3 py-1 rounded-full">
-                <Text className="text-blue-600 text-sm">
-                  Tasks {goal.tasks.completed}/{goal.tasks.total}
-                </Text>
-              </View>
-            )}
-          </View>
-          
-          {/* Days remaining */}
-          {goal.daysLeft && (
-            <View className="flex-row items-center">
-              <Ionicons name="time-outline" size={16} color="#6b7280" />
-              <Ionicons name="calendar-outline" size={16} color="#6b7280" style={{ marginLeft: 8 }} />
-              <Text className="text-gray-500 text-sm ml-2">
-                D-{goal.daysLeft} days
-              </Text>
-            </View>
-          )}
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
 
       <View className="flex-row py-6 justify-between items-center px-4 bg-background">
@@ -165,7 +118,13 @@ const MyGoalsPage = () => {
       <ScrollView className="flex-1 px-4">
         {currentGoals.length > 0 ? (
           currentGoals.map((goal) => (
-            <GoalCard key={goal.id} goal={goal} />
+            <GoalCard 
+              key={goal.id} 
+              {...GoalCardConfigs.myGoals}
+              goal={goal}
+              onPress={() => router.push(`/goals/details/${goal.id}`)}
+              className="mb-4"
+            />
           ))
         ) : (
           <View className="flex-1 items-center justify-center py-20">

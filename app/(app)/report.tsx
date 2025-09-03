@@ -220,7 +220,7 @@ const ReportPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
       <Header {...HeaderConfigs.basic("Report")} size="large" />
 

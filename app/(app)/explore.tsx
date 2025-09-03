@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
@@ -9,6 +8,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Header, HeaderConfigs } from '@/components/ui/header';
+import { GoalCard, GoalCardConfigs } from '@/components/cards';
+import { Text } from '@/components/ui/text';
 
 const ExplorePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
@@ -61,48 +62,10 @@ const ExplorePage = () => {
     }
   ];
 
-  // Since we can't use actual images in this example, I'll create placeholder cards
-  const GoalCard = ({ goal }: { goal: any }) => (
-    <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm">
-      <View className="flex-row">
-        {/* Image placeholder with gradient background */}
-        <View className={`w-20 h-20 ${goal.backgroundColor} rounded-2xl mr-4 items-center justify-center`}>
-          <Image source = {goal.image} />
-        </View>
-        
-        {/* Content */}
-        <View className="flex-1">
-          <View className="flex-row justify-between items-start mb-2">
-            <Text className="text-lg font-semibold text-gray-900 flex-1 mr-2">
-              {goal.title}
-            </Text>
-            <TouchableOpacity>
-              <Ionicons name="add" size={24} color="#f97316" />
-            </TouchableOpacity>
-          </View>
-          
-          {/* Tags */}
-          <View className="flex-row mb-3">
-            <View className="bg-orange-100 px-3 py-1 rounded-full mr-2">
-              <Text className="text-orange-600 text-sm">Habits {goal.habits}</Text>
-            </View>
-            <View className="bg-blue-100 px-3 py-1 rounded-full">
-              <Text className="text-blue-600 text-sm">Tasks {goal.tasks}</Text>
-            </View>
-          </View>
-          
-          {/* Users count */}
-          <View className="flex-row items-center">
-            <Ionicons name="people-outline" size={16} color="#6b7280" />
-            <Text className="text-gray-500 text-sm ml-1">{goal.users}</Text>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
+
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
       <View className="flex-row justify-between items-center px-4 py-2 bg-white">
         {isSearchMode ? (
@@ -162,7 +125,22 @@ const ExplorePage = () => {
               
               {/* Show only first 2 goals in search mode */}
               {goals.slice(0, 2).map((goal) => (
-                <GoalCard key={goal.id} goal={goal} />
+                <GoalCard 
+                  key={goal.id} 
+                  {...GoalCardConfigs.explore}
+                  goal={{
+                    id: goal.id,
+                    title: goal.title,
+                    image: goal.image,
+                    illustration: goal.illustration,
+                    backgroundColor: goal.backgroundColor,
+                    habits: { completed: 0, total: goal.habits },
+                    tasks: { completed: 0, total: goal.tasks },
+                    users: goal.users,
+                  }}
+                  onAddPress={() => console.log('Add goal:', goal.id)}
+                  className="mb-4"
+                />
               ))}
             </View>
           </View>
@@ -236,7 +214,22 @@ const ExplorePage = () => {
             {/* Goals List */}
             <View className="px-4 pb-20">
               {goals.map((goal) => (
-                <GoalCard key={goal.id} goal={goal} />
+                <GoalCard 
+                  key={goal.id} 
+                  {...GoalCardConfigs.explore}
+                  goal={{
+                    id: goal.id,
+                    title: goal.title,
+                    image: goal.image,
+                    illustration: goal.illustration,
+                    backgroundColor: goal.backgroundColor,
+                    habits: { completed: 0, total: goal.habits },
+                    tasks: { completed: 0, total: goal.tasks },
+                    users: goal.users,
+                  }}
+                  onAddPress={() => console.log('Add goal:', goal.id)}
+                  className="mb-4"
+                />
               ))}
             </View>
           </View>
