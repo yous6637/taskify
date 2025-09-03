@@ -28,11 +28,11 @@ export const THEME = {
     chart5: 'hsl(200 80% 60%)', // Teal/cyan vibe
   },
   dark: {
-    background: 'hsl(270 50% 20%)', // Dark purple-blue from night sky
-    foreground: 'hsl(0 0% 98%)', // Near-white text
-    card: 'hsl(270 50% 25%)',
-    cardForeground: 'hsl(0 0% 98%)',
-    popover: 'hsl(270 50% 25%)',
+    background: 'hsl(0 0.02% 3.94%)', // Dark purple-blue from night sky
+    foreground: 'hsl(0 0.5% 98.03%)', // Near-white text
+    card: 'hsl(0 0.02% 9.06%)',
+    cardForeground: 'hsl(0 0.5% 98.03%)',
+    popover: 'hsl(0 0.01% 14.94%)',
     popoverForeground: 'hsl(0 0% 98%)',
     primary: 'hsl(25 100% 50%)', // Orange primary
     primaryForeground: 'hsl(0 0% 0%)', // Black for contrast

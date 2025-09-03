@@ -42,6 +42,10 @@ export default function Screen() {
     <>
       <Stack.Screen options={SCREEN_OPTIONS} />
       <View className="flex-1 items-center justify-center gap-8 p-4">
+         <View className="top-safe absolute left-0 right-0 flex-row justify-between px-4 py-2 web:mx-2">
+      <ThemeToggle />
+      <UserMenu />
+    </View>
         <View className="flex-row items-center justify-center gap-3.5">
           <Image
             source={CLERK_LOGO[colorScheme ?? 'light']}
