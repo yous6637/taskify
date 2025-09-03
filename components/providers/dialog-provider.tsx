@@ -9,6 +9,8 @@ interface DialogState {
   onConfirm?: () => void | Promise<void>;
   onCancel?: () => void;
   variant?: 'default' | 'destructive';
+  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
+  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
 }
 
 interface DialogContextType {
@@ -38,6 +40,8 @@ export function DialogProvider({ children }: DialogProviderProps) {
     confirmText: 'Confirm',
     cancelText: 'Cancel',
     variant: 'default',
+    side: 'default',
+    type: 'default',
   });
 
   const showDialog = (config: Omit<DialogState, 'isOpen'>) => {

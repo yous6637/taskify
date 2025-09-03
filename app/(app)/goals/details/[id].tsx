@@ -10,11 +10,27 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useDialog } from '@/components/providers/dialog-provider';
 
 const GoalDetailsPage = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
+
+  const { confirmDialog } = useDialog();
+
+  const handleDeleteHabit = async (habitId: number) => {
+    const confirmed = await confirmDialog({
+      title: 'Delete Habit',
+      description: 'Are you sure you want to delete this habit?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      variant: 'destructive',
+    });
+    if (confirmed) {
+      handleDeleteHabitSuccess(habitId);
+    }
+  };
 
   // Sample goal data - in a real app, this would be fetched based on the ID
   const goalData = {
@@ -53,7 +69,7 @@ const GoalDetailsPage = () => {
     ]
   };
 
-  const handleDeleteHabit = (habitId: number) => {
+  const handleDeleteHabitSuccess = (habitId: number) => {
     setShowDeleteSuccess(true);
     setTimeout(() => {
       setShowDeleteSuccess(false);
