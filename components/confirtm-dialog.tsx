@@ -1,6 +1,7 @@
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogBody,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -33,25 +34,28 @@ export function ConfirmDialog() {
 
   return (
     <AlertDialog open={dialogState.isOpen} onOpenChange={(open) => !open && hideDialog()}>
-      <AlertDialogContent 
-        className={dialogVariants({ 
-          side: dialogState.side, 
-          type: dialogState.type 
+      <AlertDialogContent
+        className={dialogVariants({
+          side: dialogState.side,
+          type: dialogState.type
         })}
       >
-        <AlertDialogHeader>
-          <AlertDialogTitle>{dialogState.title}</AlertDialogTitle>
+        <AlertDialogHeader className='border-b border-muted-foreground'>
+          <AlertDialogTitle className='text-center mb-6'>{dialogState.title}</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogBody>
+
           <AlertDialogDescription>
             {dialogState.description}
           </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel buttonVariant={{variant: "secondary", size: "lg"}} onPress={handleCancel}>
+        </AlertDialogBody>
+        <AlertDialogFooter className='flex-row gap-3 justify-center'>
+          <AlertDialogCancel buttonVariant={{ variant: "secondary", size: "lg" }} onPress={handleCancel}>
             <Text>{dialogState.cancelText}</Text>
           </AlertDialogCancel>
           <AlertDialogAction
             onPress={handleConfirm}
-            buttonVariant={{variant: dialogState.variant, size: "lg"}}
+            buttonVariant={{ variant: dialogState.variant, size: "lg" }}
             className={"rounded-xl"}
           >
             <Text>{dialogState.confirmText}</Text>
@@ -102,7 +106,7 @@ const dialogVariants = cva(
       type: {
         default: 'relative',
         bottomSheet: cn(
-          'fixed bottom-0 left-0 right-0 w-full max-w-none rounded-t-xl p-6',
+          'fixed h-[50vh] bottom-0 left-0 right-0 w-full max-w-none rounded-t-xl rounded-b-0 p-6',
           Platform.select({
             web: 'animate-in slide-in-from-bottom duration-300',
           })
@@ -179,22 +183,22 @@ export const dialogConfigs = {
     variant: 'destructive',
     type: 'modal',
   }),
-  
+
   bottomSheetAction: createDialogConfig({
     type: 'bottomSheet',
     confirmText: 'Continue',
   }),
-  
+
   sidePanel: createDialogConfig({
     type: 'rightSheet',
     confirmText: 'Save',
   }),
-  
+
   fullScreenEdit: createDialogConfig({
     type: 'fullScreen',
     confirmText: 'Save Changes',
   }),
-  
+
   quickPopover: createDialogConfig({
     type: 'popover',
     confirmText: 'OK',

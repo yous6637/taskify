@@ -134,13 +134,13 @@ const AnalyticsPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1">
       {/* Header */}
-      <View className="flex-row items-center px-4 py-3 bg-white border-b border-gray-200">
+      <View className="flex-row justify-between items-center px-4 py-6">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <Ionicons name="arrow-back" size={24} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-xl font-semibold text-gray-900">Analytics</Text>
+        <Text className="text-xl font-semibold text-foreground">Analytics</Text>
       </View>
 
       <ScrollView className="flex-1">

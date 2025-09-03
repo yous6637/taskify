@@ -101,9 +101,9 @@ const ExplorePage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1">
       {/* Header */}
-      <View className="flex-row justify-between items-center px-4 py-2 bg-white">
+      <View className="flex-row justify-between items-center px-4 py-6">
         {isSearchMode ? (
           <View className="flex-row items-center flex-1">
             <TouchableOpacity onPress={() => setIsSearchMode(false)} className="mr-3">
