@@ -15,12 +15,13 @@ import {
   BottomSheetOpenTrigger,
   BottomSheetView,
 } from '~/components/deprecated-ui/bottom-sheet';
-import { useColorScheme } from '@/lib/useColorScheme';
 import { Calendar as CalendarIcon } from '~/lib/icons/Calendar';
 import { X } from '~/lib/icons/X';
 import { cn } from '~/lib/utils';
 import { Text } from '../text';
 import type { Override } from './types';
+import { Noop } from 'react-hook-form';
+import { useColorScheme } from 'nativewind';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -54,6 +55,7 @@ const FormDatePicker = React.forwardRef<
           <Button
             variant='outline'
             className='flex-row gap-3 justify-start px-3 relative'
+            // @ts-ignore
             ref={ref!}
             aria-labelledby={formItemNativeID}
             aria-describedby={
