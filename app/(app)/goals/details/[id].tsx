@@ -23,10 +23,11 @@ const GoalDetailsPage = () => {
   const handleDeleteHabit = async (habitId: number) => {
     const confirmed = await confirmDialog({
       title: 'Delete Habit',
+      side: "bottom",
+      type: "bottomSheet",
       description: 'Are you sure you want to delete this habit?',
       confirmText: 'Delete',
       cancelText: 'Cancel',
-      variant: 'destructive',
     });
     if (confirmed) {
       handleDeleteHabitSuccess(habitId);
@@ -83,9 +84,9 @@ const GoalDetailsPage = () => {
 
   const HabitCard = ({ habit, isDeleted = false }: { habit: any, isDeleted?: boolean }) => {
     const completedCount = habit.completed.filter(Boolean).length;
-    
+
     return (
-      <View className={`bg-white rounded-2xl p-4 mb-4 ${isDeleted ? 'opacity-50' : ''}`}>
+      <View className={`bg-background rounded-2xl p-4 mb-4 ${isDeleted ? 'opacity-50' : ''}`}>
         <View className="flex-row items-start justify-between mb-3">
           <View className="flex-1">
             <Text className={`text-lg font-semibold text-gray-900 mb-1 ${isDeleted ? 'line-through' : ''}`}>
@@ -96,7 +97,7 @@ const GoalDetailsPage = () => {
               <Text className="text-gray-500 text-sm ml-1">{habit.reminder}</Text>
             </View>
           </View>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => handleDeleteHabit(habit.id)}
             className="p-2"
           >
@@ -109,12 +110,11 @@ const GoalDetailsPage = () => {
           {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, index) => (
             <View key={index} className="items-center">
               <Text className="text-xs text-gray-500 mb-1">{day}</Text>
-              <View 
-                className={`w-8 h-8 rounded-full items-center justify-center ${
-                  habit.completed[index] 
-                    ? 'bg-orange-500' 
+              <View
+                className={`w-8 h-8 rounded-full items-center justify-center ${habit.completed[index]
+                    ? 'bg-orange-500'
                     : index <= 2 ? 'bg-gray-200' : 'bg-gray-100'
-                }`}
+                  }`}
               >
                 {habit.completed[index] && (
                   <Ionicons name="checkmark" size={16} color="white" />
@@ -141,28 +141,50 @@ const GoalDetailsPage = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1">
       {/* Header with background image */}
-      <Header {...HeaderConfigs.imageBackground(goalData.backgroundImage)}>
-        {/* Goal info */}
-        <View className="px-4 pb-6">
-          <Text className="text-white text-2xl font-bold mb-2">
-            {goalData.title}
-          </Text>
-          <View className="flex-row items-center mb-2">
-            <Ionicons name="briefcase-outline" size={16} color="white" />
-            <Text className="text-white/90 text-sm ml-2">{goalData.category}</Text>
+      <View className="relative">
+        <ImageBackground
+          source={{ uri: goalData.backgroundImage }}
+          className="h-64 justify-between"
+          style={{ backgroundColor: '#a855f7' }}
+        >
+          {/* Gradient overlay */}
+          <View className="absolute inset-0 bg-gradient-to-b from-purple-600/60 to-pink-500/60" />
+          
+          {/* Header controls */}
+          <View className="flex-row justify-between items-center px-4 pt-4">
+            <TouchableOpacity 
+              onPress={() => router.back()}
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
+            >
+              <Ionicons name="arrow-back" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity className="w-10 h-10 bg-white/20 rounded-full items-center justify-center">
+              <Ionicons name="share-outline" size={24} color="white" />
+            </TouchableOpacity>
           </View>
-          <View className="flex-row items-center mb-2">
-            <Ionicons name="calendar-outline" size={16} color="white" />
-            <Text className="text-white/90 text-sm ml-2">{goalData.duration}</Text>
+
+          {/* Goal info */}
+          <View className="px-4 pb-6">
+            <Text className="text-white text-2xl font-bold mb-2">
+              {goalData.title}
+            </Text>
+            <View className="flex-row items-center mb-2">
+              <Ionicons name="briefcase-outline" size={16} color="white" />
+              <Text className="text-white/90 text-sm ml-2">{goalData.category}</Text>
+            </View>
+            <View className="flex-row items-center mb-2">
+              <Ionicons name="calendar-outline" size={16} color="white" />
+              <Text className="text-white/90 text-sm ml-2">{goalData.duration}</Text>
+            </View>
+            <View className="flex-row items-center">
+              <Ionicons name="time-outline" size={16} color="white" />
+              <Text className="text-white/90 text-sm ml-2">{goalData.deadline}</Text>
+            </View>
           </View>
-          <View className="flex-row items-center">
-            <Ionicons name="time-outline" size={16} color="white" />
-            <Text className="text-white/90 text-sm ml-2">{goalData.deadline}</Text>
-          </View>
-        </View>
-      </Header>
+        </ImageBackground>
+      </View>
 
       <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
         {/* Habits section */}
@@ -194,7 +216,7 @@ const GoalDetailsPage = () => {
               </View>
               <Text className="text-white font-medium">Successfully deleted!</Text>
             </View>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={handleUndo}
               className="bg-orange-500 px-4 py-2 rounded-full"
             >

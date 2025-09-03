@@ -88,6 +88,15 @@ function AlertDialogFooter({ className, ...props }: ViewProps) {
   );
 }
 
+function AlertDialogBody({ className, ...props }: ViewProps) {
+  return (
+    <View 
+      className={cn('flex flex-1 flex-col gap-4 py-3', className)}
+      {...props} 
+    />
+  );
+}
+
 function AlertDialogTitle({
   className,
   ...props
@@ -131,7 +140,7 @@ function AlertDialogCancel({
   ...props
 }: AlertDialogPrimitive.CancelProps & React.RefAttributes<AlertDialogPrimitive.CancelRef> & { buttonVariant?: Parameters<typeof buttonVariants>[0]}) {
   return (
-    <TextClassContext.Provider value={buttonTextVariants({ className, variant: 'outline' })}>
+    <TextClassContext.Provider value={buttonTextVariants(buttonVariant)}>
       <AlertDialogPrimitive.Cancel
         className={cn(buttonVariants(buttonVariant), className)}
         {...props}
@@ -150,6 +159,7 @@ export {
   AlertDialogHeader,
   AlertDialogOverlay,
   AlertDialogPortal,
+  AlertDialogBody,
   AlertDialogTitle,
   AlertDialogTrigger,
 };

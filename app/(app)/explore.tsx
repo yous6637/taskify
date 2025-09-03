@@ -102,16 +102,31 @@ const ExplorePage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1">
       {/* Header */}
-      <Header 
-        {...HeaderConfigs.withSearch("Explore")}
-        isSearchMode={isSearchMode}
-        setIsSearchMode={setIsSearchMode}
-        searchValue={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search goals..."
-      />
+      <View className="flex-row justify-between items-center px-4 py-2 bg-white">
+        {isSearchMode ? (
+          <View className="flex-row items-center flex-1">
+            <TouchableOpacity onPress={() => setIsSearchMode(false)} className="mr-3">
+              <Ionicons name="arrow-back" size={24} color="gray" />
+            </TouchableOpacity>
+            <View className="flex-row items-center flex-1 bg-gray-100 rounded-lg px-3 py-2">
+              <Ionicons name="search" size={20} color="#f97316" />
+              <Text className="ml-2 text-orange-500">|</Text>
+            </View>
+          </View>
+        ) : (
+          <>
+            <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
+              <View className="w-4 h-4 border-2 border-white transform rotate-45" />
+            </View>
+            <Text className="text-xl font-semibold text-gray-900">Explore</Text>
+            <TouchableOpacity onPress={() => setIsSearchMode(true)}>
+              <Ionicons name="search-outline" size={24} color="gray" />
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
 
       <ScrollView className="flex-1">
         {isSearchMode ? (

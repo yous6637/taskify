@@ -23,6 +23,9 @@ interface DialogContextType {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
+    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
+    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+
   }) => Promise<boolean>;
 }
 
@@ -66,9 +69,12 @@ export function DialogProvider({ children }: DialogProviderProps) {
     description: string;
     confirmText?: string;
     cancelText?: string;
+    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
+    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
     variant?: 'default' | 'destructive';
   }): Promise<boolean> => {
     return new Promise((resolve) => {
+      console.log({ config })
       showDialog({
         ...config,
         onConfirm: () => {
@@ -112,6 +118,9 @@ let globalConfirmDialog: ((config: {
   confirmText?: string;
   cancelText?: string;
   variant?: 'default' | 'destructive';
+  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
+  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+
 }) => Promise<boolean>) | null = null;
 
 export function setGlobalConfirmDialog(
@@ -121,6 +130,9 @@ export function setGlobalConfirmDialog(
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
+    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
+    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+
   }) => Promise<boolean>
 ) {
   globalConfirmDialog = confirmDialogFn;
@@ -132,6 +144,9 @@ export function confirmDialog(config: {
   confirmText?: string;
   cancelText?: string;
   variant?: 'default' | 'destructive';
+  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
+  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+
 }): Promise<boolean> {
   if (!globalConfirmDialog) {
     throw new Error('DialogProvider not initialized. Make sure to wrap your app with DialogProvider.');

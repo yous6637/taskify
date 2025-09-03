@@ -117,9 +117,18 @@ const MyGoalsPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1">
       {/* Header */}
-      <Header {...HeaderConfigs.basic("My Goals")} />
+
+      <View className="flex-row py-6 justify-between items-center px-4 bg-background">
+        <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
+          <View className="w-4 h-4 border-2 transform rotate-45" />
+        </View>
+        <Text className="text-xl font-semibold text-foreground">My Goals</Text>
+        <TouchableOpacity>
+          <Ionicons name="ellipsis-vertical" size={24} color="gray" />
+        </TouchableOpacity>
+      </View>
 
       {/* Tab Navigation */}
       <View className="px-4 py-4 bg-white">
