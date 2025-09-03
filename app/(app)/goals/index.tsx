@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const MyGoalsPage = () => {
   const router = useRouter();
@@ -118,6 +119,7 @@ const MyGoalsPage = () => {
   return (
     <SafeAreaView className="flex-1">
       {/* Header */}
+
       <View className="flex-row py-6 justify-between items-center px-4 bg-background">
         <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
           <View className="w-4 h-4 border-2 transform rotate-45" />

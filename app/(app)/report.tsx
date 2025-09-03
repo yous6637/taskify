@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -221,15 +222,7 @@ const ReportPage = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="flex-row justify-between items-center px-4 py-3 bg-white">
-        <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
-          <View className="w-4 h-4 border-2 border-white transform rotate-45" />
-        </View>
-        <Text className="text-xl font-semibold text-gray-900">Report</Text>
-        <TouchableOpacity>
-          <Ionicons name="ellipsis-vertical" size={24} color="gray" />
-        </TouchableOpacity>
-      </View>
+      <Header {...HeaderConfigs.basic("Report")} size="large" />
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Period Selector */}

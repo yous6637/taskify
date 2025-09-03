@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useDialog } from '@/components/providers/dialog-provider';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const GoalDetailsPage = () => {
   const router = useRouter();
@@ -150,10 +151,10 @@ const GoalDetailsPage = () => {
         >
           {/* Gradient overlay */}
           <View className="absolute inset-0 bg-gradient-to-b from-purple-600/60 to-pink-500/60" />
-
+          
           {/* Header controls */}
           <View className="flex-row justify-between items-center px-4 pt-4">
-            <TouchableOpacity
+            <TouchableOpacity 
               onPress={() => router.back()}
               className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
             >

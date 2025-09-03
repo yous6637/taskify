@@ -12,6 +12,7 @@ import {
 import { Calendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { AddButton } from '@/components/add-button';
+import { Header, HeaderConfigs } from '@/components/ui/header';
 
 const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState('2024-03-22');
@@ -143,15 +144,7 @@ const HomePage = () => {
     <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       <CalendarProvider date= {new Date().toDateString()}>
       {/* Header */}
-      <View className="flex-row h-20 justify-between items-center px-4 ">
-        <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
-          <View className="w-4 h-4 border-2 border-white transform rotate-45" />
-        </View>
-        <Text className="text-xl font-semibold text-gray-900">Home</Text>
-        <TouchableOpacity>
-          <Ionicons name="ellipsis-vertical" size={24} color="gray" />
-        </TouchableOpacity>
-      </View>
+      <Header {...HeaderConfigs.basic("Home")} className="h-20" />
 
         {/* Calendar */}
         <View className="px-4 mb-4 overflow-hidden">
