@@ -17,7 +17,7 @@ const headerVariants = cva(
     variants: {
       variant: {
         default: 'flex-row justify-between items-center',
-        withBackButton: 'flex-row items-center border-b border-gray-200',
+        withBackButton: 'flex-row items-center border-b border-gray-200 dark:border-gray-700',
         search: 'flex-row justify-between items-center',
         imageBackground: 'relative',
       },

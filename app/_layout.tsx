@@ -12,6 +12,8 @@ import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { DialogProvider } from '@/components/providers/dialog-provider';
 import { DialogInitializer } from '@/components/providers/dialog-initializer';
+import { ModalProvider } from '@/components/providers/modal-provider';
+import { ModalInitializer } from '@/components/providers/modal-initializer';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -32,12 +34,15 @@ export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache}>
       <DialogProvider>
+        <ModalProvider>
         <ThemeProvider  value={NAV_THEME[colorScheme ?? 'light']}>
           <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
           <Routes />
           <DialogInitializer />
+          <ModalInitializer />
           <PortalHost />
         </ThemeProvider>
+        </ModalProvider>
       </DialogProvider>
     </ClerkProvider>
   );

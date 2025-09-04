@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Header, HeaderConfigs } from '@/components/ui/header';
+import { Input } from '@/components/ui/input';
 
 const HelpPage = () => {
   const router = useRouter();
@@ -81,28 +82,28 @@ const HelpPage = () => {
       title: 'Contact Support',
       subtitle: 'Get help from our team',
       icon: 'mail-outline',
-      action: () => {},
+      action: () => { },
     },
     {
       id: 2,
       title: 'Report a Bug',
       subtitle: 'Let us know about issues',
       icon: 'bug-outline',
-      action: () => {},
+      action: () => { },
     },
     {
       id: 3,
       title: 'Feature Request',
       subtitle: 'Suggest new features',
       icon: 'bulb-outline',
-      action: () => {},
+      action: () => { },
     },
     {
       id: 4,
       title: 'Rate the App',
       subtitle: 'Leave a review',
       icon: 'star-outline',
-      action: () => {},
+      action: () => { },
     },
   ];
 
@@ -116,7 +117,7 @@ const HelpPage = () => {
   );
 
   const FaqItem = ({ faq }: { faq: any }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       className="bg-card p-4 border-b border-border"
       onPress={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
     >
@@ -124,10 +125,10 @@ const HelpPage = () => {
         <Text className="text-base font-medium text-foreground flex-1 pr-4">
           {faq.question}
         </Text>
-        <Ionicons 
-          name={expandedFaq === faq.id ? 'chevron-up' : 'chevron-down'} 
-          size={20} 
-          color="#9ca3af" 
+        <Ionicons
+          name={expandedFaq === faq.id ? 'chevron-up' : 'chevron-down'}
+          size={20}
+          color="#9ca3af"
         />
       </View>
       {expandedFaq === faq.id && (
@@ -139,7 +140,7 @@ const HelpPage = () => {
   );
 
   const QuickActionItem = ({ action }: { action: any }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       className="flex-row items-center p-4 bg-card"
       onPress={action.action}
     >
@@ -154,30 +155,27 @@ const HelpPage = () => {
     </TouchableOpacity>
   );
 
-  const filteredFaqs = faqs.filter(faq => 
+  const filteredFaqs = faqs.filter(faq =>
     faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
     faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
+
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Help & Support")} />
 
       <ScrollView className="flex-1">
         {/* Search Bar */}
-        <View className="mx-4 mt-6">
-          <View className="flex-row items-center bg-card rounded-2xl px-4 py-3">
-            <Ionicons name="search-outline" size={20} color="#9ca3af" />
-            <TextInput
-              className="flex-1 ml-3 text-base text-foreground"
-              placeholder="Search for help..."
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              placeholderTextColor="#9ca3af"
-            />
-          </View>
-        </View>
+       
+
+        <Input 
+          LeftIcon={() => (<Ionicons name="search-outline" size={20} color="#9ca3af" />)} 
+          placeholder="Search for help..."
+          value={searchQuery}
+          className='mx-4 mt-6 px-4 py-3'
+          onChangeText={setSearchQuery} />
 
         {/* Help Categories */}
         <View className="mx-4 mt-8">

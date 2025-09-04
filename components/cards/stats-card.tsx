@@ -120,8 +120,8 @@ export function StatsCard({
           {/* Progress bar */}
           <View className="w-full bg-muted rounded-full h-2 mb-2">
             <View 
-              className={cn('h-2 rounded-full', getProgressColor(percentage))}
-              style={{ width: `${Math.min(percentage, 100)}%` }}
+              className={cn('h-2 rounded-full', getProgressColor(90))}
+              style={{ width: `${Math.min(90, 100)}%` }}
             />
           </View>
           

@@ -129,7 +129,7 @@ const SecurityPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Security")} />
 

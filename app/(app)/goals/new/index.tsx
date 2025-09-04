@@ -11,13 +11,13 @@ const AddGoal = (props: Props) => {
   const { showForm } = useModal();
 
   const handleAddHabit = () => {
+    console.log("add habit")
     showForm({
       title: 'Add Habit',
       formComponent: HabitForm,
       side: 'bottom',
-      align: 'center',
-      alignOffset: 0,
-      sideOffset: 0,
+      // alignOffset: 0,
+      // sideOffset: 0,
     });
   };
   return (

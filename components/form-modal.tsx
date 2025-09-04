@@ -4,6 +4,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -12,9 +13,11 @@ import { useModal } from '@/components/providers/modal-provider';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export function FormModal() {
   const { ModalState, hideModal } = useModal();
+    const insets = useSafeAreaInsets();
 
   const handleConfirm = async () => {
     if (ModalState.onConfirm) {
@@ -39,13 +42,15 @@ export function FormModal() {
   return (
     <Dialog  open={ModalState.isOpen} onOpenChange={(open) => !open && hideModal()}>
       <DialogContent
+        className='bg-gray-950 h-screen'
     // @ts-ignore
         align={ModalState.align}
         sideOffset={ModalState.sideOffset}
         alignOffset={ModalState.alignOffset}
         side={ModalState.side}
+        insets = {insets}
       >
-        <DialogHeader className='border-b border-muted-foreground'>
+        <DialogHeader className='border-b-[0.5px] border-gray:200 dark:border-orange-100'>
           <DialogTitle className='text-center mb-6'>{ModalState.title}</DialogTitle>
         </DialogHeader>
         

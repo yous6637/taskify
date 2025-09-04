@@ -125,6 +125,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
     sideOffset?: number;
   }): Promise<any> => {
     return new Promise((resolve, reject) => {
+      console.log({...config})
       setModalState({
         isOpen: true,
         title: config.title,

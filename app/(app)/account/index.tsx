@@ -116,7 +116,7 @@ const AccountPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
       <Header {...HeaderConfigs.basic("Account")} />
 
@@ -160,7 +160,7 @@ const AccountPage = () => {
         </View>
 
         {/* User Profile */}
-        <View className="bg-card mx-4 rounded-2xl p-4 mb-6">
+        <View className="bg-gray-950 mx-4 rounded-2xl p-4 mb-6">
           <View className="flex-row items-center">
             {/* Profile Image Placeholder */}
             <View className="w-16 h-16 bg-muted rounded-full mr-4 overflow-hidden">

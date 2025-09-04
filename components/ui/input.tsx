@@ -33,7 +33,7 @@ function Input({ className, placeholderClassName, LeftIcon, RightIcon, ...props 
         </View>
       )}
       <TextInput
-        className={cn('flex focus-visible:border-none w-full border-none min-w-0 flex-row items-center', placeholderClassName)}
+        className={cn('flex placeholder:text-muted-foreground text-foreground focus-visible:border-none w-full border-none min-w-0 flex-row items-center', placeholderClassName)}
         {...props}
       />
       {RightIcon && (
