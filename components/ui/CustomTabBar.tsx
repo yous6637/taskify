@@ -22,8 +22,8 @@ const tabLabels = {
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
-    <View className="flex-row native:mb-10  border-t border-gray-200  px-4 py-2">
-      {state.routes.map((route, index) => {
+    <View className="flex-row native:mb-10  border-t border-gray-200 dark:border-gray-700  px-4 py-2">
+      {state.routes.filter(n => n.key !== "clerk").map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const routeName = route.name as keyof typeof tabIcons;

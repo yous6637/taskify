@@ -87,7 +87,7 @@ const SubscriptionPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1">
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Subscription")} />
 
@@ -97,7 +97,7 @@ const SubscriptionPage = () => {
           <Text className="text-lg font-semibold text-gray-900 mb-4">
             Current Subscription
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className="rounded-2xl p-4">
             <View className="flex-row items-center justify-between mb-3">
               <View>
                 <Text className="text-xl font-bold text-gray-900">{currentPlan.name}</Text>
@@ -108,8 +108,8 @@ const SubscriptionPage = () => {
               </View>
             </View>
             
-            <View className="border-t border-gray-200 pt-3">
-              <Text className="text-sm text-gray-600 mb-2">Next billing date:</Text>
+            <View className="border-t border pt-3">
+              <Text className="text-sm text-card-foreground mb-2">Next billing date:</Text>
               <Text className="text-base font-medium text-gray-900">{currentPlan.nextBilling}</Text>
             </View>
             

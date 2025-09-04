@@ -145,7 +145,7 @@ const HomePage = () => {
     <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       <CalendarProvider date= {new Date().toDateString()}>
       {/* Header */}
-      <Header {...HeaderConfigs.basic("Home")} className="h-20" />
+      <Header {...HeaderConfigs.basic("Home")} />
 
         {/* Calendar */}
         <View className="px-4 mb-4 overflow-hidden">

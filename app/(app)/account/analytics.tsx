@@ -82,19 +82,19 @@ const AnalyticsPage = () => {
   ];
 
   const StatCard = ({ stat }: { stat: any }) => (
-    <View className="bg-white rounded-2xl p-4 flex-1 mx-1">
+    <View className="rounded-2xl p-4 flex-1 mx-1">
       <View className={`w-12 h-12 ${stat.color} rounded-full items-center justify-center mb-3`}>
         <Ionicons name={stat.icon} size={24} color={stat.iconColor} />
       </View>
-      <Text className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</Text>
-      <Text className="text-sm text-gray-600 mb-2">{stat.title}</Text>
+      <Text className="text-2xl font-bold text-foreground mb-1">{stat.value}</Text>
+      <Text className="text-sm text-muted-foreground mb-2">{stat.title}</Text>
       <View className="flex-row items-center">
         <Text className={`text-sm font-medium ${
           stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
         }`}>
           {stat.change}
         </Text>
-        <Text className="text-xs text-gray-500 ml-1">vs last {selectedPeriod}</Text>
+        <Text className="text-xs text-muted-foreground ml-1">vs last {selectedPeriod}</Text>
       </View>
     </View>
   );
@@ -137,17 +137,12 @@ const AnalyticsPage = () => {
   return (
     <SafeAreaView className="flex-1">
       {/* Header */}
-      <View className="flex-row items-center px-4 py-3 bg-white border-b border-gray-200">
-        <TouchableOpacity onPress={() => router.back()} className="mr-4">
-          <Ionicons name="arrow-back" size={24} color="#374151" />
-        </TouchableOpacity>
-        <Text className="text-xl font-semibold text-gray-900">Analytics</Text>
-      </View>
+      <Header {...HeaderConfigs.withBackButton("Analytics")} />
 
       <ScrollView className="flex-1">
         {/* Period Selector */}
         <View className="mx-4 mt-6">
-          <View className="flex-row bg-white rounded-2xl p-1">
+          <View className="flex-row  rounded-2xl p-1">
             {periods.map((period) => (
               <TouchableOpacity
                 key={period.id}
@@ -183,7 +178,7 @@ const AnalyticsPage = () => {
           <Text className="text-lg font-semibold text-gray-900 mb-4">
             Daily Activity
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className=" rounded-2xl p-4">
             <View className="flex-row items-end justify-between" style={{ height: 140 }}>
               {activityData.map((data, index) => (
                 <ActivityBar key={index} data={data} />
@@ -207,7 +202,7 @@ const AnalyticsPage = () => {
           <Text className="text-lg font-semibold text-gray-900 mb-4">
             Category Breakdown
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className=" rounded-2xl p-4">
             {categories.map((category, index) => (
               <CategoryBar key={index} category={category} />
             ))}
@@ -219,7 +214,7 @@ const AnalyticsPage = () => {
           <Text className="text-lg font-semibold text-gray-900 mb-4">
             Insights
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className=" rounded-2xl p-4">
             <View className="flex-row items-start mb-4">
               <View className="w-8 h-8 bg-blue-100 rounded-full items-center justify-center mr-3">
                 <Ionicons name="bulb-outline" size={16} color="#3b82f6" />
