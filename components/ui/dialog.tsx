@@ -67,6 +67,7 @@ function DialogContent({
             }),
             className
           )}
+          
           {...props}>
           <>{children}</>
           <DialogPrimitive.Close

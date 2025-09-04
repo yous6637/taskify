@@ -13,8 +13,10 @@ interface ModalState {
   onConfirm?: () => void | Promise<void>;
   onCancel?: () => void;
   variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+  side?: 'top' | 'bottom';
+  align?: 'start' | 'center' | 'end';
+  alignOffset?: number;
+  sideOffset?: number;
   // Form-specific properties
   formComponent?: React.ComponentType<FormComponentProps>;
   onFormSubmit?: (data: any) => void | Promise<void>;
@@ -31,9 +33,10 @@ interface ModalContextType {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-
+    side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    sideOffset?: number;
   }) => Promise<boolean>;
   showForm: (config: {
     title: string;
@@ -41,8 +44,10 @@ interface ModalContextType {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+    side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    sideOffset?: number;
   }) => Promise<any>;
 }
 
@@ -60,8 +65,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
     confirmText: 'Confirm',
     cancelText: 'Cancel',
     variant: 'default',
-    side: 'default',
-    type: 'default',
+    side: 'bottom',
     isFormModal: false,
   });
 
@@ -76,7 +80,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
   };
 
   const hideModal = () => {
-    setModalState(prev => ({
+    setModalState((prev) => ({
       ...prev,
       isOpen: false,
     }));
@@ -87,12 +91,14 @@ export function ModalProvider({ children }: ModalProviderProps) {
     description: string;
     confirmText?: string;
     cancelText?: string;
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+    side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    sideOffset?: number;
     variant?: 'default' | 'destructive';
   }): Promise<boolean> => {
     return new Promise((resolve) => {
-      console.log({ config })
+      console.log({ config });
       showModal({
         ...config,
         onConfirm: () => {
@@ -113,8 +119,10 @@ export function ModalProvider({ children }: ModalProviderProps) {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+    side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    sideOffset?: number;
   }): Promise<any> => {
     return new Promise((resolve, reject) => {
       setModalState({
@@ -124,8 +132,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
         confirmText: config.confirmText || 'Submit',
         cancelText: config.cancelText || 'Cancel',
         variant: config.variant || 'default',
-        side: config.side || 'default',
-        type: config.type || 'default',
+        side: config.side,
         isFormModal: true,
         formComponent: config.formComponent,
         onFormSubmit: (data: any) => {
@@ -148,11 +155,13 @@ export function ModalProvider({ children }: ModalProviderProps) {
     showForm,
   };
 
-  return (
-    <ModalContext.Provider value={contextValue}>
-      {children}
-    </ModalContext.Provider>
-  );
+  // Set global functions for easy access
+  React.useEffect(() => {
+    setGlobalConfirmModal(confirmModal);
+    setGlobalShowForm(showForm);
+  }, [confirmModal, showForm]);
+
+  return <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>;
 }
 
 export function useModal() {
@@ -164,26 +173,33 @@ export function useModal() {
 }
 
 // Utility functions for easy access to Modal functions from anywhere in the app
-let globalConfirmModal: ((config: {
-  title: string;
-  description: string;
-  confirmText?: string;
-  cancelText?: string;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+let globalConfirmModal:
+  | ((config: {
+      title: string;
+      description: string;
+      confirmText?: string;
+      cancelText?: string;
+      variant?: 'default' | 'destructive';
+      side?: 'top' | 'bottom';
+      align?: 'start' | 'center' | 'end';
+      alignOffset?: number;
+      sideOffset?: number;
+    }) => Promise<boolean>)
+  | null = null;
 
-}) => Promise<boolean>) | null = null;
-
-let globalShowForm: ((config: {
-  title: string;
-  formComponent: React.ComponentType<FormComponentProps>;
-  confirmText?: string;
-  cancelText?: string;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-}) => Promise<any>) | null = null;
+let globalShowForm:
+  | ((config: {
+      title: string;
+      formComponent: React.ComponentType<FormComponentProps>;
+      confirmText?: string;
+      cancelText?: string;
+      variant?: 'default' | 'destructive';
+      side?: 'top' | 'bottom';
+      align?: 'start' | 'center' | 'end';
+      alignOffset?: number;
+      sideOffset?: number;
+    }) => Promise<any>)
+  | null = null;
 
 export function setGlobalConfirmModal(
   confirmModalFn: (config: {
@@ -192,9 +208,10 @@ export function setGlobalConfirmModal(
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-
+    side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    sideOffset?: number;
   }) => Promise<boolean>
 ) {
   globalConfirmModal = confirmModalFn;
@@ -207,8 +224,10 @@ export function setGlobalShowForm(
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+    side?: 'top' | 'bottom';
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    sideOffset?: number;
   }) => Promise<any>
 ) {
   globalShowForm = showFormFn;
@@ -220,12 +239,15 @@ export function confirmModal(config: {
   confirmText?: string;
   cancelText?: string;
   variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-
+  side?: 'top' | 'bottom';
+  align?: 'start' | 'center' | 'end';
+  alignOffset?: number;
+  sideOffset?: number;
 }): Promise<boolean> {
   if (!globalConfirmModal) {
-    throw new Error('ModalProvider not initialized. Make sure to wrap your app with ModalProvider.');
+    throw new Error(
+      'ModalProvider not initialized. Make sure to wrap your app with ModalProvider.'
+    );
   }
   return globalConfirmModal(config);
 }
@@ -236,11 +258,15 @@ export function showForm(config: {
   confirmText?: string;
   cancelText?: string;
   variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+  side?: 'top' | 'bottom';
+  align?: 'start' | 'center' | 'end';
+  alignOffset?: number;
+  sideOffset?: number;
 }): Promise<any> {
   if (!globalShowForm) {
-    throw new Error('ModalProvider not initialized. Make sure to wrap your app with ModalProvider.');
+    throw new Error(
+      'ModalProvider not initialized. Make sure to wrap your app with ModalProvider.'
+    );
   }
   return globalShowForm(config);
 }
