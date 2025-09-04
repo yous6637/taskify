@@ -32,48 +32,38 @@ export function ConfirmDialog() {
     hideDialog();
   };
 
-  const handleFormSubmit = async (data: any) => {
-    if (dialogState.onFormSubmit) {
-      await dialogState.onFormSubmit(data);
-    }
-  };
+ 
 
   return (
     <AlertDialog open={dialogState.isOpen} onOpenChange={(open) => !open && hideDialog()}>
       <AlertDialogContent
-        className={dialogVariants({
-          side: dialogState.side,
-          type: dialogState.type
-        })}
+        
       >
         <AlertDialogHeader className='border-b border-muted-foreground'>
           <AlertDialogTitle className='text-center mb-6'>{dialogState.title}</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogBody>
-          {dialogState.isFormDialog && dialogState.formComponent ? (
-            // Render the form component
-            <dialogState.formComponent onSubmit={handleFormSubmit} />
-          ) : (
+         
             // Render the regular dialog description
             <AlertDialogDescription>
               {dialogState.description}
             </AlertDialogDescription>
-          )}
+          
         </AlertDialogBody>
-        {!dialogState.isFormDialog && (
+        
           <AlertDialogFooter className='flex-row gap-3 justify-center'>
             <AlertDialogCancel buttonVariant={{ variant: "secondary", size: "lg" }} onPress={handleCancel}>
               <Text>{dialogState.cancelText}</Text>
             </AlertDialogCancel>
             <AlertDialogAction
               onPress={handleConfirm}
-              buttonVariant={{ variant: dialogState.variant, size: "lg" }}
+              buttonVariant={{  size: "lg" }}
               className={"rounded-xl"}
             >
               <Text>{dialogState.confirmText}</Text>
             </AlertDialogAction>
           </AlertDialogFooter>
-        )}
+        
       </AlertDialogContent>
     </AlertDialog>
   );
@@ -169,21 +159,15 @@ export interface DialogState {
   title: string;
   description: string;
   confirmText: string;
+
   cancelText: string;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
   onConfirm?: () => void | Promise<void>;
-  onCancel?: () => void;
 }
 
 // Utility function to create dialog configurations
 export const createDialogConfig = (config: Partial<DialogState>): Partial<DialogState> => ({
   confirmText: 'Confirm',
   cancelText: 'Cancel',
-  variant: 'default',
-  side: 'default',
-  type: 'default',
   ...config,
 });
 
@@ -193,27 +177,8 @@ export const dialogConfigs = {
     title: 'Delete Item',
     description: 'Are you sure you want to delete this item? This action cannot be undone.',
     confirmText: 'Delete',
-    variant: 'destructive',
-    type: 'modal',
   }),
 
-  bottomSheetAction: createDialogConfig({
-    type: 'bottomSheet',
-    confirmText: 'Continue',
-  }),
-
-  sidePanel: createDialogConfig({
-    type: 'rightSheet',
-    confirmText: 'Save',
-  }),
-
-  fullScreenEdit: createDialogConfig({
-    type: 'fullScreen',
-    confirmText: 'Save Changes',
-  }),
-
-  quickPopover: createDialogConfig({
-    type: 'popover',
-    confirmText: 'OK',
-  }),
+ 
+  
 };

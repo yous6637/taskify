@@ -12,13 +12,7 @@ interface DialogState {
   cancelText?: string;
   onConfirm?: () => void | Promise<void>;
   onCancel?: () => void;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-  // Form-specific properties
-  formComponent?: React.ComponentType<FormComponentProps>;
-  onFormSubmit?: (data: any) => void | Promise<void>;
-  isFormDialog?: boolean;
+  
 }
 
 interface DialogContextType {
@@ -59,10 +53,7 @@ export function DialogProvider({ children }: DialogProviderProps) {
     description: '',
     confirmText: 'Confirm',
     cancelText: 'Cancel',
-    variant: 'default',
-    side: 'default',
-    type: 'default',
-    isFormDialog: false,
+    
   });
 
   const showDialog = (config: Omit<DialogState, 'isOpen'>) => {
@@ -71,7 +62,6 @@ export function DialogProvider({ children }: DialogProviderProps) {
       isOpen: true,
       confirmText: config.confirmText || 'Confirm',
       cancelText: config.cancelText || 'Cancel',
-      variant: config.variant || 'default',
     });
   };
 
@@ -87,9 +77,6 @@ export function DialogProvider({ children }: DialogProviderProps) {
     description: string;
     confirmText?: string;
     cancelText?: string;
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-    variant?: 'default' | 'destructive';
   }): Promise<boolean> => {
     return new Promise((resolve) => {
       console.log({ config })
@@ -123,19 +110,7 @@ export function DialogProvider({ children }: DialogProviderProps) {
         description: '', // Not used for form dialogs
         confirmText: config.confirmText || 'Submit',
         cancelText: config.cancelText || 'Cancel',
-        variant: config.variant || 'default',
-        side: config.side || 'default',
-        type: config.type || 'default',
-        isFormDialog: true,
-        formComponent: config.formComponent,
-        onFormSubmit: (data: any) => {
-          hideDialog();
-          resolve(data);
-        },
-        onCancel: () => {
-          hideDialog();
-          reject(new Error('Form cancelled'));
-        },
+        
       });
     });
   };
@@ -169,21 +144,9 @@ let globalConfirmDialog: ((config: {
   description: string;
   confirmText?: string;
   cancelText?: string;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-
+  
 }) => Promise<boolean>) | null = null;
 
-let globalShowForm: ((config: {
-  title: string;
-  formComponent: React.ComponentType<FormComponentProps>;
-  confirmText?: string;
-  cancelText?: string;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-}) => Promise<any>) | null = null;
 
 export function setGlobalConfirmDialog(
   confirmDialogFn: (config: {
@@ -191,28 +154,13 @@ export function setGlobalConfirmDialog(
     description: string;
     confirmText?: string;
     cancelText?: string;
-    variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-
+    
   }) => Promise<boolean>
 ) {
   globalConfirmDialog = confirmDialogFn;
 }
 
-export function setGlobalShowForm(
-  showFormFn: (config: {
-    title: string;
-    formComponent: React.ComponentType<FormComponentProps>;
-    confirmText?: string;
-    cancelText?: string;
-    variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-  }) => Promise<any>
-) {
-  globalShowForm = showFormFn;
-}
+
 
 export function confirmDialog(config: {
   title: string;
@@ -220,8 +168,7 @@ export function confirmDialog(config: {
   confirmText?: string;
   cancelText?: string;
   variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
+  
 
 }): Promise<boolean> {
   if (!globalConfirmDialog) {
@@ -230,17 +177,4 @@ export function confirmDialog(config: {
   return globalConfirmDialog(config);
 }
 
-export function showForm(config: {
-  title: string;
-  formComponent: React.ComponentType<FormComponentProps>;
-  confirmText?: string;
-  cancelText?: string;
-  variant?: 'default' | 'destructive';
-  side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-  type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
-}): Promise<any> {
-  if (!globalShowForm) {
-    throw new Error('DialogProvider not initialized. Make sure to wrap your app with DialogProvider.');
-  }
-  return globalShowForm(config);
-}
+
