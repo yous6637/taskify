@@ -88,7 +88,7 @@ const AccountPage = () => {
 
   const MenuItem = ({ item }: { item: any }) => (
     <TouchableOpacity 
-      className="flex-row items-center py-4 px-4 bg-white"
+      className="flex-row items-center py-4 px-4 bg-card"
       onPress={() => {
         if (item.route) {
           router.push(`/account/${item.route}`);
@@ -101,22 +101,22 @@ const AccountPage = () => {
         <Ionicons 
           name={item.icon} 
           size={24} 
-          color={item.isLogout ? "#ef4444" : "#374151"} 
+          color={item.isLogout ? "#ef4444" : "#6b7280"} 
         />
       </View>
       <Text className={`flex-1 text-base font-medium ${
-        item.isLogout ? 'text-red-500' : 'text-gray-900'
+        item.isLogout ? 'text-red-500' : 'text-foreground'
       }`}>
         {item.title}
       </Text>
       {item.hasArrow && (
-        <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+        <Ionicons name="chevron-forward" size={20} color="#6b7280" />
       )}
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-background">
       {/* Header */}
       <Header {...HeaderConfigs.basic("Account")} />
 
@@ -160,10 +160,10 @@ const AccountPage = () => {
         </View>
 
         {/* User Profile */}
-        <View className="bg-white mx-4 rounded-2xl p-4 mb-6">
+        <View className="bg-card mx-4 rounded-2xl p-4 mb-6">
           <View className="flex-row items-center">
             {/* Profile Image Placeholder */}
-            <View className="w-16 h-16 bg-gray-300 rounded-full mr-4 overflow-hidden">
+            <View className="w-16 h-16 bg-muted rounded-full mr-4 overflow-hidden">
               {/* You can replace this with actual image */}
               <View className="w-full h-full bg-gradient-to-br from-orange-400 to-red-400 items-center justify-center">
                 <Text className="text-white text-xl font-bold">A</Text>
@@ -171,29 +171,29 @@ const AccountPage = () => {
             </View>
             
             <View className="flex-1">
-              <Text className="text-xl font-semibold text-gray-900 mb-1">
+              <Text className="text-xl font-semibold text-foreground mb-1">
                 Andrew Ainsley
               </Text>
-              <Text className="text-gray-500">
+              <Text className="text-muted-foreground">
                 andrew.ainsley@yourdomain.com
               </Text>
             </View>
             
             <TouchableOpacity>
-              <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+              <Ionicons name="chevron-forward" size={20} color="#6b7280" />
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Statistics */}
-        <View className="bg-white mx-4 rounded-2xl p-4 mb-6">
+        <View className="bg-card mx-4 rounded-2xl p-4 mb-6">
           <View className="flex-row justify-between">
             {userStats.map((stat, index) => (
               <View key={index} className="flex-1 items-center">
-                <Text className="text-2xl font-bold text-gray-900 mb-1">
+                <Text className="text-2xl font-bold text-foreground mb-1">
                   {stat.value}
                 </Text>
-                <Text className="text-gray-500 text-sm text-center">
+                <Text className="text-muted-foreground text-sm text-center">
                   {stat.label}
                 </Text>
               </View>
@@ -202,12 +202,12 @@ const AccountPage = () => {
         </View>
 
         {/* Menu Items */}
-        <View className="bg-white mx-4 rounded-2xl overflow-hidden mb-6">
+        <View className="bg-card mx-4 rounded-2xl overflow-hidden mb-6">
           {menuItems.map((item, index) => (
             <View key={item.id}>
               <MenuItem item={item} />
               {index < menuItems.length - 1 && (
-                <View className="border-b border-gray-100 ml-14" />
+                <View className="border-b border-border ml-14" />
               )}
             </View>
           ))}

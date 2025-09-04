@@ -32,6 +32,12 @@ export function ConfirmDialog() {
     hideDialog();
   };
 
+  const handleFormSubmit = async (data: any) => {
+    if (dialogState.onFormSubmit) {
+      await dialogState.onFormSubmit(data);
+    }
+  };
+
   return (
     <AlertDialog open={dialogState.isOpen} onOpenChange={(open) => !open && hideDialog()}>
       <AlertDialogContent
@@ -44,23 +50,30 @@ export function ConfirmDialog() {
           <AlertDialogTitle className='text-center mb-6'>{dialogState.title}</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogBody>
-
-          <AlertDialogDescription>
-            {dialogState.description}
-          </AlertDialogDescription>
+          {dialogState.isFormDialog && dialogState.formComponent ? (
+            // Render the form component
+            <dialogState.formComponent onSubmit={handleFormSubmit} />
+          ) : (
+            // Render the regular dialog description
+            <AlertDialogDescription>
+              {dialogState.description}
+            </AlertDialogDescription>
+          )}
         </AlertDialogBody>
-        <AlertDialogFooter className='flex-row gap-3 justify-center'>
-          <AlertDialogCancel buttonVariant={{ variant: "secondary", size: "lg" }} onPress={handleCancel}>
-            <Text>{dialogState.cancelText}</Text>
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onPress={handleConfirm}
-            buttonVariant={{ variant: dialogState.variant, size: "lg" }}
-            className={"rounded-xl"}
-          >
-            <Text>{dialogState.confirmText}</Text>
-          </AlertDialogAction>
-        </AlertDialogFooter>
+        {!dialogState.isFormDialog && (
+          <AlertDialogFooter className='flex-row gap-3 justify-center'>
+            <AlertDialogCancel buttonVariant={{ variant: "secondary", size: "lg" }} onPress={handleCancel}>
+              <Text>{dialogState.cancelText}</Text>
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onPress={handleConfirm}
+              buttonVariant={{ variant: dialogState.variant, size: "lg" }}
+              className={"rounded-xl"}
+            >
+              <Text>{dialogState.confirmText}</Text>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        )}
       </AlertDialogContent>
     </AlertDialog>
   );

@@ -51,12 +51,12 @@ const SubscriptionPage = () => {
   ];
 
   const PlanCard = ({ plan }: { plan: any }) => (
-    <View className={`p-4 rounded-2xl mb-4 ${plan.isCurrent ? 'bg-orange-50 border-2 border-orange-500' : 'bg-white border border-gray-200'}`}>
+    <View className={`p-4 rounded-2xl mb-4 ${plan.isCurrent ? 'bg-orange-50 border-2 border-orange-500' : 'bg-card border border-border'}`}>
       <View className="flex-row items-center justify-between mb-3">
-        <Text className={`text-xl font-bold ${plan.isCurrent ? 'text-orange-500' : 'text-gray-900'}`}>
+        <Text className={`text-xl font-bold ${plan.isCurrent ? 'text-orange-500' : 'text-foreground'}`}>
           {plan.name}
         </Text>
-        <Text className={`text-lg font-semibold ${plan.isCurrent ? 'text-orange-500' : 'text-gray-900'}`}>
+        <Text className={`text-lg font-semibold ${plan.isCurrent ? 'text-orange-500' : 'text-foreground'}`}>
           {plan.price}
         </Text>
       </View>
@@ -71,7 +71,7 @@ const SubscriptionPage = () => {
         {plan.features.map((feature: string, index: number) => (
           <View key={index} className="flex-row items-center mb-2">
             <Ionicons name="checkmark-circle" size={16} color="#10b981" />
-            <Text className="text-gray-700 ml-2">{feature}</Text>
+            <Text className="text-muted-foreground ml-2">{feature}</Text>
           </View>
         ))}
       </View>
@@ -87,20 +87,20 @@ const SubscriptionPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Subscription")} />
 
       <ScrollView className="flex-1">
         {/* Current Subscription */}
         <View className="mx-4 mt-6">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Current Subscription
           </Text>
-          <View className="rounded-2xl p-4">
+          <View className="bg-card rounded-2xl p-4">
             <View className="flex-row items-center justify-between mb-3">
               <View>
-                <Text className="text-xl font-bold text-gray-900">{currentPlan.name}</Text>
+                <Text className="text-xl font-bold text-foreground">{currentPlan.name}</Text>
                 <Text className="text-orange-500 font-semibold">{currentPlan.price}</Text>
               </View>
               <View className="bg-green-100 px-3 py-1 rounded-full">
@@ -108,9 +108,9 @@ const SubscriptionPage = () => {
               </View>
             </View>
             
-            <View className="border-t border pt-3">
-              <Text className="text-sm text-card-foreground mb-2">Next billing date:</Text>
-              <Text className="text-base font-medium text-gray-900">{currentPlan.nextBilling}</Text>
+            <View className="border-t border-border pt-3">
+              <Text className="text-sm text-muted-foreground mb-2">Next billing date:</Text>
+              <Text className="text-base font-medium text-foreground">{currentPlan.nextBilling}</Text>
             </View>
             
             <TouchableOpacity className="mt-4 bg-red-50 border border-red-200 py-3 rounded-xl">
@@ -121,7 +121,7 @@ const SubscriptionPage = () => {
 
         {/* Available Plans */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Available Plans
           </Text>
           {availablePlans.map((plan) => (
@@ -131,20 +131,20 @@ const SubscriptionPage = () => {
 
         {/* Billing Information */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Billing Information
           </Text>
-          <View className="bg-white rounded-2xl p-4">
-            <TouchableOpacity className="flex-row items-center justify-between py-3 border-b border-gray-100">
-              <Text className="text-base text-gray-900">Payment Method</Text>
+          <View className="bg-card rounded-2xl p-4">
+            <TouchableOpacity className="flex-row items-center justify-between py-3 border-b border-border">
+              <Text className="text-base text-foreground">Payment Method</Text>
               <View className="flex-row items-center">
-                <Text className="text-gray-500 mr-2">Visa ••••4242</Text>
-                <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+                <Text className="text-muted-foreground mr-2">Visa ••••4242</Text>
+                <Ionicons name="chevron-forward" size={20} color="#6b7280" />
               </View>
             </TouchableOpacity>
             <TouchableOpacity className="flex-row items-center justify-between py-3">
-              <Text className="text-base text-gray-900">Billing History</Text>
-              <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+              <Text className="text-base text-foreground">Billing History</Text>
+              <Ionicons name="chevron-forward" size={20} color="#6b7280" />
             </TouchableOpacity>
           </View>
         </View>
