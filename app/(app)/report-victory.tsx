@@ -9,9 +9,6 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Header, HeaderConfigs } from '@/components/ui/header';
-// Victory Native XL implementation
-// Note: Install with: npm install victory-native-xl
-// For now using enhanced custom charts with Victory Native XL styling
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -67,7 +64,7 @@ const ReportPage = () => {
     const barWidth = (screenWidth - 80) / data.length - 8;
 
     return (
-      <View className=" rounded-2xl p-4 mb-6 shadow-sm">
+      <View className="bg-white rounded-2xl p-4 mb-6 shadow-sm">
         <View className="flex-row items-end justify-between mb-4" style={{ height: chartHeight }}>
           {data.map((item: any, index: number) => {
             const barHeight = (item.value / maxValue) * (chartHeight - 20);
@@ -77,7 +74,7 @@ const ReportPage = () => {
               <View key={index} className="items-center">
                 <View className="flex-1 justify-end mb-2" style={{ height: chartHeight - 20 }}>
                   {isHighlighted && (
-                    <View className="absolute -top-8  rounded-full border-2 border-orange-500 px-2 py-1 z-10 shadow-sm">
+                    <View className="absolute -top-8 bg-white rounded-full border-2 border-orange-500 px-2 py-1 z-10 shadow-sm">
                       <Text className="text-orange-500 font-bold text-sm">{item.value}{showPercentage ? '%' : ''}</Text>
                     </View>
                   )}
@@ -115,7 +112,7 @@ const ReportPage = () => {
     }));
 
     return (
-      <View className=" rounded-2xl p-4 mb-6 shadow-sm">
+      <View className="bg-white rounded-2xl p-4 mb-6 shadow-sm">
         <View className="relative" style={{ height: chartHeight }}>
           {/* Background area with gradient effect */}
           <View className="absolute inset-0">
@@ -158,7 +155,7 @@ const ReportPage = () => {
                 className={`absolute w-4 h-4 rounded-full border-2 ${
                   point.highlighted 
                     ? 'bg-orange-500 border-white' 
-                    : ' border-orange-500'
+                    : 'bg-white border-orange-500'
                 }`}
                 style={{
                   left: point.x - 8,
@@ -169,7 +166,7 @@ const ReportPage = () => {
               {/* Highlighted value */}
               {point.highlighted && (
                 <View 
-                  className="absolute  rounded-full border-2 border-orange-500 px-2 py-1 shadow-sm"
+                  className="absolute bg-white rounded-full border-2 border-orange-500 px-2 py-1 shadow-sm"
                   style={{
                     left: point.x - 15,
                     top: point.y - 35,
@@ -205,7 +202,7 @@ const ReportPage = () => {
     const total = pieData.reduce((sum, item) => sum + item.y, 0);
 
     return (
-      <View className=" rounded-2xl p-4 mb-6 shadow-sm">
+      <View className="bg-white rounded-2xl p-4 mb-6 shadow-sm">
         <Text className="text-lg font-semibold text-gray-900 mb-4 text-center">Overview</Text>
         <View className="items-center justify-center mb-4" style={{ height: 200 }}>
           {/* Simple pie chart representation */}
@@ -231,9 +228,9 @@ const ReportPage = () => {
   };
 
   const ChartModeToggle = ({ color }: { color: string }) => (
-    <View className="flex-row bg-gray-100 dark:bg-gray-800 rounded-lg p-1 ml-auto">
+    <View className="flex-row bg-gray-100 rounded-lg p-1 ml-auto">
       <TouchableOpacity
-        className={`p-2 rounded ${chartMode === 'bar' ? color.replace('bg-', 'bg-').replace('-200', '-500') : 'bg-transparent'}`}
+        className={`p-2 rounded ${chartMode === 'bar' ? 'bg-orange-500' : 'bg-transparent'}`}
         onPress={() => setChartMode('bar')}
       >
         <Ionicons 
@@ -243,7 +240,7 @@ const ReportPage = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        className={`p-2 rounded ${chartMode === 'line' ? color.replace('bg-', 'bg-').replace('-200', '-500') : 'bg-transparent'}`}
+        className={`p-2 rounded ${chartMode === 'line' ? 'bg-orange-500' : 'bg-transparent'}`}
         onPress={() => setChartMode('line')}
       >
         <Ionicons 
@@ -263,7 +260,7 @@ const ReportPage = () => {
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Period Selector */}
         <View className="mx-4 mt-6">
-          <View className="flex-row  rounded-2xl p-1">
+          <View className="flex-row bg-white rounded-2xl p-1 shadow-sm">
             {periods.map((period) => (
               <TouchableOpacity
                 key={period.id}
