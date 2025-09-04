@@ -137,12 +137,7 @@ const AnalyticsPage = () => {
   return (
     <SafeAreaView className="flex-1 bg-background">
       {/* Header */}
-      <View className="flex-row items-center px-4 py-3 bg-card border-b border-border">
-        <TouchableOpacity onPress={() => router.back()} className="mr-4">
-          <Ionicons name="arrow-back" size={24} color="#6b7280" />
-        </TouchableOpacity>
-        <Text className="text-xl font-semibold text-foreground">Analytics</Text>
-      </View>
+      <Header {...HeaderConfigs.withBackButton("Analytics")} />
 
       <ScrollView className="flex-1">
         {/* Period Selector */}
@@ -183,7 +178,7 @@ const AnalyticsPage = () => {
           <Text className="text-lg font-semibold text-foreground mb-4">
             Daily Activity
           </Text>
-          <View className="bg-card rounded-2xl p-4">
+          <View className=" rounded-2xl p-4">
             <View className="flex-row items-end justify-between" style={{ height: 140 }}>
               {activityData.map((data, index) => (
                 <ActivityBar key={index} data={data} />

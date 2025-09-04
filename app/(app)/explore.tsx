@@ -67,29 +67,8 @@ const ExplorePage = () => {
   return (
     <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
-      <View className="flex-row justify-between items-center px-4 py-2 bg-white">
-        {isSearchMode ? (
-          <View className="flex-row items-center flex-1">
-            <TouchableOpacity onPress={() => setIsSearchMode(false)} className="mr-3">
-              <Ionicons name="arrow-back" size={24} color="gray" />
-            </TouchableOpacity>
-            <View className="flex-row items-center flex-1 bg-gray-100 rounded-lg px-3 py-2">
-              <Ionicons name="search" size={20} color="#f97316" />
-              <Text className="ml-2 text-orange-500">|</Text>
-            </View>
-          </View>
-        ) : (
-          <>
-            <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
-              <View className="w-4 h-4 border-2 border-white transform rotate-45" />
-            </View>
-            <Text className="text-xl font-semibold text-gray-900">Explore</Text>
-            <TouchableOpacity onPress={() => setIsSearchMode(true)}>
-              <Ionicons name="search-outline" size={24} color="gray" />
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
+
+      <Header isSearchMode = {isSearchMode} setIsSearchMode={setIsSearchMode} {...HeaderConfigs.withSearch("Explore")}  />
 
       <ScrollView className="flex-1">
         {isSearchMode ? (
@@ -163,21 +142,21 @@ const ExplorePage = () => {
                 {/* Content */}
                 <View className="flex-row">
                   <View className="flex-1 pr-4">
-                    <Text className="text-white text-2xl font-bold mb-2">
+                    <Text className="text-foreground text-2xl font-bold mb-2">
                       Explore thousands of amazing goals today!
                     </Text>
-                    <Text className="text-white opacity-90 text-base">
+                    <Text className="text-foreground opacity-90 text-base">
                       Make your dreams come true with the power of AI
                     </Text>
                   </View>
                   
                   {/* Illustration placeholder */}
                   <View className="w-24 h-24 items-center justify-center">
-                    <View className="w-16 h-20 bg-white bg-opacity-20 rounded-lg items-center justify-center mb-2">
-                      <Text className="text-white text-2xl">👨‍💼</Text>
+                    <View className="w-16 h-20  bg-opacity-20 rounded-lg items-center justify-center mb-2">
+                      <Text className="text-foreground text-2xl">👨‍💼</Text>
                     </View>
-                    <View className="w-12 h-16 bg-white bg-opacity-30 rounded-lg items-center justify-center">
-                      <Text className="text-white text-lg">💼</Text>
+                    <View className="w-12 h-16  bg-opacity-30 rounded-lg items-center justify-center">
+                      <Text className="text-foreground text-lg">💼</Text>
                     </View>
                   </View>
                 </View>
@@ -195,12 +174,12 @@ const ExplorePage = () => {
                       className={`px-6 py-3 rounded-full mr-3 ${
                         selectedCategory === category
                           ? 'bg-orange-500'
-                          : 'bg-white'
+                          : ''
                       }`}
                     >
                       <Text className={`font-medium ${
                         selectedCategory === category
-                          ? 'text-white'
+                          ? 'text-foreground'
                           : 'text-gray-600'
                       }`}>
                         {category}

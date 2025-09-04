@@ -101,7 +101,7 @@ export function GoalCard({
             size 
           })}>
             {goal.image ? (
-              <Image source={goal.image} className="w-full h-full" resizeMode="cover" />
+              <Image style = {{width: 100, height: 100, resizeMode: "contain"}}  source={goal.image} className="object-contain h-full"  />
             ) : (
               <Text className="text-2xl">{goal.illustration || '🎯'}</Text>
             )}
@@ -114,8 +114,8 @@ export function GoalCard({
                 {goal.title}
               </Text>
               {showAddButton && onAddPress && (
-                <TouchableOpacity onPress={onAddPress}>
-                  <Ionicons name="add" size={24} color="hsl(var(--primary))" />
+                <TouchableOpacity className='p-2 bg-orange-500/10 rounded-full' onPress={onAddPress}>
+                  <Ionicons color={"#ea580c"} name="add" size={20}  />
                 </TouchableOpacity>
               )}
             </View>

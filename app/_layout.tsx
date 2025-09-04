@@ -19,7 +19,15 @@ export {
 } from 'expo-router';
 
 export default function RootLayout() {
-  const { colorScheme } = useColorScheme();
+  const { colorScheme , setColorScheme} = useColorScheme();
+
+  React.useEffect(() => {
+
+    setColorScheme("dark")
+
+  },[
+    colorScheme
+  ])
 
   return (
     <ClerkProvider tokenCache={tokenCache}>

@@ -93,7 +93,7 @@ const HabitForm = ({ defaultValues, onSubmit }: Props) => {
           }}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name='reminder'
           render={({ field }) => (
@@ -101,7 +101,7 @@ const HabitForm = ({ defaultValues, onSubmit }: Props) => {
               <></>
             </FormTimePicker>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}

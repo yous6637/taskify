@@ -10,11 +10,14 @@ import { useRouter } from 'expo-router';
 import { Header, HeaderConfigs } from '@/components/ui/header';
 import { GoalCard, GoalCardConfigs } from '@/components/cards';
 import { Text } from '@/components/ui/text';
+import { cn } from '@/lib/utils';
+import { useColorScheme } from 'nativewind';
 
 const MyGoalsPage = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('Ongoing');
-
+  const { colorScheme } = useColorScheme()
+  const isDarkMode = colorScheme === "dark"
   const ongoingGoals = [
     {
       id: 1,
@@ -73,41 +76,38 @@ const MyGoalsPage = () => {
     <SafeAreaView className="flex-1 h-screen native:pt-10 pb-0 mb-0">
       {/* Header */}
 
-      <View className="flex-row py-6 justify-between items-center px-4 bg-background">
-        <View className="w-8 h-8 bg-orange-500 rounded-lg items-center justify-center">
-          <View className="w-4 h-4 border-2 transform rotate-45" />
-        </View>
-        <Text className="text-xl font-semibold text-foreground">My Goals</Text>
-        <TouchableOpacity>
-          <Ionicons name="ellipsis-vertical" size={24} color="gray" />
-        </TouchableOpacity>
-      </View>
+      <Header {...HeaderConfigs.basic("My Goals")} />
 
       {/* Tab Navigation */}
-      <View className="px-4 py-4 bg-white">
-        <View className="flex-row bg-gray-100 rounded-full p-1">
+      <View className="px-4 py-4">
+        <View className="flex-row bg-gray-100 dark:bg-gray-900 rounded-full p-1">
           <TouchableOpacity
             onPress={() => setActiveTab('Ongoing')}
-            className={`flex-1 py-3 rounded-full ${
-              activeTab === 'Ongoing' ? 'bg-orange-500' : 'bg-transparent'
-            }`}
+            className = {cn("flex-1 py-3 rounded-full bg-transparent", {
+              "bg-orange-500": activeTab === 'Ongoing',
+            })}
           >
-            <Text className={`text-center font-medium ${
-              activeTab === 'Ongoing' ? 'text-white' : 'text-gray-600'
-            }`}>
+            <Text 
+            className = {cn("text-center font-medium text-gray-600", {
+              "text-gray-300": isDarkMode,
+              "text-white": activeTab === 'Ongoing'
+            })}
+            >
               Ongoing
             </Text>
           </TouchableOpacity>
           
           <TouchableOpacity
             onPress={() => setActiveTab('Achieved')}
-            className={`flex-1 py-3 rounded-full ${
-              activeTab === 'Achieved' ? 'bg-orange-500' : 'bg-transparent'
-            }`}
+            className = {cn("flex-1 py-3 rounded-full bg-transparent", {
+              "bg-orange-500": activeTab === 'Achieved',
+            })}
+            
           >
-            <Text className={`text-center font-medium ${
-              activeTab === 'Achieved' ? 'text-white' : 'text-gray-600'
-            }`}>
+            <Text className = {cn("text-center font-medium text-gray-600", {
+              "text-gray-300": isDarkMode,
+              "text-white": activeTab === 'Achieved'
+            })}>
               Achieved
             </Text>
           </TouchableOpacity>

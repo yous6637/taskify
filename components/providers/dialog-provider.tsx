@@ -25,8 +25,6 @@ interface DialogContextType {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
 
   }) => Promise<boolean>;
   showForm: (config: {
@@ -35,8 +33,6 @@ interface DialogContextType {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
   }) => Promise<any>;
 }
 
@@ -100,8 +96,6 @@ export function DialogProvider({ children }: DialogProviderProps) {
     confirmText?: string;
     cancelText?: string;
     variant?: 'default' | 'destructive';
-    side?: 'default' | 'top' | 'bottom' | 'left' | 'right';
-    type?: 'default' | 'bottomSheet' | 'leftSheet' | 'rightSheet' | 'fullScreen' | 'modal' | 'popover';
   }): Promise<any> => {
     return new Promise((resolve, reject) => {
       setDialogState({

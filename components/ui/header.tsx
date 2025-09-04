@@ -4,11 +4,15 @@ import { Text } from '@/components/ui/text';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import { cn, zodResolver } from '@/lib/utils';
+import { Form, FormField, FormInput } from './form';
+import { useForm } from 'react-hook-form';
+import z from 'zod';
+import { useColorScheme } from 'nativewind';
 
 const headerVariants = cva(
   // Base classes
-  'px-4 py-2 bg-white',
+  'px-4 py-2 h-20',
   {
     variants: {
       variant: {
@@ -73,6 +77,13 @@ export function Header({
   ...props
 }: HeaderProps) {
   const router = useRouter();
+  const searchForm = useForm({
+    resolver: zodResolver(z.object({ search: z.string().optional() }))
+  })
+
+  const { colorScheme } = useColorScheme()
+
+  const isDarkMode = colorScheme === "dark"
 
   const handleBackPress = () => {
     if (onBackPress) {
@@ -95,24 +106,28 @@ export function Header({
   );
 
   const renderSearchMode = () => (
-    <View className="flex-row items-center flex-1">
-      <TouchableOpacity onPress={() => setIsSearchMode?.(false)} className="mr-3">
-        <Ionicons name="arrow-back" size={24} color="#374151" />
-      </TouchableOpacity>
-      <View className="flex-1 h-10 bg-gray-100 rounded-lg flex-row items-center px-3">
-        <Ionicons name="search" size={20} color="#9CA3AF" />
-        <TextInput
-          placeholder={searchPlaceholder}
-          value={searchValue}
-          onChangeText={onSearchChange}
-          className="flex-1 ml-2 text-gray-900"
-          autoFocus
-        />
+    <Form {...searchForm}>
+      <View className="flex-row w-full items-center flex-1">
+        <FormField control={searchForm.control} name='search' render={({ field }) => (
+          <FormInput
+            LeftIcon={() => (
+              <TouchableOpacity onPress={() => setIsSearchMode?.(false)} className="mr-3">
+                <Ionicons name="arrow-back" size={24} color="#374151" />
+              </TouchableOpacity>
+            )}
+            RightIcon={() => (
+              <TouchableOpacity onPress={() => setIsSearchMode?.(false)} className="ml-3">
+                <Text className="text-orange-500 font-medium">Cancel</Text>
+              </TouchableOpacity>
+            )}
+            {...field}
+          />
+        )} />
+
+
+
       </View>
-      <TouchableOpacity onPress={() => setIsSearchMode?.(false)} className="ml-3">
-        <Text className="text-orange-500 font-medium">Cancel</Text>
-      </TouchableOpacity>
-    </View>
+    </Form>
   );
 
   // Image background variant (for goal details)
@@ -126,10 +141,10 @@ export function Header({
         >
           {/* Gradient overlay */}
           <View className="absolute inset-0 bg-gradient-to-b from-purple-600/60 to-pink-500/60" />
-          
+
           {/* Header controls */}
           <View className="flex-row justify-between items-center px-4 pt-4">
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={handleBackPress}
               className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
             >
@@ -158,14 +173,18 @@ export function Header({
           <View className="flex-row items-center">
             {showBackButton && (
               <TouchableOpacity onPress={handleBackPress} className="mr-4">
-                <Ionicons name="arrow-back" size={24} color="#374151" />
+                <Ionicons name="arrow-back" size={24} color={isDarkMode ? "white" : "#374151"} />
               </TouchableOpacity>
             )}
             {showLogo && renderLogo()}
             {leftIcon}
+
+          </View>
+
+          <View className='flex-1'>
             {title && (
               <Text className={cn(
-                'text-xl font-semibold text-gray-900',
+                'text-xl font-semibold text-center',
                 showBackButton && 'ml-0',
                 showLogo && 'ml-0'
               )}>

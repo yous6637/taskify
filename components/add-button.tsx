@@ -59,7 +59,6 @@ export function AddButton() {
       subtitle: 'Let AI create personalized goals for you',
       icon: 'sparkles',
       onPress: () => {
-        router.push('/goals/new');
 
         closeModal();
         // Handle AI-made goals navigation
@@ -83,6 +82,8 @@ export function AddButton() {
       subtitle: 'Create your own custom goals',
       icon: 'person',
       onPress: () => {
+        router.push('/goals/new');
+
         closeModal();
         // Handle self-made goals navigation
         console.log('Self-made Goals selected');
