@@ -107,21 +107,21 @@ const HelpPage = () => {
   ];
 
   const CategoryCard = ({ category }: { category: any }) => (
-    <TouchableOpacity className="bg-white rounded-2xl p-4 flex-1 mx-1">
+    <TouchableOpacity className="bg-card rounded-2xl p-4 flex-1 mx-1">
       <View className={`w-12 h-12 ${category.color} rounded-full items-center justify-center mb-3`}>
         <Ionicons name={category.icon} size={24} color={category.iconColor} />
       </View>
-      <Text className="text-base font-medium text-gray-900">{category.title}</Text>
+      <Text className="text-base font-medium text-foreground">{category.title}</Text>
     </TouchableOpacity>
   );
 
   const FaqItem = ({ faq }: { faq: any }) => (
     <TouchableOpacity 
-      className="bg-white p-4 border-b border-gray-100"
+      className="bg-card p-4 border-b border-border"
       onPress={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
     >
       <View className="flex-row items-center justify-between">
-        <Text className="text-base font-medium text-gray-900 flex-1 pr-4">
+        <Text className="text-base font-medium text-foreground flex-1 pr-4">
           {faq.question}
         </Text>
         <Ionicons 
@@ -131,7 +131,7 @@ const HelpPage = () => {
         />
       </View>
       {expandedFaq === faq.id && (
-        <Text className="text-gray-600 mt-3 leading-6">
+        <Text className="text-muted-foreground mt-3 leading-6">
           {faq.answer}
         </Text>
       )}
@@ -140,17 +140,17 @@ const HelpPage = () => {
 
   const QuickActionItem = ({ action }: { action: any }) => (
     <TouchableOpacity 
-      className="flex-row items-center p-4 bg-white"
+      className="flex-row items-center p-4 bg-card"
       onPress={action.action}
     >
       <View className="w-10 h-10 items-center justify-center mr-4">
-        <Ionicons name={action.icon} size={24} color="#374151" />
+        <Ionicons name={action.icon} size={24} color="#6b7280" />
       </View>
       <View className="flex-1">
-        <Text className="text-base font-medium text-gray-900">{action.title}</Text>
-        <Text className="text-sm text-gray-500 mt-1">{action.subtitle}</Text>
+        <Text className="text-base font-medium text-foreground">{action.title}</Text>
+        <Text className="text-sm text-muted-foreground mt-1">{action.subtitle}</Text>
       </View>
-      <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+      <Ionicons name="chevron-forward" size={20} color="#6b7280" />
     </TouchableOpacity>
   );
 
@@ -160,17 +160,17 @@ const HelpPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-background">
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Help & Support")} />
 
       <ScrollView className="flex-1">
         {/* Search Bar */}
         <View className="mx-4 mt-6">
-          <View className="flex-row items-center bg-white rounded-2xl px-4 py-3">
+          <View className="flex-row items-center bg-card rounded-2xl px-4 py-3">
             <Ionicons name="search-outline" size={20} color="#9ca3af" />
             <TextInput
-              className="flex-1 ml-3 text-base text-gray-900"
+              className="flex-1 ml-3 text-base text-foreground"
               placeholder="Search for help..."
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -181,7 +181,7 @@ const HelpPage = () => {
 
         {/* Help Categories */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Browse by Category
           </Text>
           <View className="flex-row mb-4">
@@ -196,10 +196,10 @@ const HelpPage = () => {
 
         {/* FAQs */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Frequently Asked Questions
           </Text>
-          <View className="bg-white rounded-2xl overflow-hidden">
+          <View className="bg-card rounded-2xl overflow-hidden">
             {filteredFaqs.map((faq, index) => (
               <View key={faq.id}>
                 <FaqItem faq={faq} />
@@ -210,15 +210,15 @@ const HelpPage = () => {
 
         {/* Quick Actions */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Need More Help?
           </Text>
-          <View className="bg-white rounded-2xl overflow-hidden">
+          <View className="bg-card rounded-2xl overflow-hidden">
             {quickActions.map((action, index) => (
               <View key={action.id}>
                 <QuickActionItem action={action} />
                 {index < quickActions.length - 1 && (
-                  <View className="border-b border-gray-100 ml-14" />
+                  <View className="border-b border-border ml-14" />
                 )}
               </View>
             ))}
@@ -227,42 +227,42 @@ const HelpPage = () => {
 
         {/* Contact Information */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Contact Information
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className="bg-card rounded-2xl p-4">
             <View className="flex-row items-center mb-4">
               <Ionicons name="mail-outline" size={20} color="#374151" />
-              <Text className="text-gray-900 ml-3">support@taskify.com</Text>
+              <Text className="text-foreground ml-3">support@taskify.com</Text>
             </View>
             <View className="flex-row items-center mb-4">
               <Ionicons name="time-outline" size={20} color="#374151" />
-              <Text className="text-gray-900 ml-3">Response time: 24-48 hours</Text>
+              <Text className="text-foreground ml-3">Response time: 24-48 hours</Text>
             </View>
             <View className="flex-row items-center">
               <Ionicons name="globe-outline" size={20} color="#374151" />
-              <Text className="text-gray-900 ml-3">www.taskify.com/help</Text>
+              <Text className="text-foreground ml-3">www.taskify.com/help</Text>
             </View>
           </View>
         </View>
 
         {/* App Information */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             App Information
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className="bg-card rounded-2xl p-4">
             <View className="flex-row items-center justify-between py-2">
-              <Text className="text-gray-600">Version</Text>
-              <Text className="text-gray-900 font-medium">2.1.0</Text>
+              <Text className="text-muted-foreground">Version</Text>
+              <Text className="text-foreground font-medium">2.1.0</Text>
             </View>
             <View className="flex-row items-center justify-between py-2">
-              <Text className="text-gray-600">Build</Text>
-              <Text className="text-gray-900 font-medium">2024.01.15</Text>
+              <Text className="text-muted-foreground">Build</Text>
+              <Text className="text-foreground font-medium">2024.01.15</Text>
             </View>
             <View className="flex-row items-center justify-between py-2">
-              <Text className="text-gray-600">Platform</Text>
-              <Text className="text-gray-900 font-medium">React Native</Text>
+              <Text className="text-muted-foreground">Platform</Text>
+              <Text className="text-foreground font-medium">React Native</Text>
             </View>
           </View>
         </View>

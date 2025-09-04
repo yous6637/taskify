@@ -81,16 +81,16 @@ const SecurityPage = () => {
 
   const SecurityOption = ({ item }: { item: any }) => (
     <TouchableOpacity 
-      className="flex-row items-center p-4 bg-white"
+      className="flex-row items-center p-4 bg-card"
       onPress={item.hasSwitch ? undefined : item.onPress}
       disabled={item.hasSwitch}
     >
       <View className="w-10 h-10 items-center justify-center mr-4">
-        <Ionicons name={item.icon} size={24} color="#374151" />
+        <Ionicons name={item.icon} size={24} color="#6b7280" />
       </View>
       <View className="flex-1">
-        <Text className="text-base font-medium text-gray-900">{item.title}</Text>
-        <Text className="text-sm text-gray-500 mt-1">{item.subtitle}</Text>
+        <Text className="text-base font-medium text-foreground">{item.title}</Text>
+        <Text className="text-sm text-muted-foreground mt-1">{item.subtitle}</Text>
       </View>
       {item.hasSwitch ? (
         <Switch
@@ -100,19 +100,19 @@ const SecurityPage = () => {
           thumbColor={item.value ? '#ea580c' : '#f3f4f6'}
         />
       ) : (
-        <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+        <Ionicons name="chevron-forward" size={20} color="#6b7280" />
       )}
     </TouchableOpacity>
   );
 
   const LinkedAccount = ({ account }: { account: any }) => (
-    <View className="flex-row items-center p-4 bg-white">
+    <View className="flex-row items-center p-4 bg-card">
       <View className="w-10 h-10 items-center justify-center mr-4">
-        <Ionicons name={account.icon} size={24} color="#374151" />
+        <Ionicons name={account.icon} size={24} color="#6b7280" />
       </View>
       <View className="flex-1">
-        <Text className="text-base font-medium text-gray-900">{account.name}</Text>
-        <Text className="text-sm text-gray-500 mt-1">{account.email}</Text>
+        <Text className="text-base font-medium text-foreground">{account.name}</Text>
+        <Text className="text-sm text-muted-foreground mt-1">{account.email}</Text>
       </View>
       <TouchableOpacity 
         className={`px-4 py-2 rounded-lg ${
@@ -129,22 +129,22 @@ const SecurityPage = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-background">
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Security")} />
 
       <ScrollView className="flex-1">
         {/* Security Settings */}
         <View className="mt-6 mx-4">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Security Settings
           </Text>
-          <View className="bg-white rounded-2xl overflow-hidden">
+          <View className="bg-card rounded-2xl overflow-hidden">
             {securityOptions.map((item, index) => (
               <View key={item.id}>
                 <SecurityOption item={item} />
                 {index < securityOptions.length - 1 && (
-                  <View className="border-b border-gray-100 ml-14" />
+                  <View className="border-b border-border ml-14" />
                 )}
               </View>
             ))}
@@ -153,23 +153,23 @@ const SecurityPage = () => {
 
         {/* Account Security Status */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Security Status
           </Text>
-          <View className="bg-white rounded-2xl p-4">
+          <View className="bg-card rounded-2xl p-4">
             <View className="flex-row items-center mb-3">
               <View className="w-12 h-12 bg-green-100 rounded-full items-center justify-center mr-4">
                 <Ionicons name="shield-checkmark" size={24} color="#10b981" />
               </View>
               <View className="flex-1">
-                <Text className="text-base font-semibold text-gray-900">Good Security</Text>
-                <Text className="text-sm text-gray-500">Your account is well protected</Text>
+                <Text className="text-base font-semibold text-foreground">Good Security</Text>
+                <Text className="text-sm text-muted-foreground">Your account is well protected</Text>
               </View>
             </View>
             
-            <View className="bg-gray-50 rounded-xl p-3 mt-3">
-              <Text className="text-sm text-gray-600 mb-2">Security Score: 8/10</Text>
-              <View className="bg-gray-200 rounded-full h-2">
+            <View className="bg-muted rounded-xl p-3 mt-3">
+              <Text className="text-sm text-muted-foreground mb-2">Security Score: 8/10</Text>
+              <View className="bg-muted rounded-full h-2">
                 <View className="bg-green-500 rounded-full h-2" style={{ width: '80%' }} />
               </View>
             </View>
@@ -178,15 +178,15 @@ const SecurityPage = () => {
 
         {/* Linked Accounts */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Linked Accounts
           </Text>
-          <View className="bg-white rounded-2xl overflow-hidden">
+          <View className="bg-card rounded-2xl overflow-hidden">
             {linkedAccounts.map((account, index) => (
               <View key={account.id}>
                 <LinkedAccount account={account} />
                 {index < linkedAccounts.length - 1 && (
-                  <View className="border-b border-gray-100 ml-14" />
+                  <View className="border-b border-border ml-14" />
                 )}
               </View>
             ))}
@@ -195,14 +195,14 @@ const SecurityPage = () => {
 
         {/* Recent Activity */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Recent Security Activity
           </Text>
-          <View className="bg-white rounded-2xl p-4">
-            <View className="flex-row items-center justify-between py-3 border-b border-gray-100">
+          <View className="bg-card rounded-2xl p-4">
+            <View className="flex-row items-center justify-between py-3 border-b border-border">
               <View className="flex-1">
-                <Text className="text-base font-medium text-gray-900">Password changed</Text>
-                <Text className="text-sm text-gray-500">2 days ago</Text>
+                <Text className="text-base font-medium text-foreground">Password changed</Text>
+                <Text className="text-sm text-muted-foreground">2 days ago</Text>
               </View>
               <View className="bg-green-100 px-2 py-1 rounded-full">
                 <Text className="text-green-800 text-xs">Success</Text>
@@ -210,8 +210,8 @@ const SecurityPage = () => {
             </View>
             <View className="flex-row items-center justify-between py-3">
               <View className="flex-1">
-                <Text className="text-base font-medium text-gray-900">New device login</Text>
-                <Text className="text-sm text-gray-500">1 week ago</Text>
+                <Text className="text-base font-medium text-foreground">New device login</Text>
+                <Text className="text-sm text-muted-foreground">1 week ago</Text>
               </View>
               <View className="bg-blue-100 px-2 py-1 rounded-full">
                 <Text className="text-blue-800 text-xs">Verified</Text>

@@ -38,34 +38,34 @@ const PaymentPage = () => {
   ];
 
   const PaymentMethodItem = ({ item }: { item: any }) => (
-    <TouchableOpacity className="flex-row items-center p-4 bg-white border-b border-gray-100">
+    <TouchableOpacity className="flex-row items-center p-4 bg-card border-b border-border">
       <View className="w-10 h-10 items-center justify-center mr-4">
-        <Ionicons name={item.icon} size={24} color="#374151" />
+        <Ionicons name={item.icon} size={24} color="#6b7280" />
       </View>
       <View className="flex-1">
-        <Text className="text-base font-medium text-gray-900">{item.name}</Text>
+        <Text className="text-base font-medium text-foreground">{item.name}</Text>
         {item.isDefault && (
           <Text className="text-sm text-orange-500 mt-1">Default</Text>
         )}
       </View>
       <TouchableOpacity>
-        <Ionicons name="ellipsis-vertical" size={20} color="#9ca3af" />
+        <Ionicons name="ellipsis-vertical" size={20} color="#6b7280" />
       </TouchableOpacity>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-background">
       {/* Header */}
       <Header {...HeaderConfigs.withBackButton("Payment Methods")} />
 
       <ScrollView className="flex-1">
         {/* Payment Methods */}
         <View className="mt-6 mx-4">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Your Payment Methods
           </Text>
-          <View className="bg-white rounded-2xl overflow-hidden">
+          <View className="bg-card rounded-2xl overflow-hidden">
             {paymentMethods.map((item, index) => (
               <View key={item.id}>
                 <PaymentMethodItem item={item} />
@@ -86,23 +86,23 @@ const PaymentPage = () => {
 
         {/* Payment History */}
         <View className="mx-4 mt-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4">
+          <Text className="text-lg font-semibold text-foreground mb-4">
             Recent Transactions
           </Text>
-          <View className="bg-white rounded-2xl p-4">
-            <View className="flex-row items-center justify-between py-3 border-b border-gray-100">
+          <View className="bg-card rounded-2xl p-4">
+            <View className="flex-row items-center justify-between py-3 border-b border-border">
               <View>
-                <Text className="text-base font-medium text-gray-900">Pro Subscription</Text>
-                <Text className="text-sm text-gray-500">Dec 15, 2023</Text>
+                <Text className="text-base font-medium text-foreground">Pro Subscription</Text>
+                <Text className="text-sm text-muted-foreground">Dec 15, 2023</Text>
               </View>
-              <Text className="text-base font-semibold text-gray-900">$9.99</Text>
+              <Text className="text-base font-semibold text-foreground">$9.99</Text>
             </View>
             <View className="flex-row items-center justify-between py-3">
               <View>
-                <Text className="text-base font-medium text-gray-900">Premium Features</Text>
-                <Text className="text-sm text-gray-500">Nov 15, 2023</Text>
+                <Text className="text-base font-medium text-foreground">Premium Features</Text>
+                <Text className="text-sm text-muted-foreground">Nov 15, 2023</Text>
               </View>
-              <Text className="text-base font-semibold text-gray-900">$4.99</Text>
+              <Text className="text-base font-semibold text-foreground">$4.99</Text>
             </View>
           </View>
         </View>
