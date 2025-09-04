@@ -52,7 +52,7 @@ export function ConfirmDialog() {
         <AlertDialogBody>
           {dialogState.isFormDialog && dialogState.formComponent ? (
             // Render the form component
-            <dialogState.formComponent onSubmit={handleFormSubmit} />
+          <dialogState.formComponent onSubmit={handleFormSubmit} />
           ) : (
             // Render the regular dialog description
             <AlertDialogDescription>
