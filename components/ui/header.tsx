@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { View, TouchableOpacity, ImageBackground, TextInput } from 'react-native';
+import { View, TouchableOpacity, ImageBackground, TextInput, useWindowDimensions } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -85,6 +85,8 @@ export function Header({
 
   const isDarkMode = colorScheme === "dark"
 
+  const { width } = useWindowDimensions()
+
   const handleBackPress = () => {
     if (onBackPress) {
       onBackPress();
@@ -107,9 +109,9 @@ export function Header({
 
   const renderSearchMode = () => (
     <Form {...searchForm}>
-      <View className="flex-row w-full items-center flex-1">
+      <View className="flex-row w-[calc(100vw_-60px)] w-20px items-center flex-1">
         <FormField control={searchForm.control} name='search' render={({ field }) => (
-          <FormInput
+          <FormInput style={{width: width/1.8}} 
             LeftIcon={() => (
               <TouchableOpacity onPress={() => setIsSearchMode?.(false)} className="mr-3">
                 <Ionicons name="arrow-back" size={24} color="#374151" />

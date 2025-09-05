@@ -83,7 +83,7 @@ const MyGoalsPage = () => {
           <TabsList className="bg-gray-100 dark:bg-gray-900 rounded-full p-1">
             <TabsTrigger 
               value="Ongoing" 
-              className="flex-1 py-3 rounded-full bg-transparent data-[state=active]:bg-orange-500"
+              className="flex-1 py-3 rounded-full"
             >
               <Text className="text-center font-medium text-gray-600 dark:text-gray-300 data-[state=active]:text-white">
                 Ongoing
@@ -91,7 +91,7 @@ const MyGoalsPage = () => {
             </TabsTrigger>
             <TabsTrigger 
               value="Achieved" 
-              className="flex-1 py-3 rounded-full bg-transparent data-[state=active]:bg-orange-500"
+              className="flex-1 py-3 rounded-full"
             >
               <Text className="text-center font-medium text-gray-600 dark:text-gray-300 data-[state=active]:text-white">
                 Achieved

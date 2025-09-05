@@ -120,7 +120,7 @@ export function AddButton() {
         onPress={openModal}
         activeOpacity={0.8}
       >
-        <Ionicons name="add" size={28} color={colorScheme === 'dark' ? '#000000' : '#ffffff'} />
+        <Ionicons name="add" size={28} color={'#ffffff'} />
       </TouchableOpacity>
 
       {/* Modal */}
@@ -150,7 +150,7 @@ export function AddButton() {
             transform: [{ translateY: slideAnim }],
           }}
         >
-          <View className="bg-background rounded-t-3xl px-6 pt-6 pb-8">
+          <View className=" bg-white dark:bg-gray-950 rounded-t-3xl px-6 pt-6 pb-8">
             {/* Handle bar */}
             <View className="w-12 h-1 bg-muted-foreground rounded-full self-center mb-6" />
             
@@ -163,12 +163,12 @@ export function AddButton() {
                 onPress={closeModal}
                 className="w-8 h-8 bg-primary rounded-full items-center justify-center"
               >
-                <Ionicons name="close" size={20} color={colorScheme === 'dark' ? '#000000' : '#ffffff'} />
+                <Ionicons name="close" size={20} color={'#ffffff'} />
               </TouchableOpacity>
             </View>
 
             {/* Options */}
-            <View className="bg-card rounded-2xl overflow-hidden border border-border">
+            <View className="bg-card rounded-2xl overflow-hidden ">
               {goalOptions.map((option, index) => (
                 <View key={option.id}>
                   <OptionItem option={option} />

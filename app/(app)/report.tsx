@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Header, HeaderConfigs } from '@/components/ui/header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { buttonTextVariants } from '@/components/ui/button';
 // Victory Native XL implementation
 // Note: Install with: npm install victory-native-xl
 // For now using enhanced custom charts with Victory Native XL styling
@@ -267,8 +268,8 @@ const ReportPage = () => {
           <Tabs value={selectedPeriod} onValueChange={setSelectedPeriod} className="w-full">
             <TabsList className="bg-card dark:bg-card border border-border dark:border-border">
               {periods.map((period) => (
-                <TabsTrigger key={period.id} value={period.id} className="flex-1">
-                  {period.label}
+                <TabsTrigger key={period.id} value={period.id} className="flex-1 border-none">
+                  <Text className={buttonTextVariants({})}> {period.label} </Text>
                 </TabsTrigger>
               ))}
             </TabsList>

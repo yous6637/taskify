@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView,  } from 'react-native';
 import { ChevronDown } from 'lucide-react-native';
+import { useColorScheme } from 'nativewind';
 
 const WeekCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [weekDates, setWeekDates] = useState([]);
-
+  const { colorScheme } = useColorScheme()
   // Days of the week
   const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 

@@ -18,7 +18,7 @@ function TabsList({
   return (
     <TabsPrimitive.List
       className={cn(
-        'bg-muted flex h-9 flex-row items-center justify-center rounded-lg p-[3px]',
+        'bg-muted flex flex-row items-center justify-center rounded-lg p-[3px]',
         Platform.select({ web: 'inline-flex w-fit', native: 'mr-auto' }),
         className
       )}
@@ -33,6 +33,8 @@ function TabsTrigger({
   ...props
 }: TabsPrimitive.TriggerProps & React.RefAttributes<TabsPrimitive.TriggerRef>) {
   const { value } = TabsPrimitive.useRootContext();
+
+
   return (
     <TextClassContext.Provider
       value={cn(
@@ -44,8 +46,9 @@ function TabsTrigger({
         asChild
         {...props}
       >
-        <Button variant={props.value === value ? 'default' : 'outline'} {...props}> 
-          {props.children instanceof Function ? props.children({pressed: false}) : props.children}
+        <Button className={cn( "border-0 border-none" , className)} variant={props.value === value ? 'default' : 'outline'} {...props}> 
+          {/* @ts-ignore */}
+          {props.children instanceof Function ? props.children({pressed: ref?.current?.pressed, hovered: ref?.current?.hovered}) : props.children}
           </Button>
       </TabsPrimitive.Trigger>
     </TextClassContext.Provider>

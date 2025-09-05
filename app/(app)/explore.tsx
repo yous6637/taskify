@@ -76,15 +76,15 @@ const ExplorePage = () => {
             {/* Recent Searches */}
             <View className="px-4 py-4">
               <View className="flex-row justify-between items-center mb-4">
-                <Text className="text-lg font-semibold text-gray-900">Recent Searches</Text>
+                <Text className="text-lg font-semibold">Recent Searches</Text>
                 <TouchableOpacity>
                   <Ionicons name="close" size={20} color="gray" />
                 </TouchableOpacity>
               </View>
               
               {recentSearches.map((search, index) => (
-                <View key={index} className="flex-row justify-between items-center py-3 border-b border-gray-100">
-                  <Text className="text-gray-600 flex-1">{search}</Text>
+                <View key={index} className="flex-row justify-between items-center py-3 border-b border-muted">
+                  <Text className="text-muted-foreground flex-1">{search}</Text>
                   <TouchableOpacity onPress={() => removeRecentSearch(index)}>
                     <Ionicons name="close" size={20} color="gray" />
                   </TouchableOpacity>
@@ -95,7 +95,7 @@ const ExplorePage = () => {
             {/* Popular Goals Section */}
             <View className="px-4 mt-4">
               <View className="flex-row justify-between items-center mb-4">
-                <Text className="text-lg font-semibold text-gray-900">Popular Goals</Text>
+                <Text className="text-lg font-semibold">Popular Goals</Text>
                 <TouchableOpacity className="flex-row items-center">
                   <Text className="text-orange-500 font-medium mr-1">View All</Text>
                   <Ionicons name="arrow-forward" size={16} color="#f97316" />
@@ -180,7 +180,7 @@ const ExplorePage = () => {
                       <Text className={`font-medium ${
                         selectedCategory === category
                           ? 'text-foreground'
-                          : 'text-gray-600'
+                          : 'text-muted-foreground'
                       }`}>
                         {category}
                       </Text>

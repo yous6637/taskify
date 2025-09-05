@@ -14,6 +14,7 @@ import { DialogProvider } from '@/components/providers/dialog-provider';
 import { DialogInitializer } from '@/components/providers/dialog-initializer';
 import { ModalProvider } from '@/components/providers/modal-provider';
 import { ModalInitializer } from '@/components/providers/modal-initializer';
+import { resourceCache } from '@clerk/clerk-expo/resource-cache'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -32,7 +33,7 @@ export default function RootLayout() {
   ])
 
   return (
-    <ClerkProvider tokenCache={tokenCache}>
+    <ClerkProvider tokenCache={tokenCache} __experimental_resourceCache={resourceCache}>
       <DialogProvider>
         <ModalProvider>
         <ThemeProvider  value={NAV_THEME[colorScheme ?? 'light']}>
