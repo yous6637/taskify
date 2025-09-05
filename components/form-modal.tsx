@@ -43,12 +43,9 @@ export function FormModal() {
     <Dialog  open={ModalState.isOpen} onOpenChange={(open) => !open && hideModal()}>
       <DialogContent
         className='bg-gray-950 h-screen'
-    // @ts-ignore
-        align={ModalState.align}
-        sideOffset={ModalState.sideOffset}
-        alignOffset={ModalState.alignOffset}
-        side={ModalState.side}
-        insets = {insets}
+        size={ModalState.size}
+        sheet={ModalState.sheet}
+        modal={ModalState.modal}
       >
         <DialogHeader className='border-b-[0.5px] border-gray:200 dark:border-orange-100'>
           <DialogTitle className='text-center mb-6'>{ModalState.title}</DialogTitle>
@@ -75,7 +72,6 @@ export function FormModal() {
               <Text>{ModalState.cancelText}</Text>
             </Button>
             <Button
-              variant={ModalState.variant === 'destructive' ? 'destructive' : 'default'}
               size="lg"
               onPress={handleConfirm}
               className="flex-1 rounded-xl"

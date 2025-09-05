@@ -22,6 +22,7 @@ import { Text } from '../text';
 import type { Override } from './types';
 import { Noop } from 'react-hook-form';
 import { useColorScheme } from 'nativewind';
+import { Input } from '../input';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -40,9 +41,9 @@ type FormItemProps<T extends React.ElementType<any>, U> = Override<
 };
 
 const FormDatePicker = React.forwardRef<
-  React.ComponentRef<typeof Button>,
-  FormItemProps<typeof Calendar, string> & ButtonChildrenProps
->(({ label, description, value, onChange, ...props }, ref) => {
+  React.ComponentRef<typeof Input>,
+  FormItemProps<typeof Calendar, string> & { placeholder?: string }
+>(({ label, description, value, onChange, placeholder = 'Pick a date', ...props }, ref) => {
   const { error, formItemNativeID, formDescriptionNativeID, formMessageNativeID } = useFormField();
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -52,8 +53,7 @@ const FormDatePicker = React.forwardRef<
       {!!label && <FormLabel nativeID={formItemNativeID}>{label}</FormLabel>}
       <BottomSheet>
         <BottomSheetOpenTrigger asChild>
-          <Button
-            variant='outline'
+          <Input
             className='flex-row gap-3 justify-start px-3 relative'
             // @ts-ignore
             ref={ref!}
@@ -64,38 +64,13 @@ const FormDatePicker = React.forwardRef<
                 : `${formDescriptionNativeID} ${formMessageNativeID}`
             }
             aria-invalid={!!error}
-          >
-            {({ pressed }: { pressed: boolean }) => (
-              <>
-                <CalendarIcon
-                  className={buttonTextVariants({
-                    variant: 'outline',
-                    className: cn(!value && 'opacity-80', pressed && 'opacity-60'),
-                  })}
-                  size={18}
-                />
-                <Text
-                  className={buttonTextVariants({
-                    variant: 'outline',
-                    className: cn('font-normal', !value && 'opacity-70', pressed && 'opacity-50'),
-                  })}
-                >
-                  {value ? (new Date(value).toDateString()) : 'Pick a date'}
-                </Text>
-                {!!value && (
-                  <Button
-                    className='absolute right-0 active:opacity-70 native:pr-3'
-                    variant='ghost'
-                    onPress={() => {
-                      onChange?.('');
-                    }}
-                  >
-                    <X size={18} className='text-muted-foreground text-xs' />
-                  </Button>
-                )}
-              </>
-            )}
-          </Button>
+            placeholder={placeholder}
+            LeftIcon={() => <CalendarIcon size={18} />}
+            RightIcon={() => <X size={18} className='text-muted-foreground text-xs' />}
+            onChangeText={onChange}
+            value={value ? (new Date(value).toDateString()) : 'Pick a date'}
+          />
+           
         </BottomSheetOpenTrigger>
         <BottomSheetContent>
           <BottomSheetView hadHeader={false} className='pt-2'>

@@ -32,24 +32,28 @@ const FormSwitch = React.forwardRef<
   const switchRef = React.useRef<React.ComponentRef<typeof Switch>>(null);
   const { error, formItemNativeID, formDescriptionNativeID, formMessageNativeID } = useFormField();
 
-  React.useImperativeHandle(
-    ref,
-    () => {
-      if (!switchRef.current) {
-        return {} as React.ComponentRef<typeof Switch>;
-      }
-      return switchRef.current;
-    },
-    [switchRef.current]
-  );
+  React.useImperativeHandle(ref, () => {
+    if (!switchRef.current) {
+      return {} as React.ComponentRef<typeof Switch>;
+    }
+    return switchRef.current;
+  }, [switchRef.current]);
 
   function handleOnLabelPress() {
     onChange?.(!value);
   }
 
   return (
-    <FormItem className='px-1'>
-      <View className='flex-row gap-3 items-center'>
+    <FormItem className="px-1">
+      <View className="flex-row justify-between gap-3">
+        <View>
+          {!!label && (
+            <FormLabel className="pb-0" nativeID={formItemNativeID} onPress={handleOnLabelPress}>
+              {label}
+            </FormLabel>
+          )}
+          {!!description && <FormDescription>{description}</FormDescription>}
+        </View>
         <Switch
           // @ts-ignore
           ref={switchRef}
@@ -64,13 +68,7 @@ const FormSwitch = React.forwardRef<
           checked={value}
           {...props}
         />
-        {!!label && (
-          <FormLabel className='pb-0' nativeID={formItemNativeID} onPress={handleOnLabelPress}>
-            {label}
-          </FormLabel>
-        )}
       </View>
-      {!!description && <FormDescription>{description}</FormDescription>}
       <FormMessage />
     </FormItem>
   );

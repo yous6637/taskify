@@ -2,6 +2,7 @@ import { Icon } from '@/components/ui/icon';
 import { NativeOnlyAnimatedView } from '@/components/ui/native-only-animated-view';
 import { cn } from '@/lib/utils';
 import * as DialogPrimitive from '@rn-primitives/dialog';
+import { cva, VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react-native';
 import * as React from 'react';
 import { Platform, Text, View, type ViewProps } from 'react-native';
@@ -24,8 +25,8 @@ function DialogOverlay({
   ...props
 }: Omit<DialogPrimitive.OverlayProps, 'asChild'> &
   React.RefAttributes<DialogPrimitive.OverlayRef> & {
-    children?: React.ReactNode;
-  }) {
+    children?: React.ReactNode} 
+  ) {
   return (
     <FullWindowOverlay>
       <DialogPrimitive.Overlay
@@ -53,7 +54,9 @@ function DialogContent({
   children,
   ...props
 }: DialogPrimitive.ContentProps &
-  React.RefAttributes<DialogPrimitive.ContentRef> & {
+  React.RefAttributes<DialogPrimitive.ContentRef>
+  & VariantProps<typeof dialogVariants>
+  & {
     portalHost?: string;
   }) {
   return (
@@ -61,7 +64,7 @@ function DialogContent({
       <DialogOverlay>
         <DialogPrimitive.Content
           className={cn(
-            'bg-background rounded-t-xl  z-100 mx-auto flex w-screen  flex-col gap-4 rounded-lg border p-6 shadow-lg shadow-black/5 ',
+            dialogVariants({  sheet: props.sheet, modal: props.modal, size: props.size }),
             Platform.select({
               web: 'animate-in fade-in-0 zoom-in-95 duration-200',
             }),
@@ -129,6 +132,68 @@ function DialogDescription({
   );
 }
 
+export type DialogVariants = VariantProps<typeof dialogVariants>;
+
+export const dialogVariants = cva(
+  // Base styles applied to all dialog variants
+  'relative z-50 max-w-lg gap-4 border border-border bg-background p-6 shadow-lg',
+  {
+    variants: {
+      
+        sheet: {
+          // Sheet variants - slide in from edges
+          bottom: 'fixed w-screen inset-x-0 bottom-0 max-w-none rounded-t-xl border-b-0',
+          left: 'fixed h-screen inset-y-0 left-0 h-full max-w-sm rounded-r-xl border-l-0',
+          right: 'fixed h-screen inset-y-0 right-0 h-full max-w-sm rounded-l-xl border-r-0',
+          top: 'fixed w-screen inset-x-0 top-0 max-w-none rounded-b-xl border-t-0',
+        },
+        modal: {
+          // Modal variants - centered or positioned
+          default: '',
+          fullScreen: 'fixed inset-0 max-w-none rounded-none border-0 p-0',
+          sidePanel: 'fixed inset-y-0 right-0 h-full max-w-md rounded-l-xl border-r-0',
+          sidePanelLeft: 'fixed inset-y-0 left-0 h-full max-w-md rounded-r-xl border-l-0',
+        }
+      ,
+      size: {
+        sm: 'max-w-sm',
+        md: 'max-w-md', 
+        lg: 'max-w-lg',
+        xl: 'max-w-xl',
+        '2xl': 'max-w-2xl',
+        '3xl': 'max-w-3xl',
+        '4xl': 'max-w-4xl',
+        '5xl': 'max-w-5xl',
+        full: 'max-w-full',
+      }
+    },
+    defaultVariants: {
+      sheet: 'bottom',
+      modal: 'default',
+      size: 'full',
+    },
+    compoundVariants: [
+      // Compound variants for specific combinations
+      {
+        sheet: 'bottom',
+        modal: 'default',
+        class: 'h-[85vh]'
+      },
+      {
+        sheet: 'top', 
+        modal: 'default',
+        class: 'h-[85vh]'
+      },
+      
+    ]
+  }
+)
+
+
+dialogVariants({
+  sheet: "bottom",
+  
+})
 
 
 export {

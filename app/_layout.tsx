@@ -1,4 +1,7 @@
 import '@/global.css';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { NAV_THEME } from '@/lib/theme';
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
@@ -14,7 +17,7 @@ import { DialogProvider } from '@/components/providers/dialog-provider';
 import { DialogInitializer } from '@/components/providers/dialog-initializer';
 import { ModalProvider } from '@/components/providers/modal-provider';
 import { ModalInitializer } from '@/components/providers/modal-initializer';
-import { resourceCache } from '@clerk/clerk-expo/resource-cache'
+import { resourceCache } from '@clerk/clerk-expo/resource-cache';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -22,29 +25,29 @@ export {
 } from 'expo-router';
 
 export default function RootLayout() {
-  const { colorScheme , setColorScheme} = useColorScheme();
+  const { colorScheme, setColorScheme } = useColorScheme();
 
   React.useEffect(() => {
-
-    setColorScheme("dark")
-
-  },[
-    colorScheme
-  ])
+    setColorScheme('dark');
+  }, [colorScheme]);
 
   return (
     <ClerkProvider tokenCache={tokenCache} __experimental_resourceCache={resourceCache}>
-      <DialogProvider>
-        <ModalProvider>
-        <ThemeProvider  value={NAV_THEME[colorScheme ?? 'light']}>
-          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-          <Routes />
-          <DialogInitializer />
-          <ModalInitializer />
-          <PortalHost />
-        </ThemeProvider>
-        </ModalProvider>
-      </DialogProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <DialogProvider>
+            <ModalProvider>
+              <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+                <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+                <Routes />
+                <DialogInitializer />
+                <ModalInitializer />
+                <PortalHost />
+              </ThemeProvider>
+            </ModalProvider>
+          </DialogProvider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </ClerkProvider>
   );
 }

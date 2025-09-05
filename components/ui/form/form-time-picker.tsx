@@ -23,6 +23,7 @@ import {
   BottomSheetCloseTrigger,
   BottomSheetView,
 } from '@/components/deprecated-ui/bottom-sheet';
+import { Input } from '../input';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -41,8 +42,8 @@ type FormItemProps<T extends React.ElementType<any>, U> = Override<
 };
 
 const FormTimePicker = React.forwardRef<
-  React.ComponentRef<typeof Button>,
-  FormItemProps<typeof Button, string> & ButtonChildrenProps & {
+  React.ComponentRef<typeof Input>,
+  FormItemProps<typeof Input, string> &  {
     mode?: 'time' | 'countdown';
     is24Hour?: boolean;
     display?: 'default' | 'spinner' | 'compact';
@@ -94,8 +95,7 @@ const FormTimePicker = React.forwardRef<
 
       <BottomSheet>
         <BottomSheetOpenTrigger asChild>
-          <Button
-            variant='outline'
+          <Input
             className='flex-row gap-3 justify-start px-3 relative'
             aria-labelledby={formItemNativeID}
             aria-describedby={
@@ -104,40 +104,13 @@ const FormTimePicker = React.forwardRef<
                 : `${formDescriptionNativeID} ${formMessageNativeID}`
             }
             aria-invalid={!!error}
+            LeftIcon={() => <Clock1Icon size={18} />}
+            RightIcon={() => <X size={18} className='text-muted-foreground text-xs' />}
+            onChangeText={onChange}
+            value={formatTime(value)}
             {...props}
-          >
-            {({ pressed }) => (
-              <>
-                <Clock1Icon
-                  className={buttonTextVariants({
-                    variant: 'outline',
-                    className: cn(!value && 'opacity-80', pressed && 'opacity-60'),
-                  })}
-                  size={18}
-                />
-                <Text
-                  className={buttonTextVariants({
-                    variant: 'outline',
-                    className: cn('font-normal', !value && 'opacity-70', pressed && 'opacity-50'),
-                  })}
-                >
-                  {formatTime(value)}
-                </Text>
-                {!!value && (
-                  <Button
-                    className='absolute right-0 active:opacity-70 native:pr-3'
-                    variant='ghost'
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      onChange?.('');
-                    }}
-                  >
-                    <X size={18} className='text-muted-foreground text-xs' />
-                  </Button>
-                )}
-              </>
-            )}
-          </Button>
+          />
+            
         </BottomSheetOpenTrigger>
 
         <BottomSheetContent backgroundStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24 }}>
@@ -149,6 +122,7 @@ const FormTimePicker = React.forwardRef<
           <BottomSheetView className='py-4'>
             <TimerPickerAny
               padWithNItems={2}
+              ref={ref}
               hourLabel={':' as any}
               minuteLabel={':' as any}
               secondLabel={'' as any}
