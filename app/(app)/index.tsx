@@ -8,7 +8,7 @@ import {
   useWindowDimensions
 
 } from 'react-native';
-import { Calendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
+import { Calendar, CalendarProvider,  } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { AddButton } from '@/components/add-button';
 import { Header, HeaderConfigs } from '@/components/ui/header';
@@ -16,6 +16,7 @@ import { TaskCard, TaskCardConfigs, StatsCard, StatsCardConfigs } from '@/compon
 import { Text } from '@/components/ui/text';
 import { useColorScheme } from 'nativewind';
 import { Button } from '@/components/ui/button';
+import WeekCalendar from '@/components/week-calendar';
 
 const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState('2024-03-22');
@@ -153,7 +154,7 @@ const HomePage = () => {
       {/* Calendar */}
       <View className="px-4 mb-4 h-28 overflow-hidden">
         <CalendarProvider style={{ flex: 1 }} date={new Date().toDateString()}>
-          <WeekCalendar
+          {/* <WeekCalendar
             current="2025-09-04"
             onDayPress={(day) => setSelectedDate(day.dateString)}
             markedDates={markedDates}
@@ -201,7 +202,8 @@ const HomePage = () => {
             showWeekNumbers={false}
             disableArrowLeft={false}
             disableArrowRight={false}
-          />
+          /> */}
+          <WeekCalendar />
           <View className='flex-row justify-center'>
             <Button variant={"ghost"}>
               <Ionicons color={isDarkMode ? "white" : "black"} name="arrow-down" size={16} />

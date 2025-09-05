@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Header, HeaderConfigs } from '@/components/ui/header';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // Victory Native XL implementation
 // Note: Install with: npm install victory-native-xl
 // For now using enhanced custom charts with Victory Native XL styling
@@ -61,13 +62,13 @@ const ReportPage = () => {
     { day: '22', value: 5, highlighted: false },
   ];
 
-  // Enhanced Bar Chart with Victory Native XL styling
+  // Enhanced Bar Chart with Victory Native XL styling and dark mode support
   const VictoryBarChart = ({ data, color, maxValue = 100, showPercentage = false }: { data: any[], color: string, maxValue?: number, showPercentage?: boolean }) => {
     const chartHeight = 120;
     const barWidth = (screenWidth - 80) / data.length - 8;
 
     return (
-      <View className=" rounded-2xl p-4 mb-6 shadow-sm">
+      <View className="bg-card dark:bg-card rounded-2xl p-4 mb-6 shadow-sm border border-border dark:border-border">
         <View className="flex-row items-end justify-between mb-4" style={{ height: chartHeight }}>
           {data.map((item: any, index: number) => {
             const barHeight = (item.value / maxValue) * (chartHeight - 20);
@@ -77,7 +78,7 @@ const ReportPage = () => {
               <View key={index} className="items-center">
                 <View className="flex-1 justify-end mb-2" style={{ height: chartHeight - 20 }}>
                   {isHighlighted && (
-                    <View className="absolute -top-8  rounded-full border-2 border-orange-500 px-2 py-1 z-10 shadow-sm">
+                    <View className="absolute -top-8 bg-background dark:bg-background rounded-full border-2 border-orange-500 px-2 py-1 z-10 shadow-sm">
                       <Text className="text-orange-500 font-bold text-sm">{item.value}{showPercentage ? '%' : ''}</Text>
                     </View>
                   )}
@@ -90,7 +91,7 @@ const ReportPage = () => {
                     }}
                   />
                 </View>
-                <Text className="text-xs text-gray-600 mt-1">{item.day}</Text>
+                <Text className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">{item.day}</Text>
               </View>
             );
           })}
@@ -99,7 +100,7 @@ const ReportPage = () => {
     );
   };
 
-  // Enhanced Line Chart with Victory Native XL styling
+  // Enhanced Line Chart with Victory Native XL styling and dark mode support
   const VictoryLineChart = ({ data, color, maxValue = 100, showPercentage = false }: { data: any[], color: string, maxValue?: number, showPercentage?: boolean }) => {
     const chartHeight = 120;
     const chartWidth = screenWidth - 80;
@@ -115,12 +116,12 @@ const ReportPage = () => {
     }));
 
     return (
-      <View className=" rounded-2xl p-4 mb-6 shadow-sm">
+      <View className="bg-card dark:bg-card rounded-2xl p-4 mb-6 shadow-sm border border-border dark:border-border">
         <View className="relative" style={{ height: chartHeight }}>
           {/* Background area with gradient effect */}
           <View className="absolute inset-0">
             <View 
-              className="bg-orange-100 opacity-30 rounded-b-lg"
+              className="bg-orange-100 dark:bg-orange-900 opacity-30 rounded-b-lg"
               style={{ 
                 height: chartHeight - 20,
               }}
@@ -157,8 +158,8 @@ const ReportPage = () => {
               <View
                 className={`absolute w-4 h-4 rounded-full border-2 ${
                   point.highlighted 
-                    ? 'bg-orange-500 border-white' 
-                    : ' border-orange-500'
+                    ? 'bg-orange-500 border-background dark:border-background' 
+                    : 'bg-background dark:bg-background border-orange-500'
                 }`}
                 style={{
                   left: point.x - 8,
@@ -169,7 +170,7 @@ const ReportPage = () => {
               {/* Highlighted value */}
               {point.highlighted && (
                 <View 
-                  className="absolute  rounded-full border-2 border-orange-500 px-2 py-1 shadow-sm"
+                  className="absolute bg-background dark:bg-background rounded-full border-2 border-orange-500 px-2 py-1 shadow-sm"
                   style={{
                     left: point.x - 15,
                     top: point.y - 35,
@@ -186,7 +187,7 @@ const ReportPage = () => {
           {/* X-axis labels */}
           <View className="absolute bottom-0 left-0 right-0 flex-row justify-between px-5">
             {data.map((item: any, index: number) => (
-              <Text key={index} className="text-xs text-gray-600">{item.day}</Text>
+              <Text key={index} className="text-xs text-muted-foreground dark:text-muted-foreground">{item.day}</Text>
             ))}
           </View>
         </View>
@@ -194,7 +195,7 @@ const ReportPage = () => {
     );
   };
 
-  // Enhanced Pie Chart with Victory Native XL styling
+  // Enhanced Pie Chart with Victory Native XL styling and dark mode support
   const VictoryPieChart = () => {
     const pieData = [
       { x: 'Goals', y: stats.goalsAchieved, color: '#ea580c' },
@@ -205,13 +206,13 @@ const ReportPage = () => {
     const total = pieData.reduce((sum, item) => sum + item.y, 0);
 
     return (
-      <View className=" rounded-2xl p-4 mb-6 shadow-sm">
-        <Text className="text-lg font-semibold text-gray-900 mb-4 text-center">Overview</Text>
+      <View className="bg-card dark:bg-card rounded-2xl p-4 mb-6 shadow-sm border border-border dark:border-border">
+        <Text className="text-lg font-semibold text-foreground dark:text-foreground mb-4 text-center">Overview</Text>
         <View className="items-center justify-center mb-4" style={{ height: 200 }}>
           {/* Simple pie chart representation */}
-          <View className="w-32 h-32 rounded-full border-4 border-gray-200 items-center justify-center">
-            <Text className="text-2xl font-bold text-gray-700">{total}</Text>
-            <Text className="text-sm text-gray-500">Total</Text>
+          <View className="w-32 h-32 rounded-full border-4 border-border dark:border-border items-center justify-center">
+            <Text className="text-2xl font-bold text-foreground dark:text-foreground">{total}</Text>
+            <Text className="text-sm text-muted-foreground dark:text-muted-foreground">Total</Text>
           </View>
         </View>
         {/* Legend */}
@@ -222,7 +223,7 @@ const ReportPage = () => {
                 className="w-3 h-3 rounded-full mr-2"
                 style={{ backgroundColor: item.color }}
               />
-              <Text className="text-xs text-gray-600">{item.x}: {item.y}</Text>
+              <Text className="text-xs text-muted-foreground dark:text-muted-foreground">{item.x}: {item.y}</Text>
             </View>
           ))}
         </View>
@@ -231,9 +232,9 @@ const ReportPage = () => {
   };
 
   const ChartModeToggle = ({ color }: { color: string }) => (
-    <View className="flex-row bg-gray-100 dark:bg-gray-800 rounded-lg p-1 ml-auto">
+    <View className="flex-row bg-muted dark:bg-muted rounded-lg p-1 ml-auto">
       <TouchableOpacity
-        className={`p-2 rounded ${chartMode === 'bar' ? color.replace('bg-', 'bg-').replace('-200', '-500') : 'bg-transparent'}`}
+        className={`p-2 rounded ${chartMode === 'bar' ? 'bg-orange-500' : 'bg-transparent'}`}
         onPress={() => setChartMode('bar')}
       >
         <Ionicons 
@@ -243,7 +244,7 @@ const ReportPage = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        className={`p-2 rounded ${chartMode === 'line' ? color.replace('bg-', 'bg-').replace('-200', '-500') : 'bg-transparent'}`}
+        className={`p-2 rounded ${chartMode === 'line' ? 'bg-orange-500' : 'bg-transparent'}`}
         onPress={() => setChartMode('line')}
       >
         <Ionicons 
@@ -261,25 +262,17 @@ const ReportPage = () => {
       <Header {...HeaderConfigs.basic("Report")} size="large" />
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        {/* Period Selector */}
+        {/* Period Selector with Tabs */}
         <View className="mx-4 mt-6">
-          <View className="flex-row  rounded-2xl p-1">
-            {periods.map((period) => (
-              <TouchableOpacity
-                key={period.id}
-                className={`flex-1 py-3 rounded-xl ${
-                  selectedPeriod === period.id ? 'bg-orange-500' : 'bg-transparent'
-                }`}
-                onPress={() => setSelectedPeriod(period.id)}
-              >
-                <Text className={`text-center font-medium ${
-                  selectedPeriod === period.id ? 'text-white' : 'text-gray-600'
-                }`}>
+          <Tabs value={selectedPeriod} onValueChange={setSelectedPeriod} className="w-full">
+            <TabsList className="bg-card dark:bg-card border border-border dark:border-border">
+              {periods.map((period) => (
+                <TabsTrigger key={period.id} value={period.id} className="flex-1">
                   {period.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
         </View>
 
         {/* Date Range */}
@@ -287,7 +280,7 @@ const ReportPage = () => {
           <TouchableOpacity>
             <Ionicons name="chevron-back" size={24} color="#6b7280" />
           </TouchableOpacity>
-          <Text className="text-lg font-semibold text-gray-900">
+          <Text className="text-lg font-semibold text-foreground dark:text-foreground">
             Dec 16 - Dec 22, 2024
           </Text>
           <TouchableOpacity>
@@ -298,16 +291,16 @@ const ReportPage = () => {
         {/* Stats Cards */}
         <View className="flex-row justify-between mx-4 mt-6 mb-8">
           <View className="flex-1 items-center">
-            <Text className="text-3xl font-bold text-gray-900">{stats.goalsAchieved}</Text>
-            <Text className="text-gray-500 text-sm mt-1">Goals achieved</Text>
+            <Text className="text-3xl font-bold text-foreground dark:text-foreground">{stats.goalsAchieved}</Text>
+            <Text className="text-muted-foreground dark:text-muted-foreground text-sm mt-1">Goals achieved</Text>
           </View>
           <View className="flex-1 items-center">
-            <Text className="text-3xl font-bold text-gray-900">{stats.formedHabits}</Text>
-            <Text className="text-gray-500 text-sm mt-1">Formed habits</Text>
+            <Text className="text-3xl font-bold text-foreground dark:text-foreground">{stats.formedHabits}</Text>
+            <Text className="text-muted-foreground dark:text-muted-foreground text-sm mt-1">Formed habits</Text>
           </View>
           <View className="flex-1 items-center">
-            <Text className="text-3xl font-bold text-gray-900">{stats.finishedTasks}</Text>
-            <Text className="text-gray-500 text-sm mt-1">Finished tasks</Text>
+            <Text className="text-3xl font-bold text-foreground dark:text-foreground">{stats.finishedTasks}</Text>
+            <Text className="text-muted-foreground dark:text-muted-foreground text-sm mt-1">Finished tasks</Text>
           </View>
         </View>
 
@@ -319,7 +312,7 @@ const ReportPage = () => {
         {/* Completion Rate Chart */}
         <View className="mx-4">
           <View className="flex-row items-center justify-between mb-4">
-            <Text className="text-lg font-semibold text-gray-900">Completion Rate</Text>
+            <Text className="text-lg font-semibold text-foreground dark:text-foreground">Completion Rate</Text>
             <ChartModeToggle color="bg-orange-200" />
           </View>
           {chartMode === 'bar' ? (
@@ -342,7 +335,7 @@ const ReportPage = () => {
         {/* Habits Completed Chart */}
         <View className="mx-4">
           <View className="flex-row items-center justify-between mb-4">
-            <Text className="text-lg font-semibold text-gray-900">Habits Completed</Text>
+            <Text className="text-lg font-semibold text-foreground dark:text-foreground">Habits Completed</Text>
             <ChartModeToggle color="bg-orange-200" />
           </View>
           {chartMode === 'bar' ? (
@@ -363,7 +356,7 @@ const ReportPage = () => {
         {/* Tasks Completed Chart */}
         <View className="mx-4">
           <View className="flex-row items-center justify-between mb-4">
-            <Text className="text-lg font-semibold text-gray-900">Tasks Completed</Text>
+            <Text className="text-lg font-semibold text-foreground dark:text-foreground">Tasks Completed</Text>
             <ChartModeToggle color="bg-blue-200" />
           </View>
           {chartMode === 'bar' ? (
