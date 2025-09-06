@@ -14,11 +14,10 @@ export interface HabitFormType {
   }
   
   export interface GoalFormType {
-    name: string;
-    duration: string;
-    start_date: string;
-    habits: HabitFormType[];
-    tasks: TaskFormType[];
+    title: string;
+    due_date: string;
+    category: string;
+    reminder: string;
     notes: string;
   }
   

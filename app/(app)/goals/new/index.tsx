@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View, TextInput, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TextInput, Image, ImageSourcePropType, ImageURISource, Touchable, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Header, HeaderConfigs } from '@/components/ui/header';
 import { Button, buttonTextVariants } from '@/components/ui/button';
@@ -7,15 +7,29 @@ import HabitForm from '@/components/forms/habit-form';
 import { useModal } from '@/components/providers/modal-provider';
 import TaskForm from '@/components/forms/task-form';
 import { cn } from '@/lib/utils';
-import { HabitFormType, TaskFormType } from '@/lib/dataTypes';
+import { GoalFormType, HabitFormType, TaskFormType } from '@/lib/dataTypes';
+import CoverForm from '@/components/forms/cover-form';
+import GoalForm from '@/components/forms/goal-form';
 
 type Props = {};
 
 const AddGoal = (props: Props) => {
   const { showForm: showHabitForm } = useModal<HabitFormType>();
-  const { showForm: showTaskForm } = useModal<TaskFormType>();
+    const { showForm: showTaskForm } = useModal<TaskFormType>();
+    const { showForm: showCoverForm } = useModal<ImageURISource>();
+    const { showForm: showGoalForm } = useModal<GoalFormType>();
   const [goalTitle, setGoalTitle] = useState('');
   const [note, setNote] = useState('');
+
+  const handleSelectCover = async () => {
+    const result = await showCoverForm({
+      title: 'Select Cover',
+      formComponent: CoverForm,
+      modal: "fullScreen",
+      size: "full",
+    });
+    console.log("cover form result", result)
+  }
 
   const handleAddHabit = async () => {
     console.log("add habit")
@@ -39,9 +53,16 @@ const AddGoal = (props: Props) => {
     console.log("task form result", result)
   };
 
-  const handleCreateGoals = () => {
+  const handleCreateGoals = async () => {
     console.log("Create goals with:", { goalTitle, note });
-    // Handle goal creation logic here
+
+    const result = await showGoalForm({
+      title: 'Create Goal',
+      formComponent: GoalForm,
+      modal: "fullScreen",
+      size: "full",
+    });
+    console.log("goal form result", result)
   };
 
   return (
@@ -50,35 +71,36 @@ const AddGoal = (props: Props) => {
       
       <View className="flex-1 px-4 pt-6">
         {/* Goal Image Placeholder */}
-        <View className="items-center mb-8">
-          <View className="w-20 h-20 bg-gray-300 rounded-2xl items-center justify-center">
-            <View className="w-8 h-8 bg-white rounded-full" />
-            <View className="w-12 h-6 bg-white rounded-lg mt-1" />
+        <TouchableOpacity onPress={handleSelectCover} className="items-center mb-8">
+          <View className="w-20 h-20 bg-muted rounded-2xl items-center justify-center">
+            <View className="w-8 h-8 bg-background rounded-full" />
+            <View className="w-12 h-6 bg-background rounded-lg mt-1" />
           </View>
-        </View>
+        </TouchableOpacity>
 
         {/* Goal Title Input */}
         <View className="mb-6">
           <TextInput
-            className="text-2xl font-medium text-gray-400 bg-transparent"
+            className="text-2xl font-medium text-muted-foreground bg-transparent"
             placeholder="Add a Goals Title"
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor="hsl(var(--muted-foreground))"
             value={goalTitle}
             onChangeText={setGoalTitle}
+            onFocus={handleCreateGoals}
           />
           
           {/* Goal metadata */}
           <View className="flex-row items-center mt-3 gap-4">
-            <Text className="text-sm text-gray-500">Category</Text>
+            <Text className="text-sm text-muted-foreground">Category</Text>
             <View className="flex-row items-center gap-1">
-              <View className="w-4 h-4 border border-gray-400 rounded" />
-              <Text className="text-sm text-gray-500">No due date</Text>
+              <View className="w-4 h-4 border border-border rounded" />
+              <Text className="text-sm text-muted-foreground">No due date</Text>
             </View>
             <View className="flex-row items-center gap-1">
-              <View className="w-4 h-4 border border-gray-400 rounded-full" />
-              <Text className="text-sm text-gray-500">Set reminder</Text>
+              <View className="w-4 h-4 border border-border rounded-full" />
+              <Text className="text-sm text-muted-foreground">Set reminder</Text>
             </View>
-            <View className="w-4 h-4 border border-gray-400 rounded rotate-45" />
+            <View className="w-4 h-4 border border-border rounded rotate-45" />
           </View>
         </View>
 
@@ -86,14 +108,14 @@ const AddGoal = (props: Props) => {
         <View className="mb-6">
           <View className="flex-row items-center justify-between mb-3">
             <Text className="text-lg font-semibold text-foreground">Habit (0)</Text>
-            <View className="w-5 h-5 border border-gray-400 rounded" />
+            <View className="w-5 h-5 border border-border rounded" />
           </View>
           <Button 
-            className="bg-orange-50 border-2 border-dashed border-orange-200 py-6" 
+            className="bg-secondary/30 border-2 border-dashed border-secondary py-6" 
             onPress={handleAddHabit} 
             variant={'ghost'}
           >
-            <Text className="text-orange-500 font-medium">+ Add Habit</Text>
+            <Text className="text-primary font-medium">+ Add Habit</Text>
           </Button>
         </View>
 
@@ -101,14 +123,14 @@ const AddGoal = (props: Props) => {
         <View className="mb-6">
           <View className="flex-row items-center justify-between mb-3">
             <Text className="text-lg font-semibold text-foreground">Task (0)</Text>
-            <View className="w-5 h-5 border border-gray-400 rounded" />
+            <View className="w-5 h-5 border border-border rounded" />
           </View>
           <Button 
-            className="bg-orange-50 border-2 border-dashed border-orange-200 py-6" 
+            className="bg-secondary/30 border-2 border-dashed border-secondary py-6" 
             onPress={handleAddTask} 
             variant={'ghost'}
           >
-            <Text className="text-orange-500 font-medium">+ Add Task</Text>
+            <Text className="text-primary font-medium">+ Add Task</Text>
           </Button>
         </View>
 
@@ -116,9 +138,9 @@ const AddGoal = (props: Props) => {
         <View className="mb-8">
           <Text className="text-lg font-semibold text-foreground mb-3">Note</Text>
           <TextInput
-            className="text-gray-400 text-base bg-transparent min-h-[100px]"
+            className="text-muted-foreground text-base bg-transparent min-h-[100px]"
             placeholder="Add your note..."
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor="hsl(var(--muted-foreground))"
             value={note}
             onChangeText={setNote}
             multiline
@@ -132,18 +154,18 @@ const AddGoal = (props: Props) => {
         {/* Create Goals Button */}
         <View className="pb-6">
           <Button 
-            className="w-full bg-orange-500 py-4 rounded-2xl" 
+            className="w-full bg-primary py-4 rounded-2xl" 
             onPress={handleCreateGoals}
           >
-            <Text className="text-white font-semibold text-lg">Create Goals</Text>
+            <Text className="text-primary-foreground font-semibold text-lg">Create Goals</Text>
           </Button>
         </View>
       </View>
 
       {/* Floating Action Button */}
       <View className="absolute bottom-24 right-4">
-        <Button className="w-12 h-12 bg-orange-500 rounded-full items-center justify-center">
-          <Text className="text-white text-xl">💬</Text>
+        <Button className="w-12 h-12 bg-primary rounded-full items-center justify-center">
+          <Text className="text-primary-foreground text-xl">💬</Text>
         </Button>
       </View>
     </SafeAreaView>
