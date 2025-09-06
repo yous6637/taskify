@@ -10,7 +10,7 @@ export const THEME = {
     popoverForeground: 'hsl(0 0% 0%)',
     primary: 'hsl(25 100% 50%)', // Orange accent
     primaryForeground: 'hsl(0 0% 100%)', // White for text on primary
-    secondary: 'hsl(25 100% 95%)', // Light orange for secondary
+    secondary: 'hsl(34.29, 100%, 91.76%)', // Light orange for secondary
     secondaryForeground: 'hsl(25 100% 50%)', // Orange like primary
     muted: 'hsl(0 0% 96%)',
     mutedForeground: 'hsl(0 0% 45%)', // Muted gray for times
@@ -36,7 +36,7 @@ export const THEME = {
     popoverForeground: 'hsl(0 0% 98%)',
     primary: 'hsl(25 100% 50%)', // Orange primary
     primaryForeground: 'hsl(0 0% 0%)', // Black for contrast
-    secondary: 'hsl(25 100% 30%)', // Darker orange for secondary
+    secondary: 'hsl(34.29, 100%, 91.76%)', // Darker orange for secondary
     secondaryForeground: 'hsl(25 100% 50%)', // Orange like primary
     muted: 'hsl(270 30% 30%)',
     mutedForeground: 'hsl(270 20% 70%)', // Lighter muted

@@ -122,13 +122,13 @@ const FormDateTimePicker = React.forwardRef<
           />
         </DialogTrigger>
 
-        <DialogContent sheet="bottom" size="md" className='max-h-[80vh]'>
+        <DialogContent sheet="bottom" size="md" className='dark:bg-gray-900 max-h-[80vh]'>
           <DialogHeader className='py-4'>
             <DialogTitle className='text-lg font-semibold'>
               {label ? String(label).replace(/\*$/, '') : 'Select time'}
             </DialogTitle>
           </DialogHeader>
-          <View className='py-4 flex-1 overflow-hidden'>
+          <View className='py-4 flex-1 overflow-hidden items-center'>
             <TimerPickerAny
               padWithNItems={2}
               hourLabel={':' as any}
@@ -148,6 +148,7 @@ const FormDateTimePicker = React.forwardRef<
               // MaskedView={MaskedView}
               styles={{
                 theme: isDark ? 'dark' : 'light',
+                
                 backgroundColor: 'transparent',
                 pickerItem: { fontSize: 20 },
                 pickerLabel: { fontSize: 20, marginTop: 0 },
@@ -163,16 +164,16 @@ const FormDateTimePicker = React.forwardRef<
               }}
             />
 
-            <View className='flex-row justify-between mt-6 px-1'>
+            <View className='flex-row justify-between gap-3 mt-6 px-1'>
               <DialogClose asChild>
-                <Button variant='outline' className='min-w-[120px]' onPress={handleCancel}>
+                <Button variant='secondary' className='flex-1' size={"lg"} onPress={handleCancel}>
                   <Text>Cancel</Text>
                 </Button>
               </DialogClose>
 
               <DialogClose asChild>
-                <Button className='min-w-[120px]' onPress={commitDraft}>
-                  <Text>OK</Text>
+                <Button className='flex-1' size={"lg"} onPress={commitDraft}>
+                  <Text>Save</Text>
                 </Button>
               </DialogClose>
             </View>
