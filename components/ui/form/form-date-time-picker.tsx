@@ -16,13 +16,13 @@ import type { Override } from './types';
 import { Noop } from 'react-hook-form';
 import MaskedView from '@react-native-masked-view/masked-view'; // for transparent fade-out
 import {
-  BottomSheet,
-  BottomSheetContent,
-  BottomSheetHeader,
-  BottomSheetOpenTrigger,
-  BottomSheetCloseTrigger,
-  BottomSheetView,
-} from '@/components/deprecated-ui/bottom-sheet';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/components/ui/dialog';
 import { Input } from '../input';
 import { useColorScheme } from 'nativewind';
 
@@ -42,7 +42,7 @@ type FormItemProps<T extends React.ElementType<any>, U> = Override<
   description?: string;
 };
 
-const FormTimePicker = React.forwardRef<
+const FormDateTimePicker = React.forwardRef<
   React.ComponentRef<typeof Input>,
   FormItemProps<typeof Input, string> &  {
     mode?: 'time' | 'countdown';
@@ -54,6 +54,7 @@ const FormTimePicker = React.forwardRef<
   const initialDate = React.useMemo(() => (value ? new Date(value) : new Date()), [value]);
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
+  const [isOpen, setIsOpen] = React.useState(false);
   const [draft, setDraft] = React.useState<{ hours: number; minutes: number; isAm?: boolean }>(() => {
     const hours24 = initialDate.getHours();
     const minutes = initialDate.getMinutes();
@@ -88,16 +89,21 @@ const FormTimePicker = React.forwardRef<
     }
     base.setHours(hours24, draft.minutes, 0, 0);
     onChange?.(base.toISOString());
+    setIsOpen(false);
   }
 
-  const TimerPickerAny = TimerPicker as any;
+  function handleCancel() {
+    setIsOpen(false);
+  }
+
+  const TimerPickerAny = TimerPicker 
 
   return (
     <FormItem>
       {!!label && <FormLabel nativeID={formItemNativeID}>{label}</FormLabel>}
 
-      <BottomSheet >
-        <BottomSheetOpenTrigger asChild>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
           <Input
             className='flex-row gap-3 justify-start px-3 relative'
             aria-labelledby={formItemNativeID}
@@ -111,26 +117,26 @@ const FormTimePicker = React.forwardRef<
             RightIcon={() => <X size={18} className='text-muted-foreground text-xs' />}
             onChangeText={onChange}
             value={formatTime(value)}
+            onPress={() => setIsOpen(true)}
             {...props}
           />
-            
-        </BottomSheetOpenTrigger>
+        </DialogTrigger>
 
-        <BottomSheetContent snapPoints={["60%"]} enableBlurKeyboardOnGesture = {true} enableDynamicSizing = {false}  backgroundStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
-          <BottomSheetHeader className='py-4'>
-            <Text className='text-lg font-semibold'>
+        <DialogContent sheet="bottom" size="md" className='max-h-[80vh]'>
+          <DialogHeader className='py-4'>
+            <DialogTitle className='text-lg font-semibold'>
               {label ? String(label).replace(/\*$/, '') : 'Select time'}
-            </Text>
-          </BottomSheetHeader>
-          <BottomSheetView className='py-4 flex-1 overflow-hidden'>
+            </DialogTitle>
+          </DialogHeader>
+          <View className='py-4 flex-1 overflow-hidden'>
             <TimerPickerAny
               padWithNItems={2}
-              ref={ref}
               hourLabel={':' as any}
               minuteLabel={':' as any}
               secondLabel={'' as any}
+              
               use12HourPicker={!is24Hour}
-              onChange={(v: any) => {
+              onDurationChange={(v: any) => {
                 const { hours, minutes, isAmpm, ampm } = v || {};
                 setDraft((prev) => ({
                   hours: typeof hours === 'number' ? hours : prev.hours,
@@ -158,21 +164,21 @@ const FormTimePicker = React.forwardRef<
             />
 
             <View className='flex-row justify-between mt-6 px-1'>
-              <BottomSheetCloseTrigger asChild>
-                <Button variant='outline' className='min-w-[120px]'>
+              <DialogClose asChild>
+                <Button variant='outline' className='min-w-[120px]' onPress={handleCancel}>
                   <Text>Cancel</Text>
                 </Button>
-              </BottomSheetCloseTrigger>
+              </DialogClose>
 
-              <BottomSheetCloseTrigger asChild>
+              <DialogClose asChild>
                 <Button className='min-w-[120px]' onPress={commitDraft}>
                   <Text>OK</Text>
                 </Button>
-              </BottomSheetCloseTrigger>
+              </DialogClose>
             </View>
-          </BottomSheetView>
-        </BottomSheetContent>
-      </BottomSheet>
+          </View>
+        </DialogContent>
+      </Dialog>
 
       {!!description && <FormDescription>{description}</FormDescription>}
       <FormMessage />
@@ -180,6 +186,6 @@ const FormTimePicker = React.forwardRef<
   );
 });
 
-FormTimePicker.displayName = 'FormTimePicker';
+FormDateTimePicker.displayName = 'FormDateTimePicker';
 
-export { FormTimePicker };
+export { FormDateTimePicker };

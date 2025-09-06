@@ -2,11 +2,10 @@ import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { Text } from '../ui/text'
 import { Button } from '../ui/button'
-import { Form, FormField, FormSelect } from '../ui/form'
+import { Form, FormDateTimePicker, FormField, FormSelect } from '../ui/form'
 import { FormInput } from '../ui/form/form-input'
 import { FormTextarea } from '../ui/form/form-textarea'
 import { FormDatePicker } from '../ui/form/form-date-picker'
-import { FormTimePicker } from '../ui/form/form-time-picker'
 import { zodResolver } from '@/lib/utils'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
@@ -103,7 +102,7 @@ const GoalForm = ({ defaultValues, onSubmit }: Props) => {
           control={form.control}
           name='reminder'
           render={({ field }) => (
-            <FormTimePicker
+            <FormDateTimePicker
               label='Daily Reminder'
               placeholder='Set reminder time'
               {...field}
