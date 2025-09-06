@@ -33,21 +33,19 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache} __experimental_resourceCache={resourceCache}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
+      <BottomSheetModalProvider>
+        <ModalProvider>
           <DialogProvider>
-            <ModalProvider>
-              <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-                <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-                <Routes />
-                <DialogInitializer />
-                <ModalInitializer />
-                <PortalHost />
-              </ThemeProvider>
-            </ModalProvider>
+            <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+              <Routes />
+              <DialogInitializer />
+              <ModalInitializer />
+              <PortalHost />
+            </ThemeProvider>
           </DialogProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+        </ModalProvider>
+      </BottomSheetModalProvider>
     </ClerkProvider>
   );
 }

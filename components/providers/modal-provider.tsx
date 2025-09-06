@@ -106,12 +106,10 @@ export function ModalProvider({ children }: ModalProviderProps) {
   //   formComponent: React.ComponentType<FormComponentProps<T>>;
   //   confirmText?: string;
   //   cancelText?: string;
-  //   variant?: 'default' | 'destructive';
-  //   side?: 'top' | 'bottom';
-  //   align?: 'start' | 'center' | 'end';
-  //   alignOffset?: number;
-  //   sideOffset?: number;
-  // }): Promise<any> => {
+  //   sheet?: 'bottom' | 'left' | 'right' | 'top';
+  //   modal?: 'default' | 'fullScreen' | 'sidePanel' | 'sidePanelLeft';
+  //   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full';
+  // }): Promise<T> => {
   //   return new Promise((resolve, reject) => {
   //     console.log({...config})
   //     setModalState({
@@ -120,8 +118,9 @@ export function ModalProvider({ children }: ModalProviderProps) {
   //       description: '', // Not used for form Modals
   //       confirmText: config.confirmText || 'Submit',
   //       cancelText: config.cancelText || 'Cancel',
-  //       variant: config.variant || 'default',
-  //       side: config.side,
+  //       sheet: config.sheet,
+  //       size: config.size,
+  //       modal: config.modal,
   //       isFormModal: true,
   //       formComponent: config.formComponent,
   //       onFormSubmit: (data) => {
@@ -154,7 +153,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
 }
 
 export function useModal<T extends any>() {
-  const context = useContext(createContext<ModalContextType<T> | undefined>(undefined));
+  const context = useContext(ModalContext) as ModalContextType<T> | undefined;
   if (context === undefined) {
     throw new Error('useModal must be used within a ModalProvider');
   }
