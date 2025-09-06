@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Header, HeaderConfigs } from '@/components/ui/header';
 import { GoalCard, GoalCardConfigs } from '@/components/cards';
 import { Text } from '@/components/ui/text';
+import { COVERS } from '@/lib/consts';
 
 const ExplorePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
@@ -33,7 +34,7 @@ const ExplorePage = () => {
     {
       id: 1,
       title: 'Learn New Skills',
-      image: require('@/assets/learn-skills.png'), // You'll need to add actual images
+      image: COVERS.learnSkills, // You'll need to add actual images
       habits: 5,
       tasks: 4,
       users: '+15.2K users',
@@ -43,7 +44,7 @@ const ExplorePage = () => {
     {
       id: 2,
       title: 'Exercise Regularly',
-      image: require('@/assets/exercise.png'),
+      image: COVERS.exercise,
       habits: 4,
       tasks: 6,
       users: '+12.4K users',
@@ -53,7 +54,7 @@ const ExplorePage = () => {
     {
       id: 3,
       title: 'Visit New Places',
-      image: require('@/assets/travel.png'),
+      image: COVERS.travel,
       habits: 6,
       tasks: 5,
       users: '+10.9K users',

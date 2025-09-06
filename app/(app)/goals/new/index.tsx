@@ -10,14 +10,15 @@ import { cn } from '@/lib/utils';
 import { GoalFormType, HabitFormType, TaskFormType } from '@/lib/dataTypes';
 import CoverForm from '@/components/forms/cover-form';
 import GoalForm from '@/components/forms/goal-form';
+import { Input } from '@/components/ui/input';
 
 type Props = {};
 
 const AddGoal = (props: Props) => {
   const { showForm: showHabitForm } = useModal<HabitFormType>();
-    const { showForm: showTaskForm } = useModal<TaskFormType>();
-    const { showForm: showCoverForm } = useModal<ImageURISource>();
-    const { showForm: showGoalForm } = useModal<GoalFormType>();
+  const { showForm: showTaskForm } = useModal<TaskFormType>();
+  const { showForm: showCoverForm } = useModal<ImageURISource>();
+  const { showForm: showGoalForm } = useModal<GoalFormType>();
   const [goalTitle, setGoalTitle] = useState('');
   const [note, setNote] = useState('');
 
@@ -59,16 +60,16 @@ const AddGoal = (props: Props) => {
     const result = await showGoalForm({
       title: 'Create Goal',
       formComponent: GoalForm,
-      modal: "fullScreen",
-      size: "full",
+      sheet: "bottom",
+      size: "lg",
     });
     console.log("goal form result", result)
   };
 
   return (
-    <SafeAreaView className="native:pt-10 mb-0 h-screen flex-1 pb-0 bg-background">
+    <SafeAreaView className="native:pt-10 mb-0 h-screen flex-1 pb-0">
       <Header {...HeaderConfigs.imageBackground('Self-made Goals')} />
-      
+
       <View className="flex-1 px-4 pt-6">
         {/* Goal Image Placeholder */}
         <TouchableOpacity onPress={handleSelectCover} className="items-center mb-8">
@@ -80,15 +81,20 @@ const AddGoal = (props: Props) => {
 
         {/* Goal Title Input */}
         <View className="mb-6">
-          <TextInput
-            className="text-2xl font-medium text-muted-foreground bg-transparent"
-            placeholder="Add a Goals Title"
-            placeholderTextColor="hsl(var(--muted-foreground))"
-            value={goalTitle}
-            onChangeText={setGoalTitle}
-            onFocus={handleCreateGoals}
-          />
-          
+          <TouchableOpacity onPress={handleCreateGoals}
+          >
+
+            <Input
+              className="text-2xl font-medium  bg-transparent"
+              placeholder="Add a Goals Title"
+              placeholderTextColor="hsl(var(--muted-foreground))"
+              value={goalTitle}
+              onChangeText={setGoalTitle}
+              onFocus={handleCreateGoals}
+              onPress={handleCreateGoals}
+            />
+          </TouchableOpacity>
+
           {/* Goal metadata */}
           <View className="flex-row items-center mt-3 gap-4">
             <Text className="text-sm text-muted-foreground">Category</Text>
@@ -110,9 +116,9 @@ const AddGoal = (props: Props) => {
             <Text className="text-lg font-semibold text-foreground">Habit (0)</Text>
             <View className="w-5 h-5 border border-border rounded" />
           </View>
-          <Button 
-            className="bg-secondary/30 border-2 border-dashed border-secondary py-6" 
-            onPress={handleAddHabit} 
+          <Button
+            className="bg-secondary/30 border-2 border-dashed border-secondary py-6"
+            onPress={handleAddHabit}
             variant={'ghost'}
           >
             <Text className="text-primary font-medium">+ Add Habit</Text>
@@ -125,9 +131,9 @@ const AddGoal = (props: Props) => {
             <Text className="text-lg font-semibold text-foreground">Task (0)</Text>
             <View className="w-5 h-5 border border-border rounded" />
           </View>
-          <Button 
-            className="bg-secondary/30 border-2 border-dashed border-secondary py-6" 
-            onPress={handleAddTask} 
+          <Button
+            className="bg-secondary/30 border-2 border-dashed border-secondary py-6"
+            onPress={handleAddTask}
             variant={'ghost'}
           >
             <Text className="text-primary font-medium">+ Add Task</Text>
@@ -153,8 +159,8 @@ const AddGoal = (props: Props) => {
 
         {/* Create Goals Button */}
         <View className="pb-6">
-          <Button 
-            className="w-full bg-primary py-4 rounded-2xl" 
+          <Button
+            className="w-full bg-primary py-4 rounded-2xl"
             onPress={handleCreateGoals}
           >
             <Text className="text-primary-foreground font-semibold text-lg">Create Goals</Text>

@@ -48,6 +48,8 @@ const FormDatePicker = React.forwardRef<
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
 
+  console.log({ value });
+  console.log(value.split('T')[0])
   return (
     <FormItem>
       {!!label && <FormLabel nativeID={formItemNativeID}>{label}</FormLabel>}
@@ -65,7 +67,7 @@ const FormDatePicker = React.forwardRef<
             }
             aria-invalid={!!error}
             placeholder={placeholder}
-            LeftIcon={() => <CalendarIcon size={18} />}
+            LeftIcon={() => <CalendarIcon color = {isDark ? "white" : "black"} size={18} />}
             RightIcon={() => <X size={18} className='text-muted-foreground text-xs' />}
             onChangeText={onChange}
             value={value ? (new Date(value).toDateString()) : 'Pick a date'}
@@ -76,27 +78,47 @@ const FormDatePicker = React.forwardRef<
           <BottomSheetView hadHeader={false} className='pt-2'>
             <Calendar
               style={{ height: 358 }}
+              date={value ? new Date(value).toISOString() : new Date().toISOString()}
+              state="selected"
+              minDate={new Date().toISOString()}
+              
               onDayPress={(day) => {
-                onChange?.(day.dateString === value ? '' : day.dateString);
+                onChange?.(new Date(day.dateString).toISOString() === value ? '' : new Date(day.dateString).toISOString());
               }}
               markedDates={{
-                [value ?? '']: {
+                [new Date(value).toISOString() ?? '']: {
                   selected: true,
                 },
               }}
               theme={{
                 textSectionTitleColor: isDark ? '#9CA3AF' : '#6B7280',
+                selectedDayBackgroundColor: '#F97316',
+                selectedDayTextColor: '#FFFFFF',
+                todayTextColor: '#F97316',
+                dayTextColor: isDark ? '#D1D5DB' : '#374151',
+                textDisabledColor: isDark ? '#4B5563' : '#9CA3AF',
+                dotColor: '#F97316',
+                selectedDotColor: '#FFFFFF',
+                arrowColor: isDark ? '#FFFFFF' : '#000000',
+                monthTextColor: isDark ? '#FFFFFF' : '#000000',
+                indicatorColor: isDark ? '#FFFFFF' : '#000000',
                 timeLabel: {
                   color: isDark ? '#9CA3AF' : '#6B7280',
                 }
               }}
-              current={value}
+              current={value ? new Date(value).toISOString() : new Date().toISOString()}
+              
               {...props}
             />
-            <View className={'pb-2 pt-4'}>
+            <View className={'pb-2 pt-4 flex-row justify-end gap-3'}>
               <BottomSheetCloseTrigger asChild>
-                <Button>
-                  <Text>Close</Text>
+                <Button className='flex-1' size={"lg"} variant={"secondary"} >
+                  <Text>Save</Text>
+                </Button>
+              </BottomSheetCloseTrigger>
+              <BottomSheetCloseTrigger asChild>
+                <Button className='flex-1' size={"lg"} variant={"default"} >
+                  <Text>Save</Text>
                 </Button>
               </BottomSheetCloseTrigger>
             </View>

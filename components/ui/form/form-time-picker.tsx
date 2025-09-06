@@ -24,6 +24,7 @@ import {
   BottomSheetView,
 } from '@/components/deprecated-ui/bottom-sheet';
 import { Input } from '../input';
+import { useColorScheme } from 'nativewind';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -51,6 +52,8 @@ const FormTimePicker = React.forwardRef<
 >(({ label, description, value, onChange, mode = 'time', is24Hour = true, display = 'default', ...props }, ref) => {
   const { error, formItemNativeID, formDescriptionNativeID, formMessageNativeID } = useFormField();
   const initialDate = React.useMemo(() => (value ? new Date(value) : new Date()), [value]);
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const [draft, setDraft] = React.useState<{ hours: number; minutes: number; isAm?: boolean }>(() => {
     const hours24 = initialDate.getHours();
     const minutes = initialDate.getMinutes();
@@ -93,7 +96,7 @@ const FormTimePicker = React.forwardRef<
     <FormItem>
       {!!label && <FormLabel nativeID={formItemNativeID}>{label}</FormLabel>}
 
-      <BottomSheet>
+      <BottomSheet >
         <BottomSheetOpenTrigger asChild>
           <Input
             className='flex-row gap-3 justify-start px-3 relative'
@@ -113,13 +116,13 @@ const FormTimePicker = React.forwardRef<
             
         </BottomSheetOpenTrigger>
 
-        <BottomSheetContent backgroundStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24 }}>
+        <BottomSheetContent snapPoints={["60%"]} enableBlurKeyboardOnGesture = {true} enableDynamicSizing = {false}  backgroundStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
           <BottomSheetHeader className='py-4'>
             <Text className='text-lg font-semibold'>
               {label ? String(label).replace(/\*$/, '') : 'Select time'}
             </Text>
           </BottomSheetHeader>
-          <BottomSheetView className='py-4'>
+          <BottomSheetView className='py-4 flex-1 overflow-hidden'>
             <TimerPickerAny
               padWithNItems={2}
               ref={ref}
@@ -136,12 +139,12 @@ const FormTimePicker = React.forwardRef<
                     typeof ampm === 'string' ? ampm?.toUpperCase?.() === 'AM' : prev.isAm,
                 }));
               }}
-              MaskedView={MaskedView}
+              // MaskedView={MaskedView}
               styles={{
-                theme: 'light',
+                theme: isDark ? 'dark' : 'light',
                 backgroundColor: 'transparent',
-                pickerItem: { fontSize: 34 },
-                pickerLabel: { fontSize: 32, marginTop: 0 },
+                pickerItem: { fontSize: 20 },
+                pickerLabel: { fontSize: 20, marginTop: 0 },
                 pickerContainer: { marginRight: 6 },
                 pickerItemContainer: { width: 100 },
                 pickerLabelContainer: {

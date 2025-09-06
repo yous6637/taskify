@@ -31,7 +31,7 @@ function DialogOverlay({
     <FullWindowOverlay>
       <DialogPrimitive.Overlay
         className={cn(
-          'absolute bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-black/50 p-2',
+          'absolute bottom-0 left-0 right-0 top-0 z-1000 flex items-center justify-center bg-black/50',
           Platform.select({
             web: 'animate-in fade-in-0 fixed cursor-default [&>*]:cursor-auto',
           }),
@@ -136,7 +136,7 @@ export type DialogVariants = VariantProps<typeof dialogVariants>;
 
 export const dialogVariants = cva(
   // Base styles applied to all dialog variants
-  'relative z-50 max-w-lg gap-4 border border-border bg-background p-6 shadow-lg',
+  'relative z-50 p-6 max-w-lg gap-4 border border-border bg-background p-6 shadow-lg',
   {
     variants: {
       

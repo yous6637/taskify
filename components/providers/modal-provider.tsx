@@ -101,39 +101,39 @@ export function ModalProvider({ children }: ModalProviderProps) {
     });
   };
 
-  // const showForm = (config: {
-  //   title: string;
-  //   formComponent: React.ComponentType<FormComponentProps<T>>;
-  //   confirmText?: string;
-  //   cancelText?: string;
-  //   sheet?: 'bottom' | 'left' | 'right' | 'top';
-  //   modal?: 'default' | 'fullScreen' | 'sidePanel' | 'sidePanelLeft';
-  //   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full';
-  // }): Promise<T> => {
-  //   return new Promise((resolve, reject) => {
-  //     console.log({...config})
-  //     setModalState({
-  //       isOpen: true,
-  //       title: config.title,
-  //       description: '', // Not used for form Modals
-  //       confirmText: config.confirmText || 'Submit',
-  //       cancelText: config.cancelText || 'Cancel',
-  //       sheet: config.sheet,
-  //       size: config.size,
-  //       modal: config.modal,
-  //       isFormModal: true,
-  //       formComponent: config.formComponent,
-  //       onFormSubmit: (data) => {
-  //         hideModal();
-  //         resolve(data);
-  //       },
-  //       onCancel: () => {
-  //         hideModal();
-  //         reject(new Error('Form cancelled'));
-  //       },
-  //     });
-  //   });
-  // };
+  const showForm = (config: {
+    title: string;
+    formComponent: React.ComponentType<FormComponentProps<any>>;
+    confirmText?: string;
+    cancelText?: string;
+    sheet?: 'bottom' | 'left' | 'right' | 'top';
+    modal?: 'default' | 'fullScreen' | 'sidePanel' | 'sidePanelLeft';
+    size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full';
+  }): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      console.log({...config})
+      setModalState({
+        isOpen: true,
+        title: config.title,
+        description: '', // Not used for form Modals
+        confirmText: config.confirmText || 'Submit',
+        cancelText: config.cancelText || 'Cancel',
+        sheet: config.sheet,
+        size: config.size,
+        modal: config.modal,
+        isFormModal: true,
+        formComponent: config.formComponent,
+        onFormSubmit: (data) => {
+          hideModal();
+          resolve(data);
+        },
+        onCancel: () => {
+          hideModal();
+          reject(new Error('Form cancelled'));
+        },
+      });
+    });
+  };
 
   const contextValue: ModalContextType<any> = {
     ModalState,

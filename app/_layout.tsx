@@ -32,21 +32,23 @@ export default function RootLayout() {
   }, [colorScheme]);
 
   return (
-    <ClerkProvider tokenCache={tokenCache} __experimental_resourceCache={resourceCache}>
-      <BottomSheetModalProvider>
-        <ModalProvider>
-          <DialogProvider>
-            <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-              <Routes />
-              <DialogInitializer />
-              <ModalInitializer />
-              <PortalHost />
-            </ThemeProvider>
-          </DialogProvider>
-        </ModalProvider>
-      </BottomSheetModalProvider>
-    </ClerkProvider>
+    <GestureHandlerRootView>
+      <ClerkProvider tokenCache={tokenCache} __experimental_resourceCache={resourceCache}>
+        <BottomSheetModalProvider>
+          <ModalProvider>
+            <DialogProvider>
+              <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+                <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+                <Routes />
+                <DialogInitializer />
+                <ModalInitializer />
+                <PortalHost />
+              </ThemeProvider>
+            </DialogProvider>
+          </ModalProvider>
+        </BottomSheetModalProvider>
+      </ClerkProvider>
+    </GestureHandlerRootView>
   );
 }
 
