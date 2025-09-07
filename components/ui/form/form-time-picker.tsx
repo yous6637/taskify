@@ -7,7 +7,7 @@ import { FormLabel } from './form-label';
 import { FormDescription } from './form-description';
 import { FormMessage } from './form-message';
 import { useFormField } from './form';
-import { Calendar } from '~/components/deprecated-ui/calendar';
+
 import {
   BottomSheet,
   BottomSheetCloseTrigger,
@@ -23,9 +23,10 @@ import { Noop } from 'react-hook-form';
 import { useColorScheme } from 'nativewind';
 import { Input } from '../input';
 import { Clock1Icon } from 'lucide-react-native';
-import { DatePicker } from 'react-native-wheel-datepicker';
+// import { DatePicker } from 'react-native-wheel-datepicker';
 import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { Calendar } from '@/components/deprecated-ui/calendar';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -113,44 +114,7 @@ const FormTimePicker = React.forwardRef<
 
           <BottomSheetView hadHeader={false} className='pt-2 mx-auto px-10 flex items-center justify-center'>
             <Text className='px-3 pb-2 text-sm text-muted-foreground'>Scroll to set time</Text>
-            <DatePicker
-              // padWithNItems={2}
-              // hourLabel={<Text className='text-orange-500'>{":"}</Text>}
-              // minuteLabel={'' as any}
-              // hideSeconds
-              // FlatList={BottomSheetFlatList}
-              mode={'time'}
-              // LinearGradient={LinearGradient}
-              // use12HourPicker={!is24Hour}
-              // onDate={(v) => {
-              //   const { hours, minutes } = v || {};
-              //   console.log({ v });
-              //   setDraft((prev) => ({
-              //     hours: typeof hours === 'number' ? hours : prev.hours,
-              //     minutes: typeof minutes === 'number' ? minutes : prev.minutes,
-
-              //   }));
-              // }}
-              // // MaskedView={MaskedView}
-              // styles={{
-              //   theme: isDark ? 'dark' : 'light',
-
-              //   backgroundColor: 'transparent',
-              //   pickerItem: { fontSize: 30 },
-              //   pickerLabel: { fontSize: 20, marginTop: 0 },
-
-              //   pickerContainer: { marginRight: 6 },
-              //   pickerItemContainer: { width: 100,  },
-                
-              //   pickerLabelContainer: {
-              //     right: -20,
-              //     top: 0,
-              //     bottom: 6,
-              //     width: 40,
-              //     alignItems: 'center',
-              //   },
-              // }}
-            />
+            
             <View className={'pb-2 pt-4 flex-row justify-end gap-3'}>
               <BottomSheetCloseTrigger asChild>
                 <Button className='flex-1' size={"lg"} variant={"secondary"} >
