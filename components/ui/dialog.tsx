@@ -30,8 +30,9 @@ function DialogOverlay({
   return (
     <FullWindowOverlay>
       <DialogPrimitive.Overlay
+       
         className={cn(
-          'absolute bottom-0 left-0 right-0 top-0 z-1000 flex items-center justify-center bg-black/50',
+          ' z-1000 absolute  bg-black/50',
           Platform.select({
             web: 'animate-in fade-in-0 fixed cursor-default [&>*]:cursor-auto',
           }),
@@ -142,7 +143,7 @@ export const dialogVariants = cva(
       
         sheet: {
           // Sheet variants - slide in from edges
-          bottom: 'fixed w-screen inset-x-0 bottom-0 max-w-none rounded-t-xl border-b-0',
+          bottom: 'fixed h-[50vh] w-screen inset-x-0 bottom-0 max-w-none rounded-t-xl border-b-0',
           left: 'fixed h-screen inset-y-0 left-0 h-full max-w-sm rounded-r-xl border-l-0',
           right: 'fixed h-screen inset-y-0 right-0 h-full max-w-sm rounded-l-xl border-r-0',
           top: 'fixed w-screen inset-x-0 top-0 max-w-none rounded-b-xl border-t-0',
@@ -157,7 +158,7 @@ export const dialogVariants = cva(
       ,
       size: {
         sm: 'max-w-sm',
-        md: 'max-w-md', 
+        md: 'max-w-[65vh]', 
         lg: 'max-w-lg',
         xl: 'max-w-xl',
         '2xl': 'max-w-2xl',
@@ -170,7 +171,7 @@ export const dialogVariants = cva(
     defaultVariants: {
       sheet: 'bottom',
       modal: 'default',
-      size: 'full',
+      size: 'lg',
     },
     compoundVariants: [
       // Compound variants for specific combinations

@@ -27,6 +27,7 @@ import { Clock1Icon } from 'lucide-react-native';
 import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { Calendar } from '@/components/deprecated-ui/calendar';
+import { Picker } from '@react-native-picker/picker';
 
 interface FormFieldFieldProps<T> {
   name: string;
@@ -114,6 +115,72 @@ const FormTimePicker = React.forwardRef<
 
           <BottomSheetView hadHeader={false} className='pt-2 mx-auto px-10 flex items-center justify-center'>
             <Text className='px-3 pb-2 text-sm text-muted-foreground'>Scroll to set time</Text>
+             <View className='py-4 flex-1 flex-row h-[300px] overflow-hidden items-center'>
+            {/* seconds */}
+            <Picker style = {{height: 300}} className='h-[300px] bg-red-400' >
+              <Picker.Item label="Java" value="java" />
+  <Picker.Item style = {{color: "white", backgroundColor: "red"}} label="JavaScript" value="js" />
+            </Picker>
+            {/* minutes */}
+            <Picker >
+              {["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"].map((item) => (
+                <Picker.Item label={item} value={item} />
+              ))}
+            </Picker>
+            {/* hours */}
+            <Picker >
+              {["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"].map((item) => (
+                <Picker.Item style={{backgroundColor: "red"}} label={item} value={item} />
+              ))}
+            </Picker>
+            
+            <Picker>
+              {["AM", "PM"].map((item) => (
+                <Picker.Item label={item} value={item} />
+              ))}
+            </Picker>
+            
+            
+            {/* <TimerPickerAny
+              padWithNItems={2}
+              hourLabel={<Text className='text-orange-500'>{":"}</Text>}
+              minuteLabel={'' as any}
+              hideSeconds
+              
+              // LinearGradient={LinearGradient}
+              use12HourPicker={!is24Hour}
+              onDurationChange={(v) => {
+                const { hours, minutes, isAmpm, ampm } = v || {};
+                console.log({ v });
+                setDraft((prev) => ({
+                  hours: typeof hours === 'number' ? hours : prev.hours,
+                  minutes: typeof minutes === 'number' ? minutes : prev.minutes,
+                  isAm: typeof isAmpm === 'boolean' ? isAmpm :
+                    typeof ampm === 'string' ? ampm?.toUpperCase?.() === 'AM' : prev.isAm,
+                }));
+              }}
+              // MaskedView={MaskedView}
+              styles={{
+                theme: isDark ? 'dark' : 'light',
+                
+                backgroundColor: 'transparent',
+                pickerItem: { fontSize: 30 },
+                pickerLabel: { fontSize: 20, marginTop: 0 },
+                
+                pickerContainer: { marginRight: 6 },
+                pickerItemContainer: { width: 100, borderColor: "#F97316", borderTopWidth: 1 },
+                pickerLabelContainer: {
+                  right: -20,
+                  top: 0,
+                  bottom: 6,
+                  width: 40,
+                  alignItems: 'center',
+                },
+              }}
+            /> */}
+
+           
+          </View>
             
             <View className={'pb-2 pt-4 flex-row justify-end gap-3'}>
               <BottomSheetCloseTrigger asChild>

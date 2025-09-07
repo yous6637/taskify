@@ -44,7 +44,7 @@ const GoalForm = ({ defaultValues, onSubmit }: Props) => {
 
   return (
     <Form {...form}>
-      <View className='gap-6'>
+      <View className='gap-6 w-full flex-1'>
         <FormField
           control={form.control}
           name='title'
@@ -121,12 +121,14 @@ const GoalForm = ({ defaultValues, onSubmit }: Props) => {
             <FormTextarea
               label='Notes'
               placeholder='Add any additional notes about your goal...'
+              className='min-h-[100px]'
+              numberOfLines={4}
               {...field}
             />
           )}
         />
 
-        <Button className='w-full' onPress={form.handleSubmit(handleSubmit, console.error)}>
+        <Button size={"lg"} rounded className='w-full mt-auto' onPress={form.handleSubmit(handleSubmit, console.error)}>
           <Text>Create Goal</Text>
         </Button>
       </View>

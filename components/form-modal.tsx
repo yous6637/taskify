@@ -40,12 +40,16 @@ export function FormModal() {
   };
 
   return (
-    <Dialog  open={ModalState.isOpen} onOpenChange={(open) => !open && hideModal()}>
+    <Dialog side = "bottom"  open={ModalState.isOpen} onOpenChange={(open) => !open && hideModal()}>
       <DialogContent
-        className='bg-gray-950 h-screen'
+        className='bg-gray-950'
         size={ModalState.size}
         sheet={ModalState.sheet}
         modal={ModalState.modal}
+        style={{
+          // height: ModalState.sheet === 'bottom' ? 300 : undefined,
+          // paddingBottom: Platform.OS === 'ios' ? insets.bottom : 20,
+        }}
       >
         <DialogHeader className='border-b-[0.5px] border-gray:200 dark:border-orange-100'>
           <DialogTitle className='text-center mb-6'>{ModalState.title}</DialogTitle>

@@ -61,7 +61,7 @@ const AddGoal = (props: Props) => {
       title: 'Create Goal',
       formComponent: GoalForm,
       sheet: "bottom",
-      size: "lg",
+      size: "md",
     });
     console.log("goal form result", result)
   };
