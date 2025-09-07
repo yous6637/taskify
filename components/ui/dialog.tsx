@@ -19,22 +19,44 @@ const DialogClose = DialogPrimitive.Close;
 
 const FullWindowOverlay = Platform.OS === 'ios' ? RNFullWindowOverlay : React.Fragment;
 
+
+const dialogOverlayVariants = cva(
+  'z-50 flex items-center justify-center bg-black/50',
+  {
+    variants: {
+      position: {
+        center: 'fixed inset-0',
+        bottom: 'fixed inset-0 items-end',
+        top: 'fixed inset-0 items-start',
+        left: 'fixed inset-0 justify-start',
+        right: 'fixed inset-0 justify-end',
+      },
+    },
+    defaultVariants: {
+      position: 'center',
+    },
+  }
+)
+interface DialogOverlayProps extends Omit<DialogPrimitive.OverlayProps, 'asChild'>,
+  React.RefAttributes<DialogPrimitive.OverlayRef>,
+  VariantProps<typeof dialogOverlayVariants> {
+  children?: React.ReactNode;
+}
+
 function DialogOverlay({
   className,
   children,
+  position,
   ...props
-}: Omit<DialogPrimitive.OverlayProps, 'asChild'> &
-  React.RefAttributes<DialogPrimitive.OverlayRef> & {
-    children?: React.ReactNode} 
-  ) {
+}: DialogOverlayProps) {
   return (
     <FullWindowOverlay>
       <DialogPrimitive.Overlay
        
         className={cn(
-          ' z-1000 absolute  bg-black/50',
+          dialogOverlayVariants({ position }),
           Platform.select({
-            web: 'animate-in fade-in-0 fixed cursor-default [&>*]:cursor-auto',
+            web: 'animate-in fade-in-0 cursor-default [&>*]:cursor-auto',
           }),
           className
         )}
@@ -49,23 +71,29 @@ function DialogOverlay({
     </FullWindowOverlay>
   );
 }
+interface DialogContentProps extends DialogPrimitive.ContentProps,
+  React.RefAttributes<DialogPrimitive.ContentRef>,
+  VariantProps<typeof dialogVariants>,
+  VariantProps<typeof dialogOverlayVariants> {
+  portalHost?: string;
+}
+
 function DialogContent({
   className,
   portalHost,
   children,
+  sheet,
+  modal,
+  size,
+  position,
   ...props
-}: DialogPrimitive.ContentProps &
-  React.RefAttributes<DialogPrimitive.ContentRef>
-  & VariantProps<typeof dialogVariants>
-  & {
-    portalHost?: string;
-  }) {
+}: DialogContentProps) {
   return (
     <DialogPortal hostName={portalHost}>
-      <DialogOverlay>
+      <DialogOverlay position={position}>
         <DialogPrimitive.Content
           className={cn(
-            dialogVariants({  sheet: props.sheet, modal: props.modal, size: props.size }),
+            dialogVariants({ sheet, modal, size }),
             Platform.select({
               web: 'animate-in fade-in-0 zoom-in-95 duration-200',
             }),
@@ -137,28 +165,26 @@ export type DialogVariants = VariantProps<typeof dialogVariants>;
 
 export const dialogVariants = cva(
   // Base styles applied to all dialog variants
-  'relative z-50 p-6 max-w-lg gap-4 border border-border bg-background p-6 shadow-lg',
+  'relative z-50 flex flex-col gap-4 border border-border bg-background p-6 shadow-lg',
   {
     variants: {
-      
-        sheet: {
-          // Sheet variants - slide in from edges
-          bottom: 'fixed h-[50vh] w-screen inset-x-0 bottom-0 max-w-none rounded-t-xl border-b-0',
-          left: 'fixed h-screen inset-y-0 left-0 h-full max-w-sm rounded-r-xl border-l-0',
-          right: 'fixed h-screen inset-y-0 right-0 h-full max-w-sm rounded-l-xl border-r-0',
-          top: 'fixed w-screen inset-x-0 top-0 max-w-none rounded-b-xl border-t-0',
-        },
-        modal: {
-          // Modal variants - centered or positioned
-          default: '',
-          fullScreen: 'fixed inset-0 max-w-none rounded-none border-0 p-0',
-          sidePanel: 'fixed inset-y-0 right-0 h-full max-w-md rounded-l-xl border-r-0',
-          sidePanelLeft: 'fixed inset-y-0 left-0 h-full max-w-md rounded-r-xl border-l-0',
-        }
-      ,
+      sheet: {
+        // Sheet variants - slide in from edges
+        bottom: 'h-[50vh] w-screen max-w-none rounded-t-xl border-b-0',
+        left: 'h-screen max-w-sm rounded-r-xl border-l-0',
+        right: 'h-screen max-w-sm rounded-l-xl border-r-0',
+        top: 'w-screen max-w-none rounded-b-xl border-t-0',
+      },
+      modal: {
+        // Modal variants - centered or positioned
+        default: 'rounded-lg',
+        fullScreen: 'h-screen w-screen max-w-none rounded-none border-0 p-0',
+        sidePanel: 'h-screen max-w-md rounded-l-xl border-r-0',
+        sidePanelLeft: 'h-screen max-w-md rounded-r-xl border-l-0',
+      },
       size: {
         sm: 'max-w-sm',
-        md: 'max-w-[65vh]', 
+        md: 'max-w-md', 
         lg: 'max-w-lg',
         xl: 'max-w-xl',
         '2xl': 'max-w-2xl',
@@ -169,34 +195,36 @@ export const dialogVariants = cva(
       }
     },
     defaultVariants: {
-      sheet: 'bottom',
       modal: 'default',
       size: 'lg',
     },
     compoundVariants: [
-      // Compound variants for specific combinations
+      // Sheet variants override size
       {
         sheet: 'bottom',
-        modal: 'default',
-        class: 'h-[85vh]'
+        class: 'h-[85vh] max-w-none'
       },
       {
-        sheet: 'top', 
-        modal: 'default',
-        class: 'h-[85vh]'
+        sheet: 'top',
+        class: 'h-[85vh] max-w-none'
       },
-      
+      {
+        sheet: ['left', 'right'],
+        class: 'max-w-sm'
+      },
+      // Full screen modal
+      {
+        modal: 'fullScreen',
+        class: 'h-full w-full'
+      },
+      // Side panels
+      {
+        modal: ['sidePanel', 'sidePanelLeft'],
+        class: 'h-full max-w-md'
+      }
     ]
   }
 )
-
-
-dialogVariants({
-  sheet: "bottom",
-  
-})
-
-
 export {
   Dialog,
   DialogClose,
