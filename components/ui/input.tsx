@@ -11,7 +11,7 @@ function Input({ className, placeholderClassName, LeftIcon, RightIcon, ...props 
   return (
     <View
       className={cn(
-        'flex-row items-center rounded-lg border border-input bg-background px-3 py-1 text-base leading-5 text-foreground shadow-sm shadow-black/5 dark:bg-input/30 sm:h-10',
+        'flex-row h-[50px] items-center rounded-lg border border-input bg-background px-3 py-1 text-base leading-5 text-foreground shadow-sm shadow-black/5 dark:bg-input/30 sm:h-10',
         props.editable === false &&
           cn(
             'opacity-50',

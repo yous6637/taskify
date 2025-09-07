@@ -7,11 +7,13 @@ import { FormLabel } from './form-label';
 import { FormDescription } from './form-description';
 import { FormMessage } from './form-message';
 import { useFormField } from './form';
+import { LinearGradient } from 'expo-linear-gradient';
+
 import { Clock1Icon } from 'lucide-react-native';
 import { X } from '~/lib/icons/X';
 import { cn } from '~/lib/utils';
 import { Text } from '../text';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import type { Override } from './types';
 import { Noop } from 'react-hook-form';
 import MaskedView from '@react-native-masked-view/masked-view'; // for transparent fade-out
@@ -43,13 +45,14 @@ type FormItemProps<T extends React.ElementType<any>, U> = Override<
 };
 
 const FormDateTimePicker = React.forwardRef<
-  React.ComponentRef<typeof Input>,
-  FormItemProps<typeof Input, string> &  {
+  React.ComponentRef<typeof Button>,
+  FormItemProps<typeof Button, string> &  {
     mode?: 'time' | 'countdown';
     is24Hour?: boolean;
     display?: 'default' | 'spinner' | 'compact';
+    placeholder?: string;
   }
->(({ label, description, value, onChange, mode = 'time', is24Hour = true, display = 'default', ...props }, ref) => {
+>(({ label, description,placeholder, value, onChange, mode = 'time', is24Hour = true, display = 'default', ...props }, ref) => {
   const { error, formItemNativeID, formDescriptionNativeID, formMessageNativeID } = useFormField();
   const initialDate = React.useMemo(() => (value ? new Date(value) : new Date()), [value]);
   const { colorScheme } = useColorScheme();
@@ -65,31 +68,21 @@ const FormDateTimePicker = React.forwardRef<
     };
   });
 
-  const formatTime = (timeString: string) => {
-    if (!timeString) return 'Pick a time';
-    try {
-      const date = new Date(timeString);
-      return date.toLocaleTimeString([], { 
-        hour: '2-digit', 
-        minute: '2-digit',
-        hour12: !is24Hour 
-      });
-    } catch {
-      return 'Pick a time';
-    }
-  };
+  console.log({time : value})
+
+
+
+  
 
   function commitDraft() {
-    const base = new Date(initialDate);
-    let hours24 = draft.hours;
-    if (!is24Hour) {
-      // convert 12h to 24h using draft.isAm
-      const isAm = draft.isAm ?? (base.getHours() < 12);
-      hours24 = ((draft.hours % 12) + (isAm ? 0 : 12)) % 24;
-    }
-    base.setHours(hours24, draft.minutes, 0, 0);
-    onChange?.(base.toISOString());
+    try {
+   
+    onChange?.(`${String(draft.hours).padStart(2, '0')}:${String(draft.minutes).padStart(2, '0')}`);
     setIsOpen(false);
+    } catch (e) {
+      console.error(e);
+    }
+    
   }
 
   function handleCancel() {
@@ -104,7 +97,7 @@ const FormDateTimePicker = React.forwardRef<
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Input
+          <Button
             className='flex-row gap-3 justify-start px-3 relative'
             aria-labelledby={formItemNativeID}
             aria-describedby={
@@ -112,14 +105,19 @@ const FormDateTimePicker = React.forwardRef<
                 ? `${formDescriptionNativeID}`
                 : `${formDescriptionNativeID} ${formMessageNativeID}`
             }
-            aria-invalid={!!error}
-            LeftIcon={() => <Clock1Icon size={18} />}
-            RightIcon={() => <X size={18} className='text-muted-foreground text-xs' />}
-            onChangeText={onChange}
-            value={formatTime(value)}
+            aria-disabled={true}
+            // aria-invalid={!!error}
             onPress={() => setIsOpen(true)}
+            variant={'input'}
+            size={"lg"}
             {...props}
-          />
+          >
+           <Clock1Icon className='mr-2' color = {isDark ? "white" : "black"} size={18} />
+            <Text className={buttonTextVariants({ variant: 'input', size: 'default' })}>
+              {value || placeholder || 'Set time'}
+            </Text>
+          </Button>
+
         </DialogTrigger>
 
         <DialogContent sheet="bottom" size="md" className='dark:bg-gray-900 max-h-[80vh]'>
@@ -131,13 +129,15 @@ const FormDateTimePicker = React.forwardRef<
           <View className='py-4 flex-1 overflow-hidden items-center'>
             <TimerPickerAny
               padWithNItems={2}
-              hourLabel={':' as any}
-              minuteLabel={':' as any}
-              secondLabel={'' as any}
+              hourLabel={<Text className='text-orange-500'>{":"}</Text>}
+              minuteLabel={'' as any}
+              hideSeconds
               
+              // LinearGradient={LinearGradient}
               use12HourPicker={!is24Hour}
-              onDurationChange={(v: any) => {
+              onDurationChange={(v) => {
                 const { hours, minutes, isAmpm, ampm } = v || {};
+                console.log({ v });
                 setDraft((prev) => ({
                   hours: typeof hours === 'number' ? hours : prev.hours,
                   minutes: typeof minutes === 'number' ? minutes : prev.minutes,
@@ -150,10 +150,11 @@ const FormDateTimePicker = React.forwardRef<
                 theme: isDark ? 'dark' : 'light',
                 
                 backgroundColor: 'transparent',
-                pickerItem: { fontSize: 20 },
+                pickerItem: { fontSize: 30 },
                 pickerLabel: { fontSize: 20, marginTop: 0 },
+                
                 pickerContainer: { marginRight: 6 },
-                pickerItemContainer: { width: 100 },
+                pickerItemContainer: { width: 100, borderColor: "#F97316", borderTopWidth: 1 },
                 pickerLabelContainer: {
                   right: -20,
                   top: 0,

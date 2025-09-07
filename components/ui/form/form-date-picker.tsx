@@ -16,8 +16,6 @@ import {
   BottomSheetView,
 } from '~/components/deprecated-ui/bottom-sheet';
 import { Calendar as CalendarIcon } from '~/lib/icons/Calendar';
-import { X } from '~/lib/icons/X';
-import { cn } from '~/lib/utils';
 import { Text } from '../text';
 import type { Override } from './types';
 import { Noop } from 'react-hook-form';
@@ -55,10 +53,9 @@ const FormDatePicker = React.forwardRef<
       {!!label && <FormLabel nativeID={formItemNativeID}>{label}</FormLabel>}
       <BottomSheet>
         <BottomSheetOpenTrigger asChild>
-          <Input
+          <Button
             className='flex-row gap-3 justify-start px-3 relative'
-            // @ts-ignore
-            ref={ref!}
+            // ref={ref!}
             aria-labelledby={formItemNativeID}
             aria-describedby={
               !error
@@ -66,19 +63,21 @@ const FormDatePicker = React.forwardRef<
                 : `${formDescriptionNativeID} ${formMessageNativeID}`
             }
             aria-invalid={!!error}
-            placeholder={placeholder}
-            LeftIcon={() => <CalendarIcon color = {isDark ? "white" : "black"} size={18} />}
-            RightIcon={() => <X size={18} className='text-muted-foreground text-xs' />}
-            onChangeText={onChange}
-            value={value ? (new Date(value).toDateString()) : 'Pick a date'}
-          />
+            variant='input'
+            size={"lg"}
+            >
+            <CalendarIcon className='mr-2' color = {isDark ? "white" : "black"} size={18} />
+            <Text className={buttonTextVariants({ variant: 'input', size: 'default' })}>
+              {value ? (new Date(value).toDateString()) : placeholder}
+            </Text>
+          </Button>
            
         </BottomSheetOpenTrigger>
         <BottomSheetContent>
           <BottomSheetView hadHeader={false} className='pt-2'>
             <Calendar
               style={{ height: 358 }}
-              date={value ? new Date(value).toISOString() : new Date().toISOString()}
+              date={new Date(value).toISOString().split("T")[0]}
               state="selected"
               minDate={new Date().toISOString()}
               
@@ -86,7 +85,7 @@ const FormDatePicker = React.forwardRef<
                 onChange?.(new Date(day.dateString).toISOString() === value ? '' : new Date(day.dateString).toISOString());
               }}
               markedDates={{
-                [new Date(value).toISOString() ?? '']: {
+                [value.split('T')[0] ?? '']: {
                   selected: true,
                 },
               }}
@@ -106,7 +105,7 @@ const FormDatePicker = React.forwardRef<
                   color: isDark ? '#9CA3AF' : '#6B7280',
                 }
               }}
-              current={value ? new Date(value).toISOString() : new Date().toISOString()}
+              current={value.split('T')[0]}
               
               {...props}
             />

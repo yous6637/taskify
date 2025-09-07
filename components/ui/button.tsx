@@ -38,13 +38,25 @@ const buttonVariants = cva(
           Platform.select({ web: 'hover:bg-accent dark:hover:bg-accent/50' })
         ),
         link: '',
+         input: cn(
+          'flex-row h-[50px] items-center rounded-lg border border-input bg-background px-3 py-1 text-base leading-5 text-foreground shadow-sm shadow-black/5 dark:bg-input/30 sm:h-10',
+
+          Platform.select({
+            web: cn(
+              'outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground md:text-sm',
+              'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
+              'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
+            ),
+            native: 'placeholder:text-muted-foreground/50',
+          }))
       },
       size: {
         default: cn('h-10 px-4 py-2 sm:h-9', Platform.select({ web: 'has-[>svg]:px-3' })),
         sm: cn('h-9 gap-1.5 rounded-md px-3 sm:h-8', Platform.select({ web: 'has-[>svg]:px-2.5' })),
-        lg: cn('py-3 rounded-full px-6', Platform.select({ web: 'has-[>svg]:px-4' })),
+        lg: cn('py-3 px-6', Platform.select({ web: 'has-[>svg]:px-4' })),
         icon: 'h-10 w-10 sm:h-9 sm:w-9',
       },
+      rounded: { true: 'rounded-full' },
     },
     defaultVariants: {
       variant: 'default',
@@ -68,11 +80,13 @@ const buttonTextVariants = cva(
           Platform.select({ web: 'group-hover:text-accent-foreground' })
         ),
         secondary: 'text-orange-500',
+        input: '',
         ghost: 'group-active:text-accent-foreground',
         link: cn(
           'text-primary group-active:underline',
           Platform.select({ web: 'underline-offset-4 hover:underline group-hover:underline' })
         ),
+       
       },
       size: {
         default: 'text-md',
