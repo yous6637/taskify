@@ -17,7 +17,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "edgeToEdgeEnabled": true,
@@ -25,7 +28,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mobdevdz.taskify"
+      "package": "com.mobdevdz.taskify",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "bundler": "metro",
@@ -46,6 +50,9 @@
         "projectId": "7e7dedff-32d6-4e27-b414-87fc93493496"
       }
     },
-    "owner": "mobdevdz"
+    "owner": "mobdevdz",
+    "updates": {
+      "url": "https://u.expo.dev/7e7dedff-32d6-4e27-b414-87fc93493496"
+    }
   }
 }
