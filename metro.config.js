@@ -3,4 +3,8 @@ const { withNativeWind } = require('nativewind/metro');
 
 const config = getDefaultConfig(__dirname);
 
+// Add support for Hermes
+config.transformer.unstable_allowRequireContext = true;
+
+
 module.exports = withNativeWind(config, { input: './global.css', inlineRem: 16 });

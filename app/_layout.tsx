@@ -1,5 +1,6 @@
 import '@/global.css';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
@@ -32,7 +33,7 @@ export default function RootLayout() {
   }, [colorScheme]);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <ClerkProvider tokenCache={tokenCache} __experimental_resourceCache={resourceCache}>
         <BottomSheetModalProvider>
           <ModalProvider>
