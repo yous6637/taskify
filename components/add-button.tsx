@@ -133,7 +133,7 @@ export function AddButton() {
       >
         {/* Backdrop */}
         <Animated.View
-          className="flex-1 bg-black/50"
+          className="flex-1 bg-black/75"
           style={{ opacity: fadeAnim }}
         >
           <TouchableOpacity

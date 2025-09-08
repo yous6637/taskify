@@ -5,7 +5,7 @@ import * as DialogPrimitive from '@rn-primitives/dialog';
 import { cva, VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react-native';
 import * as React from 'react';
-import { Platform, Text, View, type ViewProps } from 'react-native';
+import { Modal, Platform, Text, View, type ViewProps } from 'react-native';
 import { FadeIn, FadeOut } from 'react-native-reanimated';
 import { FullWindowOverlay as RNFullWindowOverlay } from 'react-native-screens';
 
@@ -21,7 +21,7 @@ const FullWindowOverlay = Platform.OS === 'ios' ? RNFullWindowOverlay : React.Fr
 
 
 const dialogOverlayVariants = cva(
-  'z-50 flex items-center justify-center bg-black/50',
+  'z-50 absolute top-0 bottom-0 w-screen h-screen items-center justify-center bg-black/50',
   {
     variants: {
       position: {
