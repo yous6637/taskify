@@ -1,9 +1,9 @@
 import * as React from 'react'
-import type { Habit } from '@/lib/dataTypes'
+import type { HabitFormType } from '@/lib/dataTypes'
 import { HabitCard as NewHabitCard, HabitCardConfigs } from '@/components/cards/habit-card'
 
 export default function HabitCard({ habit, onPress, onToggle }: { 
-  habit: Habit;
+  habit: HabitFormType;
   onPress?: () => void;
   onToggle?: () => void;
 }) {

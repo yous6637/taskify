@@ -50,7 +50,6 @@ export function DialogUsageExamples() {
         console.log('Custom cancel action');
         // Add your custom cancel logic here
       },
-      variant: 'default',
     });
   };
 

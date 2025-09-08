@@ -4,8 +4,8 @@ import { ChevronDown } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 
 const WeekCalendar = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [weekDates, setWeekDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState<number | null>(null);
+  const [weekDates, setWeekDates] = useState<Date[]>([]);
   const { colorScheme } = useColorScheme()
   // Days of the week
   const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -30,11 +30,11 @@ const WeekCalendar = () => {
     setSelectedDate(6); // Index 6 is Sunday
   }, []);
 
-  const formatDate = (date) => {
+  const formatDate = (date: Date) => {
     return date.getDate();
   };
 
-  const isToday = (date) => {
+  const isToday = (date: Date) => {
     const today = new Date();
     return date.toDateString() === today.toDateString();
   };

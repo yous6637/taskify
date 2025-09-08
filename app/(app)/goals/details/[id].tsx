@@ -24,8 +24,6 @@ const GoalDetailsPage = () => {
   const handleDeleteHabit = async (habitId: number) => {
     const confirmed = await confirmDialog({
       title: 'Delete Habit',
-      side: "bottom",
-      type: "bottomSheet",
       description: 'Are you sure you want to delete this habit?',
       confirmText: 'Delete',
       cancelText: 'Cancel',

@@ -134,7 +134,7 @@ const Combobox = React.forwardRef<
     return (
       <BottomSheet>
         <BottomSheetOpenTrigger
-          ref={ref}
+          ref={ref as any}
           className={buttonVariants({
             variant,
             size,

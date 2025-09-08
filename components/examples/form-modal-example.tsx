@@ -13,8 +13,6 @@ export function FormModalExample() {
       const result = await showForm({
         title: 'Add New Habit',
         formComponent: HabitForm,
-        type: 'bottomSheet',
-        side: 'bottom',
         confirmText: 'Create Habit',
         cancelText: 'Cancel',
       });
@@ -32,8 +30,6 @@ export function FormModalExample() {
       description: 'Are you sure you want to delete this habit? This action cannot be undone.',
       confirmText: 'Delete',
       cancelText: 'Cancel',
-      variant: 'destructive',
-      type: 'modal',
     });
 
     if (confirmed) {

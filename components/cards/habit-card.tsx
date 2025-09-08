@@ -163,17 +163,17 @@ export function HabitCard({
                   <View
                     className={cn(
                       'w-8 h-8 rounded-full items-center justify-center',
-                      habit.completed[index]
+                      habit?.completed?.[index]
                         ? 'bg-primary'
                         : index <= 2 
                           ? 'bg-muted' 
                           : 'bg-muted/50'
                     )}
                   >
-                    {habit.completed[index] && (
+                    {habit?.completed?.[index] && (
                       <Ionicons name="checkmark" size={16} color="white" />
                     )}
-                    {!habit.completed[index] && index <= 2 && (
+                    {!habit?.completed?.[index] && index <= 2 && (
                       <Text className="text-muted-foreground text-xs">{index + 1}</Text>
                     )}
                   </View>

@@ -1,9 +1,9 @@
 import * as React from 'react'
-import type { Task } from '@/lib/dataTypes'
+import type { TaskFormType } from '@/lib/dataTypes'
 import { TaskCard as NewTaskCard, TaskCardConfigs } from '@/components/cards/task-card'
 
 export default function TaskCard({ task, onPress, onToggle }: { 
-  task: Task;
+  task: TaskFormType;
   onPress?: () => void;
   onToggle?: () => void;
 }) {
